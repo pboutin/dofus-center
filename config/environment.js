@@ -6,11 +6,14 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
-    dofusDataPath: 'https://raw.githubusercontent.com/pboutin/dofus-data/master/dofus-data.json',
+    dofusDataRepository: 'https://raw.githubusercontent.com/pboutin/dofus-data/master/',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        Date: false,
       }
     },
 

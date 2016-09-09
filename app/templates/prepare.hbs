@@ -1,0 +1,21 @@
+<h1>Preparing {{model.name}}</h1>
+
+<h2>Searching</h2>
+
+{{input value=query}}
+
+<ul>
+    {{#each filteredItems as |item|}}
+        <li>{{item.name}} <button {{action 'add' item}}>Add</button></li>
+    {{/each}}
+</ul>
+
+<h3>Item list</h3>
+
+<ul>
+    {{#each model.wishlistItems as |quantifiableItem|}}
+        <li>{{quantifiableItem.item.name}} - {{quantifiableItem.target}} - <button {{action 'remove' quantifiableItem.item}}>Remove</button></li>
+    {{/each}}
+</ul>
+
+{{outlet}}

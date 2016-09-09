@@ -1,0 +1,15 @@
+<h1>Projects</h1>
+
+{{#unless newProject}}
+    <button {{action 'create'}}>New project</button>
+{{else}}
+    {{input value=newProject.name}}
+    <button {{action 'save'}}>Save</button>
+{{/unless}}
+
+
+{{#each workbench.projects as |project|}}
+    <p>{{project.name}} - {{#link-to 'prepare' project.id}}{{project.id}}{{/link-to}}</p>
+{{/each}}
+
+{{outlet}}
