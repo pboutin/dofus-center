@@ -1,22 +1,19 @@
 import Ember from 'ember';
-import Project from '../objects/project';
 import _ from 'lodash/lodash';
 
 export default Ember.Service.extend({
-    dofusData: Ember.inject.service('dofus-data'),
-
     projects: Ember.A(),
 
     initialize() {
         let projects = this.get('projects');
-        let rawProjects = JSON.parse(localStorage.projects);
-        let dofusData = this.get('dofusData');
+        let self = this;
 
         return new Ember.RSVP.Promise(function(resolve) {
             if (localStorage.projects) {
+                let rawProjects = JSON.parse(localStorage.projects);
                 _.forEach(rawProjects, function (rawProject) {
-                    let project = new Project();
-                    project.deserialize(rawProject, dofusData);
+                    let project = Ember.getOwner(self).lookup('object:project');
+                    project.deserialize(rawProject);
                     projects.pushObject(project);
                 });
             }

@@ -1,0 +1,23 @@
+<h1>Crafting {{model.name}}</h1>
+
+{{#link-to 'prepare' model.id}}
+    Edit crafting list
+{{/link-to}}
+
+<h3>Item list</h3>
+
+<ul>
+    {{#each model.wishlistItems as |quantifiableItem|}}
+        <li>{{quantifiableItem.item.name}} - {{quantifiableItem.target}}</li>
+    {{/each}}
+</ul>
+
+<h3>Ressources list</h3>
+
+<ul>
+    {{#each model.ressourcesItems as |quantifiableItem|}}
+        <li>{{quantifiableItem.item.name}} - {{quantity-editor quantity=quantifiableItem.quantity target=quantifiableItem.target}}</li>
+    {{/each}}
+</ul>
+
+{{outlet}}

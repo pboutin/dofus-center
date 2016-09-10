@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import ENV from 'dofus-workbench/config/environment';
-import Item from '../objects/item';
 import _ from 'lodash/lodash';
 
 export default Ember.Service.extend({
@@ -15,16 +14,12 @@ export default Ember.Service.extend({
                 let baseUrl = data['metadata']['baseUrl'];
 
                 _.mapKeys(data['data'], function(rawItem, itemId) {
-                    let item = new Item();
-                    item.set('id', itemId);
-                    item.set('name', rawItem['name']);
-                    item.set('searchableName', self._sanitize(rawItem['name']));
-                    item.set('level', parseInt(rawItem['level'], 10));
-                    item.set('type', rawItem['type']);
-                    item.set('link', baseUrl + rawItem['link']);
-
-                    item.set('image', `${ENV.dofusDataRepository}/images/${itemId}.png`);
-
+                    rawItem['id'] = itemId;
+                    rawItem['link'] = baseUrl + rawItem['link'];
+                    rawItem['image'] = `${ENV.dofusDataRepository}/images/${itemId}.png`;
+                    let item = Ember.getOwner(self).lookup('object:item');
+                    item.deserialize(rawItem);
+                    item.set('searchableName', self._sanitize(item.get('name')));
                     itemMap[itemId] = item;
                 });
 
@@ -44,7 +39,7 @@ export default Ember.Service.extend({
         query = this._sanitize(query);
 
         _.mapValues(this.get('itemMap'), function(item) {
-            if (item.get('searchableName').indexOf(query) > 0) {
+            if (item.get('searchableName').indexOf(query) >= 0) {
                 result.push(item);
             }
         });

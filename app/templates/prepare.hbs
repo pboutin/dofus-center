@@ -1,5 +1,11 @@
 <h1>Preparing {{model.name}}</h1>
 
+{{#link-to 'projects'}}Back to projects{{/link-to}}
+
+{{#link-to 'crafting' model.id}}
+    Craft !
+{{/link-to}}
+
 <h2>Searching</h2>
 
 {{input value=query}}

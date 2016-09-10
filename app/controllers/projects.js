@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Project from '../objects/project';
 
 export default Ember.Controller.extend({
     workbench: Ember.inject.service('workbench'),
@@ -8,7 +7,7 @@ export default Ember.Controller.extend({
 
     actions: {
         create() {
-            this.set('newProject', new Project());
+            this.set('newProject', Ember.getOwner(this).lookup('object:project'));
         },
         save() {
             let newProject = this.get('newProject');

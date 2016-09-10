@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export function initialize(app) {
+    console.log('Init : Services initialization');
     app.deferReadiness();
 
     let container = app.__container__;
@@ -13,6 +14,7 @@ export function initialize(app) {
 }
 
 export default {
-    name: 'application',
+    name: 'services-initialization',
+    after: 'register-objects',
     initialize
 };
