@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import _ from 'lodash/lodash';
 
 export default Ember.Object.extend({
     id: '',
@@ -18,5 +19,9 @@ export default Ember.Object.extend({
         this.set('recipe', rawItem['recipe']);
         this.set('link', rawItem['link']);
         this.set('image', rawItem['image']);
-    }
+    },
+
+    isCraftable: Ember.computed('recipe', function() {
+        return _.keys(this.get('recipe')).length > 0;
+    })
 });

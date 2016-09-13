@@ -1,0 +1,32 @@
+.quantity-editor {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+
+    .btn {
+        height: 2.2rem;
+
+        &:active {
+            margin-top: 0px;
+        }
+    }
+
+    .details {
+        display: inline-block;
+        font-size: 2.3rem;
+        padding-right: 10px;
+    }
+
+    input {
+        -moz-appearance:textfield;
+
+        width: 60px;
+        display: inline-block;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}

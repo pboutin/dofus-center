@@ -7,5 +7,14 @@ export default Ember.Object.extend({
 
     increaseTargetOf(quantity) {
         this.set('target', this.get('target') + quantity);
-    }
+    },
+
+    progressWidthStyle: Ember.computed('quantity', 'target', function() {
+        let progress = (this.get('quantity') / this.get('target')) * 100;
+        return Ember.String.htmlSafe(`width: ${progress}%`);
+    }),
+
+    isComplete: Ember.computed('quantity', 'target', function() {
+        return this.get('quantity') >= this.get('target');
+    })
 });

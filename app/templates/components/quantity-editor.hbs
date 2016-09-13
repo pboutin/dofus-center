@@ -1,6 +1,19 @@
-<button {{action 'decrementBy' 10}}>-10</button>
-<button {{action 'decrementBy' 1}}>-1</button>
-{{quantity}} / {{target}}
-<button {{action 'incrementBy' 1}}>+1</button>
-<button {{action 'incrementBy' 10}}>+10</button>
-<button {{action 'maximise'}}>Max</button>
+<div class="details">
+    {{input value=quantity type="number" class="form-control"}} / {{target}}
+    {{#if missing}}
+        <sup class="text-warning">{{missing}}</sup>
+    {{/if}}
+</div>
+
+<div class="btn-group-vertical">
+    <button class="btn btn-default btn-xs" {{action 'incrementBy' 1}}>+1</button>
+    <button class="btn btn-default btn-xs" {{action 'decrementBy' 1}}>-1</button>
+</div>
+<div class="btn-group-vertical">
+    <button class="btn btn-default btn-xs" {{action 'incrementBy' 10}}>+10</button>
+    <button class="btn btn-default btn-xs" {{action 'decrementBy' 10}}>-10</button>
+</div>
+<div class="btn-group-vertical">
+    <button class="btn btn-default btn-xs" {{action 'maximise'}}>max</button>
+    <button class="btn btn-default btn-xs" {{action 'clear'}}>min</button>
+</div>

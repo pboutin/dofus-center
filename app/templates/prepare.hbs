@@ -1,27 +1,61 @@
-<h1>Preparing {{model.name}}</h1>
+<div class="container">
+    <h1>{{t 'prepare.manage'}} {{model.name}}</h1>
 
-{{#link-to 'projects'}}Back to projects{{/link-to}}
+    {{#link-to 'projects' class="btn btn-info"}}
+        {{t 'prepare.back_to_projects'}}
+    {{/link-to}}
 
-{{#link-to 'crafting' model.id}}
-    Craft !
-{{/link-to}}
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>{{t 'prepare.add_items'}}</h3>
 
-<h2>Searching</h2>
+            <div class="form-group">
+                {{input value=query placeholder=(t 'prepare.search') class="form-control"}}
+            </div>
 
-{{input value=query}}
+            <div class="list-group icons-list-group">
+                {{#each filteredItems as |item|}}
+                    <button class="list-group-item {{unless item.isCraftable 'list-group-item-dimmed'}}" {{action 'add' item}}>
+                        <span class="badge">
+                            lvl {{item.level}}
+                        </span>
+                        <span class="badge">
+                            {{item.type}}
+                        </span>
 
-<ul>
-    {{#each filteredItems as |item|}}
-        <li>{{item.name}} <button {{action 'add' item}}>Add</button></li>
-    {{/each}}
-</ul>
+                        <img src={{item.image}}>
+                        {{item.name}}
+                    </button>
+                {{/each}}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3>{{t 'prepare.your_project'}}</h3>
 
-<h3>Item list</h3>
+            <ul class="list-group icons-list-group">
+                {{#each model.wishlistItems as |quantifiableItem|}}
+                    <li class="list-group-item">
+                        <span class="badge">
+                            &times; {{quantifiableItem.target}}
+                        </span>
+                        <img src={{quantifiableItem.item.image}}>
+                        {{quantifiableItem.item.name}}
+                        <button class="btn btn-danger btn-xs btn-hover" {{action 'remove' quantifiableItem.item}}>
+                            Remove
+                        </button>
+                    </li>
+                {{else}}
+                    <li class="list-group-item list-group-item-warning">
+                        {{t 'prepare.empty_project'}}
+                    </li>
+                {{/each}}
+            </ul>
+            <hr>
+            {{#link-to 'crafting' model.id class="btn btn-success btn-block"}}
+                {{t 'prepare.go_to_workbench'}}
+            {{/link-to}}
+        </div>
+    </div>
+    {{outlet}}
+</div>
 
-<ul>
-    {{#each model.wishlistItems as |quantifiableItem|}}
-        <li>{{quantifiableItem.item.name}} - {{quantifiableItem.target}} - <button {{action 'remove' quantifiableItem.item}}>Remove</button></li>
-    {{/each}}
-</ul>
-
-{{outlet}}

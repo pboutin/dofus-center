@@ -1,0 +1,46 @@
+.icons-list-group {
+    .list-group-item {
+        padding-left: 45px;
+
+        &.list-group-item-dimmed {
+            opacity: 0.5;
+        }
+
+        img {
+            position: absolute;
+            top: 2px;
+            left: 5px;
+            height: 35px;
+            width: auto;
+        }
+
+        .btn-hover {
+            display: none;
+            font-size: 9px;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .progress {
+            width: 60%;
+            height: 1.4rem;
+        }
+
+        &:hover {
+            .btn-hover {
+                display: inline-block;
+            }
+        }
+    }
+
+    &.list-group-lg {
+        .list-group-item {
+            height: 5rem;
+            padding-left: 55px;
+
+            img {
+                height: 45px;
+            }
+        }
+    }
+}

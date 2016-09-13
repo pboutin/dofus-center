@@ -1,23 +1,55 @@
-<h1>Crafting {{model.name}}</h1>
+<div class="container">
+    <h1>{{t 'crafting.workbench_for'}} {{model.name}}</h1>
 
-{{#link-to 'prepare' model.id}}
-    Edit crafting list
-{{/link-to}}
+    {{#link-to 'prepare' model.id class="btn btn-info"}}
+        {{t 'crafting.back_to_project'}}
+    {{/link-to}}
 
-<h3>Item list</h3>
+    <div class="row">
+        <div class="col-lg-4">
+            <h3>{{t 'crafting.your_project'}}</h3>
 
-<ul>
-    {{#each model.wishlistItems as |quantifiableItem|}}
-        <li>{{quantifiableItem.item.name}} - {{quantifiableItem.target}}</li>
-    {{/each}}
-</ul>
+            <ul class="list-group icons-list-group">
+                {{#each model.wishlistItems as |quantifiableItem|}}
+                    <li class="list-group-item">
+                    <span class="badge">
+                        &times; {{quantifiableItem.target}}
+                    </span>
+                        <img src={{quantifiableItem.item.image}}>
+                        {{quantifiableItem.item.name}}
+                    </li>
+                {{else}}
+                    <li class="list-group-item list-group-item-warning">
+                        {{t 'prepare.empty_project'}}
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col-lg-8">
+            <h3>{{t 'crafting.ressources'}}</h3>
 
-<h3>Ressources list</h3>
+            <ul class="list-group list-group-lg icons-list-group">
+                {{#each model.ressourcesItems as |quantifiableItem|}}
+                    <li class="list-group-item">
+                        <img src={{quantifiableItem.item.image}}>
+                        {{quantifiableItem.item.name}}
+                        {{quantity-editor quantity=quantifiableItem.quantity target=quantifiableItem.target}}
 
-<ul>
-    {{#each model.ressourcesItems as |quantifiableItem|}}
-        <li>{{quantifiableItem.item.name}} - {{quantity-editor quantity=quantifiableItem.quantity target=quantifiableItem.target}}</li>
-    {{/each}}
-</ul>
+                        <div class="progress">
+                            <div class="progress-bar {{if quantifiableItem.isComplete 'progress-bar-success' 'progress-bar-warning'}}"
+                                 style={{quantifiableItem.progressWidthStyle}}>
+                                <span class="sr-only">{{quantifiableItem.progress}}%</span>
+                            </div>
+                        </div>
+                    </li>
+                {{else}}
+                    <li class="list-group-item list-group-item-warning">
+                        {{t 'prepare.empty_project'}}
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
 
-{{outlet}}
+    {{outlet}}
+</div>

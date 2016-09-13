@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+    classNames: ['quantity-editor'],
+
     workbench: Ember.inject.service('workbench'),
 
     quantity: 0,
@@ -20,10 +22,18 @@ export default Ember.Component.extend({
         },
         maximise() {
             this.set('quantity', this.get('target'));
+        },
+        clear() {
+            this.set('quantity', 0);
         }
     },
 
     quantityObserver: Ember.observer('quantity', function() {
         this.get('workbench').save();
+    }),
+
+    missing: Ember.computed('quantity', 'target', function() {
+        let missing = this.get('target') - this.get('quantity');
+        return missing > 0 ? missing : 0;
     })
 });

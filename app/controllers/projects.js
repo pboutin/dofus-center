@@ -18,6 +18,9 @@ export default Ember.Controller.extend({
             workbench.save();
             
             this.set('newProject', null);
+        },
+        cancel() {
+            this.set('newProject', null);
         }
     }
 });

@@ -1,15 +1,45 @@
-<h1>Projects</h1>
+<div class="container">
+    <h1>{{t 'projects.title'}}</h1>
 
-{{#unless newProject}}
-    <button {{action 'create'}}>New project</button>
-{{else}}
-    {{input value=newProject.name}}
-    <button {{action 'save'}}>Save</button>
-{{/unless}}
+    {{#unless newProject}}
+        <button {{action 'create'}} class="btn btn-primary">
+            {{t 'projects.new'}}
+        </button>
+    {{else}}
+        <div class="form-inline">
+            <div class="form-group">
+                {{input value=newProject.name
+                    placeholder=(t 'projects.name')
+                    class="form-control"}}
+            </div>
+            <button {{action 'save'}} class="btn btn-success btn-sm">
+                {{t 'projects.save'}}
+            </button>
+            <button {{action 'cancel'}} class="btn btn-default btn-sm">
+                {{t 'projects.cancel'}}
+            </button>
+        </div>
+    {{/unless}}
+</div>
 
+<hr>
 
 {{#each workbench.projects as |project|}}
-    <p>{{project.name}} - {{#link-to 'prepare' project.id}}{{project.id}}{{/link-to}}</p>
+    {{#link-to 'prepare' project.id class="project"}}
+        <div class="container">
+            <div class="content">
+                <h3>{{project.name}}</h3>
+                <code>{{project.id}}</code>
+            </div>
+            <div class="thumbnails">
+                {{#each project.wishlistItems as |wishlistItemQuantifiable|}}
+                    <img class="image-item"
+                         src={{wishlistItemQuantifiable.item.image}}
+                                 alt={{wishlistItemQuantifiable.item.name}}>
+                {{/each}}
+            </div>
+        </div>
+    {{/link-to}}
 {{/each}}
 
 {{outlet}}
