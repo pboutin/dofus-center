@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'dofus-workbench',
     environment: environment,
-    baseURL: '/',
+    baseURL: '/dofus-workbench/',
     locationType: 'auto',
     dofusDataRepository: 'https://raw.githubusercontent.com/pboutin/dofus-data/master/',
     EmberENV: {

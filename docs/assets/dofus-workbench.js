@@ -2456,7 +2456,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("dofus-workbench/app")["default"].create({"name":"dofus-workbench","version":"0.0.0+acb6d7cd"});
+  require("dofus-workbench/app")["default"].create({"name":"dofus-workbench","version":"0.0.0+190f4f0d"});
 }
 
 /* jshint ignore:end */
