@@ -57,6 +57,7 @@ define('dofus-workbench/components/quantity-editor', ['exports', 'ember'], funct
 
         quantity: 0,
         target: 0,
+        editableQuantity: 0,
 
         actions: {
             incrementBy: function incrementBy(quantity) {
@@ -78,8 +79,20 @@ define('dofus-workbench/components/quantity-editor', ['exports', 'ember'], funct
             }
         },
 
+        didInsertElement: function didInsertElement() {
+            this.set('editableQuantity', this.get('quantity'));
+        },
+
         quantityObserver: _ember['default'].observer('quantity', function () {
+            this.set('editableQuantity', this.get('quantity'));
             this.get('workbench').save();
+        }),
+
+        editableQuantityObserver: _ember['default'].observer('editableQuantity', function () {
+            var editableQuantity = this.get('editableQuantity');
+            if ( ! isNaN(editableQuantity)) {
+                this.set('quantity', parseInt(editableQuantity, 10));
+            }
         }),
 
         missing: _ember['default'].computed('quantity', 'target', function () {
@@ -1018,7 +1031,7 @@ define("dofus-workbench/templates/components/quantity-editor", ["exports"], func
         morphs[8] = dom.createElementMorph(element9);
         return morphs;
       },
-      statements: [["inline", "input", [], ["value", ["subexpr", "@mut", [["get", "quantity", ["loc", [null, [2, 18], [2, 26]]]]], [], []], "type", "number", "class", "form-control"], ["loc", [null, [2, 4], [2, 63]]]], ["content", "target", ["loc", [null, [2, 66], [2, 76]]]], ["block", "if", [["get", "missing", ["loc", [null, [3, 10], [3, 17]]]]], [], 0, null, ["loc", [null, [3, 4], [5, 11]]]], ["element", "action", ["incrementBy", 1], [], ["loc", [null, [9, 43], [9, 69]]]], ["element", "action", ["decrementBy", 1], [], ["loc", [null, [10, 43], [10, 69]]]], ["element", "action", ["incrementBy", 10], [], ["loc", [null, [13, 43], [13, 70]]]], ["element", "action", ["decrementBy", 10], [], ["loc", [null, [14, 43], [14, 70]]]], ["element", "action", ["maximise"], [], ["loc", [null, [17, 43], [17, 64]]]], ["element", "action", ["clear"], [], ["loc", [null, [18, 43], [18, 61]]]]],
+      statements: [["inline", "input", [], ["value", ["subexpr", "@mut", [["get", "editableQuantity", ["loc", [null, [2, 18], [2, 34]]]]], [], []], "type", "number", "class", "form-control"], ["loc", [null, [2, 4], [2, 71]]]], ["content", "target", ["loc", [null, [2, 74], [2, 84]]]], ["block", "if", [["get", "missing", ["loc", [null, [3, 10], [3, 17]]]]], [], 0, null, ["loc", [null, [3, 4], [5, 11]]]], ["element", "action", ["incrementBy", 1], [], ["loc", [null, [9, 43], [9, 69]]]], ["element", "action", ["decrementBy", 1], [], ["loc", [null, [10, 43], [10, 69]]]], ["element", "action", ["incrementBy", 10], [], ["loc", [null, [13, 43], [13, 70]]]], ["element", "action", ["decrementBy", 10], [], ["loc", [null, [14, 43], [14, 70]]]], ["element", "action", ["maximise"], [], ["loc", [null, [17, 43], [17, 64]]]], ["element", "action", ["clear"], [], ["loc", [null, [18, 43], [18, 61]]]]],
       locals: [],
       templates: [child0]
     };

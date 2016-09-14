@@ -7,6 +7,7 @@ export default Ember.Component.extend({
 
     quantity: 0,
     target: 0,
+    editableQuantity: 0,
 
     actions: {
         incrementBy(quantity) {
@@ -28,8 +29,20 @@ export default Ember.Component.extend({
         }
     },
 
+    didInsertElement() {
+        this.set('editableQuantity', this.get('quantity'));
+    },
+
     quantityObserver: Ember.observer('quantity', function() {
+        this.set('editableQuantity', this.get('quantity'));
         this.get('workbench').save();
+    }),
+
+    editableQuantityObserver: Ember.observer('editableQuantity', function() {
+        let editableQuantity = this.get('editableQuantity');
+        if ( ! isNaN(editableQuantity)) {
+            this.set('quantity', parseInt(editableQuantity, 10));
+        }
     }),
 
     missing: Ember.computed('quantity', 'target', function() {
