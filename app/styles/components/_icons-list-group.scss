@@ -6,6 +6,10 @@
             opacity: 0.5;
         }
 
+        &.list-group-item-craftable {
+            background-color: lighten($brand-primary, 40%);
+        }
+
         img {
             position: absolute;
             top: 2px;
@@ -14,11 +18,16 @@
             width: auto;
         }
 
-        .btn-hover {
+        .btn-remove {
             display: none;
-            font-size: 9px;
+            float: right;
+            margin-right: 10px;
+        }
+
+        .btn-craft, .btn-remove {
             padding-top: 0;
             padding-bottom: 0;
+            font-size: 9px;
         }
 
         .progress {
@@ -27,7 +36,7 @@
         }
 
         &:hover {
-            .btn-hover {
+            .btn-remove {
                 display: inline-block;
             }
         }

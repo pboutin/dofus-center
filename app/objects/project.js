@@ -17,18 +17,21 @@ export default Ember.Object.extend({
     initRessourcesItems() {
         let self = this;
         let wishlistItems = this.get('wishlistItems');
+        let rawWishlist = this.get('wishlist');
         let dofusData = this.get('dofusData');
         let stock = this.get('stock');
 
         let ressourcesItems = _.values(_.reduce(wishlistItems, function(ressourcesMap, quantifiableItem) {
             _.mapKeys(quantifiableItem.get('item.recipe'), function(ressourceQuantity, ressourceItemId) {
-                if ( ! _.has(ressourcesMap, ressourceItemId)) {
-                    let quantifiable = Ember.getOwner(self).lookup('object:quantifiable');
-                    quantifiable.set('item', dofusData.getItem(ressourceItemId));
-                    quantifiable.set('quantity', _.get(stock, ressourceItemId, 0));
-                    ressourcesMap[ressourceItemId] = quantifiable;
+                if ( ! _.has(rawWishlist, ressourceItemId)) {
+                    if ( ! _.has(ressourcesMap, ressourceItemId)) {
+                        let quantifiable = Ember.getOwner(self).lookup('object:quantifiable');
+                        quantifiable.set('item', dofusData.getItem(ressourceItemId));
+                        quantifiable.set('quantity', _.get(stock, ressourceItemId, 0));
+                        ressourcesMap[ressourceItemId] = quantifiable;
+                    }
+                    ressourcesMap[ressourceItemId].increaseTargetOf(parseInt(ressourceQuantity, 10) * quantifiableItem.get('target'));
                 }
-                ressourcesMap[ressourceItemId].increaseTargetOf(parseInt(ressourceQuantity, 10) * quantifiableItem.get('target'));
             });
             return ressourcesMap;
         }, {}));
@@ -46,7 +49,9 @@ export default Ember.Object.extend({
         }));
     },
 
-    addToWishlist(item) {
+    addToWishlist(item, quantity) {
+        quantity = quantity || 1;
+
         let itemId = item.get('id');
         let wishlist = this.get('wishlist');
 
@@ -56,7 +61,7 @@ export default Ember.Object.extend({
             wishlist[itemId] = quantifiable;
         }
 
-        wishlist[itemId].increaseTargetOf(1);
+        wishlist[itemId].increaseTargetOf(quantity);
         this.notifyPropertyChange('wishlist');
     },
 
