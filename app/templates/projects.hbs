@@ -5,6 +5,9 @@
         <button {{action 'create'}} class="btn btn-primary">
             {{t 'projects.new'}}
         </button>
+        <button class="btn btn-info" {{action 'import'}}>
+            {{t 'projects.import'}}
+        </button>
     {{else}}
         <div class="form-inline">
             <div class="form-group">
@@ -24,12 +27,33 @@
 
 <hr>
 
+{{#if serializedProject}}
+    <div class="container">
+        <h3>{{serializedProject.name}}</h3>
+        <div class="form-group">
+            <textarea rows="10" class="form-control">{{serializedProject.data}}</textarea>
+        </div>
+        <button class="btn btn-info btn-sm" {{action 'closeSerializedProject'}}>
+            {{t 'projects.close'}}
+        </button>
+    </div>
+    <hr>
+{{/if}}
+
 {{#each workbench.projects as |project|}}
-    {{#link-to 'prepare' project.id class="project"}}
+    <div class="project">
         <div class="container">
             <div class="content">
                 <h3>{{project.name}}</h3>
-                <code>{{project.id}}</code>
+                {{#link-to 'prepare' project.id class="btn btn-sm btn-primary"}}
+                    {{t 'projects.open'}}
+                {{/link-to}}
+                <button class="btn btn-sm btn-info" {{action 'export' project}}>
+                    {{t 'projects.export'}}
+                </button>
+                <button class="btn btn-sm btn-danger" {{action 'delete' project}}>
+                    {{t 'projects.delete'}}
+                </button>
             </div>
             <div class="thumbnails">
                 {{#each project.wishlistItems as |wishlistItemQuantifiable|}}
@@ -39,7 +63,7 @@
                 {{/each}}
             </div>
         </div>
-    {{/link-to}}
+    </div>
 {{/each}}
 
 {{outlet}}

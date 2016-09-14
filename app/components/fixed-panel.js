@@ -10,7 +10,7 @@ export default Ember.Component.extend({
                 top: $affix.offset().top - 20
             }
         }).on('affix.bs.affix', function() {
-            const $this = $(this);
+            const $this = Ember.$(this);
             $this.width($this.parent().width());
         });
     }

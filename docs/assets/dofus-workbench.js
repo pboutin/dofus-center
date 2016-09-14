@@ -43,7 +43,7 @@ define('dofus-workbench/components/fixed-panel', ['exports', 'ember'], function 
                     top: $affix.offset().top - 20
                 }
             }).on('affix.bs.affix', function () {
-                var $this = $(this);
+                var $this = _ember['default'].$(this);
                 $this.width($this.parent().width());
             });
         }
@@ -79,8 +79,9 @@ define('dofus-workbench/components/quantity-editor', ['exports', 'ember'], funct
             }
         },
 
-        didInsertElement: function didInsertElement() {
+        init: function init() {
             this.set('editableQuantity', this.get('quantity'));
+            this._super.apply(this, arguments);
         },
 
         quantityObserver: _ember['default'].observer('quantity', function () {
@@ -90,7 +91,7 @@ define('dofus-workbench/components/quantity-editor', ['exports', 'ember'], funct
 
         editableQuantityObserver: _ember['default'].observer('editableQuantity', function () {
             var editableQuantity = this.get('editableQuantity');
-            if ( ! isNaN(editableQuantity)) {
+            if (!isNaN(editableQuantity)) {
                 this.set('quantity', parseInt(editableQuantity, 10));
             }
         }),
@@ -145,8 +146,10 @@ define('dofus-workbench/controllers/prepare', ['exports', 'ember'], function (ex
 define('dofus-workbench/controllers/projects', ['exports', 'ember'], function (exports, _ember) {
     exports['default'] = _ember['default'].Controller.extend({
         workbench: _ember['default'].inject.service('workbench'),
+        i18n: _ember['default'].inject.service('i18n'),
 
         newProject: null,
+        serializedProject: null,
 
         actions: {
             create: function create() {
@@ -164,6 +167,38 @@ define('dofus-workbench/controllers/projects', ['exports', 'ember'], function (e
             },
             cancel: function cancel() {
                 this.set('newProject', null);
+            },
+            'delete': function _delete(project) {
+                var confirmation = this.get('i18n').t('projects.delete_confirmation');
+                if (confirm(confirmation + ' : "' + project.get('name') + '"')) {
+                    var workbench = this.get('workbench');
+                    workbench.get('projects').removeObject(project);
+                    workbench.save();
+                }
+            },
+            'export': function _export(project) {
+                this.set('serializedProject', {
+                    name: project.get('name'),
+                    data: btoa(JSON.stringify(project.serialize()))
+                });
+            },
+            closeSerializedProject: function closeSerializedProject() {
+                this.set('serializedProject', null);
+            },
+            'import': function _import() {
+                var serializedData = prompt(this.get('i18n').t('projects.import_prompt'));
+
+                if (serializedData) {
+                    var workbench = this.get('workbench');
+
+                    try {
+                        var rawProject = JSON.parse(atob(serializedData));
+                        workbench.pushRawProject(rawProject);
+                        workbench.save();
+                    } catch (e) {
+                        console.log('IMPORT ERROR : ', e);
+                    }
+                }
             }
         }
     });
@@ -407,7 +442,14 @@ define('dofus-workbench/locales/fr/translations', ['exports'], function (exports
             'new': "Créer un nouveau projet",
             'save': "Sauvegarder",
             'cancel': "Cancel",
-            'name': "Nom du projet"
+            'name': "Nom du projet",
+            'import': "Importer un projet",
+            'close': "Fermer",
+            'open': "Ouvrir",
+            'export': "Exporter",
+            'delete': "Supprimer",
+            'delete_confirmation': "Êtes-vous sûr de vouloir supprimer le projet",
+            'import_prompt': "Veuillez coller le texte du projet."
         },
         'prepare': {
             'manage': "Gestion du projet",
@@ -500,7 +542,7 @@ define('dofus-workbench/objects/project', ['exports', 'ember', 'lodash/lodash'],
         initId: function initId() {
             this.set('id', 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 var r = Math.random() * 16 | 0,
-                    v = c == 'x' ? r : r & 0x3 | 0x8;
+                    v = c === 'x' ? r : r & 0x3 | 0x8;
                 return v.toString(16);
             }));
         },
@@ -712,20 +754,24 @@ define('dofus-workbench/services/workbench', ['exports', 'ember', 'lodash/lodash
         projects: _ember['default'].A(),
 
         initialize: function initialize() {
-            var projects = this.get('projects');
             var self = this;
 
             return new _ember['default'].RSVP.Promise(function (resolve) {
                 if (localStorage.projects) {
                     var rawProjects = JSON.parse(localStorage.projects);
-                    _lodashLodash['default'].forEach(rawProjects, function (rawProject) {
-                        var project = _ember['default'].getOwner(self).lookup('object:project');
-                        project.deserialize(rawProject);
-                        projects.pushObject(project);
-                    });
+                    _lodashLodash['default'].forEach(rawProjects, self.pushRawProject.bind(self));
                 }
                 resolve();
             });
+        },
+
+        pushRawProject: function pushRawProject(rawProject) {
+            var project = _ember['default'].getOwner(this).lookup('object:project');
+            project.deserialize(rawProject);
+
+            if (!this.getProject(project.get('id'))) {
+                this.get('projects').pushObject(project);
+            }
         },
 
         getProject: function getProject(id) {
@@ -756,7 +802,7 @@ define("dofus-workbench/templates/application", ["exports"], function (exports) 
             "column": 0
           },
           "end": {
-            "line": 8,
+            "line": 10,
             "column": 9
           }
         },
@@ -777,11 +823,15 @@ define("dofus-workbench/templates/application", ["exports"], function (exports) 
         var el2 = dom.createTextNode("\n");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
+        var el1 = dom.createTextNode("\n\n");
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("hr");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("footer");
         dom.setAttribute(el1, "class", "container text-center");
@@ -800,10 +850,10 @@ define("dofus-workbench/templates/application", ["exports"], function (exports) 
         var morphs = new Array(3);
         morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]), 1, 1);
         morphs[1] = dom.createMorphAt(fragment, 2, 2, contextualElement);
-        morphs[2] = dom.createMorphAt(dom.childAt(fragment, [4, 1]), 0, 0);
+        morphs[2] = dom.createMorphAt(dom.childAt(fragment, [6, 1]), 0, 0);
         return morphs;
       },
-      statements: [["inline", "t", ["app.data_warning"], [], ["loc", [null, [2, 4], [2, 28]]]], ["content", "outlet", ["loc", [null, [4, 0], [4, 10]]]], ["inline", "t", ["app.copyrights"], [], ["loc", [null, [7, 7], [7, 29]]]]],
+      statements: [["inline", "t", ["app.data_warning"], [], ["loc", [null, [2, 4], [2, 28]]]], ["content", "outlet", ["loc", [null, [5, 0], [5, 10]]]], ["inline", "t", ["app.copyrights"], [], ["loc", [null, [9, 7], [9, 29]]]]],
       locals: [],
       templates: []
     };
@@ -2064,7 +2114,7 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
               "column": 4
             },
             "end": {
-              "line": 8,
+              "line": 11,
               "column": 4
             }
           },
@@ -2087,18 +2137,32 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
           var el2 = dom.createTextNode("\n        ");
           dom.appendChild(el1, el2);
           dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n        ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("button");
+          dom.setAttribute(el1, "class", "btn btn-info");
+          var el2 = dom.createTextNode("\n            ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
           var el1 = dom.createTextNode("\n");
           dom.appendChild(el0, el1);
           return el0;
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var element6 = dom.childAt(fragment, [1]);
-          var morphs = new Array(2);
-          morphs[0] = dom.createElementMorph(element6);
-          morphs[1] = dom.createMorphAt(element6, 1, 1);
+          var element10 = dom.childAt(fragment, [1]);
+          var element11 = dom.childAt(fragment, [3]);
+          var morphs = new Array(4);
+          morphs[0] = dom.createElementMorph(element10);
+          morphs[1] = dom.createMorphAt(element10, 1, 1);
+          morphs[2] = dom.createElementMorph(element11);
+          morphs[3] = dom.createMorphAt(element11, 1, 1);
           return morphs;
         },
-        statements: [["element", "action", ["create"], [], ["loc", [null, [5, 16], [5, 35]]]], ["inline", "t", ["projects.new"], [], ["loc", [null, [6, 12], [6, 32]]]]],
+        statements: [["element", "action", ["create"], [], ["loc", [null, [5, 16], [5, 35]]]], ["inline", "t", ["projects.new"], [], ["loc", [null, [6, 12], [6, 32]]]], ["element", "action", ["import"], [], ["loc", [null, [8, 37], [8, 56]]]], ["inline", "t", ["projects.import"], [], ["loc", [null, [9, 12], [9, 35]]]]],
         locals: [],
         templates: []
       };
@@ -2111,11 +2175,11 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
           "loc": {
             "source": null,
             "start": {
-              "line": 8,
+              "line": 11,
               "column": 4
             },
             "end": {
-              "line": 22,
+              "line": 25,
               "column": 4
             }
           },
@@ -2172,69 +2236,110 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
           return el0;
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var element3 = dom.childAt(fragment, [1]);
-          var element4 = dom.childAt(element3, [3]);
-          var element5 = dom.childAt(element3, [5]);
+          var element7 = dom.childAt(fragment, [1]);
+          var element8 = dom.childAt(element7, [3]);
+          var element9 = dom.childAt(element7, [5]);
           var morphs = new Array(5);
-          morphs[0] = dom.createMorphAt(dom.childAt(element3, [1]), 1, 1);
-          morphs[1] = dom.createElementMorph(element4);
-          morphs[2] = dom.createMorphAt(element4, 1, 1);
-          morphs[3] = dom.createElementMorph(element5);
-          morphs[4] = dom.createMorphAt(element5, 1, 1);
+          morphs[0] = dom.createMorphAt(dom.childAt(element7, [1]), 1, 1);
+          morphs[1] = dom.createElementMorph(element8);
+          morphs[2] = dom.createMorphAt(element8, 1, 1);
+          morphs[3] = dom.createElementMorph(element9);
+          morphs[4] = dom.createMorphAt(element9, 1, 1);
           return morphs;
         },
-        statements: [["inline", "input", [], ["value", ["subexpr", "@mut", [["get", "newProject.name", ["loc", [null, [11, 30], [11, 45]]]]], [], []], "placeholder", ["subexpr", "t", ["projects.name"], [], ["loc", [null, [12, 32], [12, 51]]]], "class", "form-control"], ["loc", [null, [11, 16], [13, 42]]]], ["element", "action", ["save"], [], ["loc", [null, [15, 20], [15, 37]]]], ["inline", "t", ["projects.save"], [], ["loc", [null, [16, 16], [16, 37]]]], ["element", "action", ["cancel"], [], ["loc", [null, [18, 20], [18, 39]]]], ["inline", "t", ["projects.cancel"], [], ["loc", [null, [19, 16], [19, 39]]]]],
+        statements: [["inline", "input", [], ["value", ["subexpr", "@mut", [["get", "newProject.name", ["loc", [null, [14, 30], [14, 45]]]]], [], []], "placeholder", ["subexpr", "t", ["projects.name"], [], ["loc", [null, [15, 32], [15, 51]]]], "class", "form-control"], ["loc", [null, [14, 16], [16, 42]]]], ["element", "action", ["save"], [], ["loc", [null, [18, 20], [18, 37]]]], ["inline", "t", ["projects.save"], [], ["loc", [null, [19, 16], [19, 37]]]], ["element", "action", ["cancel"], [], ["loc", [null, [21, 20], [21, 39]]]], ["inline", "t", ["projects.cancel"], [], ["loc", [null, [22, 16], [22, 39]]]]],
         locals: [],
         templates: []
       };
     })();
     var child2 = (function () {
+      return {
+        meta: {
+          "fragmentReason": false,
+          "revision": "Ember@2.5.1",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 30,
+              "column": 0
+            },
+            "end": {
+              "line": 41,
+              "column": 0
+            }
+          },
+          "moduleName": "dofus-workbench/templates/projects.hbs"
+        },
+        isEmpty: false,
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("    ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "container");
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("h3");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "form-group");
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("textarea");
+          dom.setAttribute(el3, "rows", "10");
+          dom.setAttribute(el3, "class", "form-control");
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n        ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("button");
+          dom.setAttribute(el2, "class", "btn btn-info btn-sm");
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n        ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n    ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("hr");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element5 = dom.childAt(fragment, [1]);
+          var element6 = dom.childAt(element5, [5]);
+          var morphs = new Array(4);
+          morphs[0] = dom.createMorphAt(dom.childAt(element5, [1]), 0, 0);
+          morphs[1] = dom.createMorphAt(dom.childAt(element5, [3, 1]), 0, 0);
+          morphs[2] = dom.createElementMorph(element6);
+          morphs[3] = dom.createMorphAt(element6, 1, 1);
+          return morphs;
+        },
+        statements: [["content", "serializedProject.name", ["loc", [null, [32, 12], [32, 38]]]], ["content", "serializedProject.data", ["loc", [null, [34, 53], [34, 79]]]], ["element", "action", ["closeSerializedProject"], [], ["loc", [null, [36, 44], [36, 79]]]], ["inline", "t", ["projects.close"], [], ["loc", [null, [37, 12], [37, 34]]]]],
+        locals: [],
+        templates: []
+      };
+    })();
+    var child3 = (function () {
       var child0 = (function () {
-        var child0 = (function () {
-          return {
-            meta: {
-              "fragmentReason": false,
-              "revision": "Ember@2.5.1",
-              "loc": {
-                "source": null,
-                "start": {
-                  "line": 35,
-                  "column": 16
-                },
-                "end": {
-                  "line": 39,
-                  "column": 16
-                }
-              },
-              "moduleName": "dofus-workbench/templates/projects.hbs"
-            },
-            isEmpty: false,
-            arity: 1,
-            cachedFragment: null,
-            hasRendered: false,
-            buildFragment: function buildFragment(dom) {
-              var el0 = dom.createDocumentFragment();
-              var el1 = dom.createTextNode("                    ");
-              dom.appendChild(el0, el1);
-              var el1 = dom.createElement("img");
-              dom.setAttribute(el1, "class", "image-item");
-              dom.appendChild(el0, el1);
-              var el1 = dom.createTextNode("\n");
-              dom.appendChild(el0, el1);
-              return el0;
-            },
-            buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-              var element0 = dom.childAt(fragment, [1]);
-              var morphs = new Array(2);
-              morphs[0] = dom.createAttrMorph(element0, 'src');
-              morphs[1] = dom.createAttrMorph(element0, 'alt');
-              return morphs;
-            },
-            statements: [["attribute", "src", ["get", "wishlistItemQuantifiable.item.image", ["loc", [null, [37, 31], [37, 66]]]]], ["attribute", "alt", ["get", "wishlistItemQuantifiable.item.name", ["loc", [null, [38, 39], [38, 73]]]]]],
-            locals: ["wishlistItemQuantifiable"],
-            templates: []
-          };
-        })();
         return {
           meta: {
             "fragmentReason": false,
@@ -2242,12 +2347,12 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
             "loc": {
               "source": null,
               "start": {
-                "line": 28,
-                "column": 4
+                "line": 48,
+                "column": 16
               },
               "end": {
-                "line": 42,
-                "column": 4
+                "line": 50,
+                "column": 16
               }
             },
             "moduleName": "dofus-workbench/templates/projects.hbs"
@@ -2258,59 +2363,67 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
           hasRendered: false,
           buildFragment: function buildFragment(dom) {
             var el0 = dom.createDocumentFragment();
-            var el1 = dom.createTextNode("        ");
+            var el1 = dom.createTextNode("                    ");
             dom.appendChild(el0, el1);
-            var el1 = dom.createElement("div");
-            dom.setAttribute(el1, "class", "container");
-            var el2 = dom.createTextNode("\n            ");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createElement("div");
-            dom.setAttribute(el2, "class", "content");
-            var el3 = dom.createTextNode("\n                ");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createElement("h3");
-            var el4 = dom.createComment("");
-            dom.appendChild(el3, el4);
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode("\n                ");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createElement("code");
-            var el4 = dom.createComment("");
-            dom.appendChild(el3, el4);
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode("\n            ");
-            dom.appendChild(el2, el3);
-            dom.appendChild(el1, el2);
-            var el2 = dom.createTextNode("\n            ");
-            dom.appendChild(el1, el2);
-            var el2 = dom.createElement("div");
-            dom.setAttribute(el2, "class", "thumbnails");
-            var el3 = dom.createTextNode("\n");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createComment("");
-            dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode("            ");
-            dom.appendChild(el2, el3);
-            dom.appendChild(el1, el2);
-            var el2 = dom.createTextNode("\n        ");
-            dom.appendChild(el1, el2);
+            var el1 = dom.createComment("");
             dom.appendChild(el0, el1);
             var el1 = dom.createTextNode("\n");
             dom.appendChild(el0, el1);
             return el0;
           },
           buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-            var element1 = dom.childAt(fragment, [1]);
-            var element2 = dom.childAt(element1, [1]);
-            var morphs = new Array(3);
-            morphs[0] = dom.createMorphAt(dom.childAt(element2, [1]), 0, 0);
-            morphs[1] = dom.createMorphAt(dom.childAt(element2, [3]), 0, 0);
-            morphs[2] = dom.createMorphAt(dom.childAt(element1, [3]), 1, 1);
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
             return morphs;
           },
-          statements: [["content", "project.name", ["loc", [null, [31, 20], [31, 36]]]], ["content", "project.id", ["loc", [null, [32, 22], [32, 36]]]], ["block", "each", [["get", "project.wishlistItems", ["loc", [null, [35, 24], [35, 45]]]]], [], 0, null, ["loc", [null, [35, 16], [39, 25]]]]],
+          statements: [["inline", "t", ["projects.open"], [], ["loc", [null, [49, 20], [49, 41]]]]],
           locals: [],
-          templates: [child0]
+          templates: []
+        };
+      })();
+      var child1 = (function () {
+        return {
+          meta: {
+            "fragmentReason": false,
+            "revision": "Ember@2.5.1",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 59,
+                "column": 16
+              },
+              "end": {
+                "line": 63,
+                "column": 16
+              }
+            },
+            "moduleName": "dofus-workbench/templates/projects.hbs"
+          },
+          isEmpty: false,
+          arity: 1,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("                    ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("img");
+            dom.setAttribute(el1, "class", "image-item");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var element0 = dom.childAt(fragment, [1]);
+            var morphs = new Array(2);
+            morphs[0] = dom.createAttrMorph(element0, 'src');
+            morphs[1] = dom.createAttrMorph(element0, 'alt');
+            return morphs;
+          },
+          statements: [["attribute", "src", ["get", "wishlistItemQuantifiable.item.image", ["loc", [null, [61, 31], [61, 66]]]]], ["attribute", "alt", ["get", "wishlistItemQuantifiable.item.name", ["loc", [null, [62, 39], [62, 73]]]]]],
+          locals: ["wishlistItemQuantifiable"],
+          templates: []
         };
       })();
       return {
@@ -2320,11 +2433,11 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
           "loc": {
             "source": null,
             "start": {
-              "line": 27,
+              "line": 43,
               "column": 0
             },
             "end": {
-              "line": 43,
+              "line": 67,
               "column": 0
             }
           },
@@ -2336,20 +2449,92 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
         hasRendered: false,
         buildFragment: function buildFragment(dom) {
           var el0 = dom.createDocumentFragment();
-          var el1 = dom.createComment("");
+          var el1 = dom.createTextNode("    ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "project");
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "container");
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("div");
+          dom.setAttribute(el3, "class", "content");
+          var el4 = dom.createTextNode("\n                ");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createElement("h3");
+          var el5 = dom.createComment("");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("                ");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createElement("button");
+          dom.setAttribute(el4, "class", "btn btn-sm btn-info");
+          var el5 = dom.createTextNode("\n                    ");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createComment("");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createTextNode("\n                ");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n                ");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createElement("button");
+          dom.setAttribute(el4, "class", "btn btn-sm btn-danger");
+          var el5 = dom.createTextNode("\n                    ");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createComment("");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createTextNode("\n                ");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("\n            ");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("div");
+          dom.setAttribute(el3, "class", "thumbnails");
+          var el4 = dom.createTextNode("\n");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("            ");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n        ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
           dom.appendChild(el0, el1);
           return el0;
         },
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-          var morphs = new Array(1);
-          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
-          dom.insertBoundary(fragment, 0);
-          dom.insertBoundary(fragment, null);
+          var element1 = dom.childAt(fragment, [1, 1]);
+          var element2 = dom.childAt(element1, [1]);
+          var element3 = dom.childAt(element2, [5]);
+          var element4 = dom.childAt(element2, [7]);
+          var morphs = new Array(7);
+          morphs[0] = dom.createMorphAt(dom.childAt(element2, [1]), 0, 0);
+          morphs[1] = dom.createMorphAt(element2, 3, 3);
+          morphs[2] = dom.createElementMorph(element3);
+          morphs[3] = dom.createMorphAt(element3, 1, 1);
+          morphs[4] = dom.createElementMorph(element4);
+          morphs[5] = dom.createMorphAt(element4, 1, 1);
+          morphs[6] = dom.createMorphAt(dom.childAt(element1, [3]), 1, 1);
           return morphs;
         },
-        statements: [["block", "link-to", ["prepare", ["get", "project.id", ["loc", [null, [28, 25], [28, 35]]]]], ["class", "project"], 0, null, ["loc", [null, [28, 4], [42, 16]]]]],
+        statements: [["content", "project.name", ["loc", [null, [47, 20], [47, 36]]]], ["block", "link-to", ["prepare", ["get", "project.id", ["loc", [null, [48, 37], [48, 47]]]]], ["class", "btn btn-sm btn-primary"], 0, null, ["loc", [null, [48, 16], [50, 28]]]], ["element", "action", ["export", ["get", "project", ["loc", [null, [51, 70], [51, 77]]]]], [], ["loc", [null, [51, 52], [51, 79]]]], ["inline", "t", ["projects.export"], [], ["loc", [null, [52, 20], [52, 43]]]], ["element", "action", ["delete", ["get", "project", ["loc", [null, [54, 72], [54, 79]]]]], [], ["loc", [null, [54, 54], [54, 81]]]], ["inline", "t", ["projects.delete"], [], ["loc", [null, [55, 20], [55, 43]]]], ["block", "each", [["get", "project.wishlistItems", ["loc", [null, [59, 24], [59, 45]]]]], [], 1, null, ["loc", [null, [59, 16], [63, 25]]]]],
         locals: ["project"],
-        templates: [child0]
+        templates: [child0, child1]
       };
     })();
     return {
@@ -2366,7 +2551,7 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 45,
+            "line": 69,
             "column": 10
           }
         },
@@ -2403,21 +2588,26 @@ define("dofus-workbench/templates/projects", ["exports"], function (exports) {
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element7 = dom.childAt(fragment, [0]);
-        var morphs = new Array(4);
-        morphs[0] = dom.createMorphAt(dom.childAt(element7, [1]), 0, 0);
-        morphs[1] = dom.createMorphAt(element7, 3, 3);
+        var element12 = dom.childAt(fragment, [0]);
+        var morphs = new Array(5);
+        morphs[0] = dom.createMorphAt(dom.childAt(element12, [1]), 0, 0);
+        morphs[1] = dom.createMorphAt(element12, 3, 3);
         morphs[2] = dom.createMorphAt(fragment, 4, 4, contextualElement);
         morphs[3] = dom.createMorphAt(fragment, 6, 6, contextualElement);
+        morphs[4] = dom.createMorphAt(fragment, 8, 8, contextualElement);
         dom.insertBoundary(fragment, null);
         return morphs;
       },
-      statements: [["inline", "t", ["projects.title"], [], ["loc", [null, [2, 8], [2, 30]]]], ["block", "unless", [["get", "newProject", ["loc", [null, [4, 14], [4, 24]]]]], [], 0, 1, ["loc", [null, [4, 4], [22, 15]]]], ["block", "each", [["get", "workbench.projects", ["loc", [null, [27, 8], [27, 26]]]]], [], 2, null, ["loc", [null, [27, 0], [43, 9]]]], ["content", "outlet", ["loc", [null, [45, 0], [45, 10]]]]],
+      statements: [["inline", "t", ["projects.title"], [], ["loc", [null, [2, 8], [2, 30]]]], ["block", "unless", [["get", "newProject", ["loc", [null, [4, 14], [4, 24]]]]], [], 0, 1, ["loc", [null, [4, 4], [25, 15]]]], ["block", "if", [["get", "serializedProject", ["loc", [null, [30, 6], [30, 23]]]]], [], 2, null, ["loc", [null, [30, 0], [41, 7]]]], ["block", "each", [["get", "workbench.projects", ["loc", [null, [43, 8], [43, 26]]]]], [], 3, null, ["loc", [null, [43, 0], [67, 9]]]], ["content", "outlet", ["loc", [null, [69, 0], [69, 10]]]]],
       locals: [],
-      templates: [child0, child1, child2]
+      templates: [child0, child1, child2, child3]
     };
   })());
 });
@@ -2469,7 +2659,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("dofus-workbench/app")["default"].create({"name":"dofus-workbench","version":"0.0.0+190f4f0d"});
+  require("dofus-workbench/app")["default"].create({"name":"dofus-workbench","version":"0.0.0+36e4f624"});
 }
 
 /* jshint ignore:end */

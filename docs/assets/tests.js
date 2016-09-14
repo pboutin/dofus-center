@@ -13,7 +13,7 @@ define('dofus-workbench/tests/components/fixed-panel.jshint', ['exports'], funct
   QUnit.module('JSHint | components/fixed-panel.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'components/fixed-panel.js should pass jshint.\ncomponents/fixed-panel.js: line 13, col 27, \'$\' is not defined.\n\n1 error');
+    assert.ok(true, 'components/fixed-panel.js should pass jshint.');
   });
 });
 define('dofus-workbench/tests/components/quantity-editor.jshint', ['exports'], function (exports) {
@@ -528,7 +528,7 @@ define('dofus-workbench/tests/objects/project.jshint', ['exports'], function (ex
   QUnit.module('JSHint | objects/project.js');
   QUnit.test('should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'objects/project.js should pass jshint.\nobjects/project.js: line 47, col 49, Expected \'===\' and instead saw \'==\'.\n\n1 error');
+    assert.ok(true, 'objects/project.js should pass jshint.');
   });
 });
 define('dofus-workbench/tests/objects/quantifiable.jshint', ['exports'], function (exports) {

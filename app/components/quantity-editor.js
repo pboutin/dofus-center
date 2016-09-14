@@ -29,8 +29,9 @@ export default Ember.Component.extend({
         }
     },
 
-    didInsertElement() {
+    init() {
         this.set('editableQuantity', this.get('quantity'));
+        this._super(...arguments);
     },
 
     quantityObserver: Ember.observer('quantity', function() {

@@ -8,7 +8,14 @@ export default {
         'new': "Créer un nouveau projet",
         'save': "Sauvegarder",
         'cancel': "Cancel",
-        'name': "Nom du projet"
+        'name': "Nom du projet",
+        'import': "Importer un projet",
+        'close': "Fermer",
+        'open': "Ouvrir",
+        'export': "Exporter",
+        'delete': "Supprimer",
+        'delete_confirmation': "Êtes-vous sûr de vouloir supprimer le projet",
+        'import_prompt': "Veuillez coller le texte du projet."
     },
     'prepare': {
         'manage': "Gestion du projet",

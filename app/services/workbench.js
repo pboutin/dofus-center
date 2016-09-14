@@ -5,20 +5,24 @@ export default Ember.Service.extend({
     projects: Ember.A(),
 
     initialize() {
-        let projects = this.get('projects');
         let self = this;
 
         return new Ember.RSVP.Promise(function(resolve) {
             if (localStorage.projects) {
                 let rawProjects = JSON.parse(localStorage.projects);
-                _.forEach(rawProjects, function (rawProject) {
-                    let project = Ember.getOwner(self).lookup('object:project');
-                    project.deserialize(rawProject);
-                    projects.pushObject(project);
-                });
+                _.forEach(rawProjects, self.pushRawProject.bind(self));
             }
             resolve();
         });
+    },
+
+    pushRawProject(rawProject) {
+        let project = Ember.getOwner(this).lookup('object:project');
+        project.deserialize(rawProject);
+
+        if ( ! this.getProject(project.get('id'))) {
+            this.get('projects').pushObject(project);
+        }
     },
 
     getProject(id) {
