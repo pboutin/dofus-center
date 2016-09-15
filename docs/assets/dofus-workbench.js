@@ -647,6 +647,10 @@ define('dofus-workbench/router', ['exports', 'ember', 'dofus-workbench/config/en
     this.route('crafting', { path: '/crafting/:id' });
   });
 
+  Router.reopen({
+    location: 'hash'
+  });
+
   exports['default'] = Router;
 });
 define('dofus-workbench/routes/crafting', ['exports', 'ember'], function (exports, _ember) {
@@ -2670,7 +2674,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("dofus-workbench/app")["default"].create({"name":"dofus-workbench","version":"0.0.0+36e4f624"});
+  require("dofus-workbench/app")["default"].create({"name":"dofus-workbench","version":"0.0.0+5b2bf915"});
 }
 
 /* jshint ignore:end */

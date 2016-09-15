@@ -11,4 +11,8 @@ Router.map(function() {
   this.route('crafting', {path: '/crafting/:id'});
 });
 
+Router.reopen({
+  location: 'hash'
+});
+
 export default Router;
