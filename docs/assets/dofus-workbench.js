@@ -601,6 +601,8 @@ define('dofus-workbench/objects/project', ['exports', 'ember', 'lodash/lodash'],
                 }, {});
             }
 
+            this.set('stock', stock);
+
             return {
                 id: this.get('id'),
                 name: this.get('name'),

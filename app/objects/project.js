@@ -103,6 +103,8 @@ export default Ember.Object.extend({
             }, {});
         }
 
+        this.set('stock', stock);
+
         return {
             id: this.get('id'),
             name: this.get('name'),
