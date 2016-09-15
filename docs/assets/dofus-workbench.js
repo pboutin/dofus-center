@@ -1160,15 +1160,15 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
             dom.appendChild(el0, el1);
             var el1 = dom.createElement("li");
             dom.setAttribute(el1, "class", "list-group-item");
-            var el2 = dom.createTextNode("\n                    ");
+            var el2 = dom.createTextNode("\n                            ");
             dom.appendChild(el1, el2);
             var el2 = dom.createElement("span");
             dom.setAttribute(el2, "class", "badge");
-            var el3 = dom.createTextNode("\n                        × ");
+            var el3 = dom.createTextNode("\n                                × ");
             dom.appendChild(el2, el3);
             var el3 = dom.createComment("");
             dom.appendChild(el2, el3);
-            var el3 = dom.createTextNode("\n                    ");
+            var el3 = dom.createTextNode("\n                            ");
             dom.appendChild(el2, el3);
             dom.appendChild(el1, el2);
             var el2 = dom.createTextNode("\n                            ");
@@ -1195,7 +1195,7 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
             morphs[2] = dom.createMorphAt(element4, 5, 5);
             return morphs;
           },
-          statements: [["content", "quantifiableItem.target", ["loc", [null, [17, 32], [17, 59]]]], ["attribute", "src", ["get", "quantifiableItem.item.image", ["loc", [null, [19, 39], [19, 66]]]]], ["content", "quantifiableItem.item.name", ["loc", [null, [20, 28], [20, 58]]]]],
+          statements: [["content", "quantifiableItem.target", ["loc", [null, [17, 40], [17, 67]]]], ["attribute", "src", ["get", "quantifiableItem.item.image", ["loc", [null, [19, 39], [19, 66]]]]], ["content", "quantifiableItem.item.name", ["loc", [null, [20, 28], [20, 58]]]]],
           locals: ["quantifiableItem"],
           templates: []
         };
@@ -1313,11 +1313,11 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
             "loc": {
               "source": null,
               "start": {
-                "line": 38,
+                "line": 39,
                 "column": 24
               },
               "end": {
-                "line": 42,
+                "line": 43,
                 "column": 24
               }
             },
@@ -1351,7 +1351,7 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
             morphs[1] = dom.createMorphAt(element0, 1, 1);
             return morphs;
           },
-          statements: [["element", "action", ["sendToWorkbench", ["get", "quantifiableItem", ["loc", [null, [39, 104], [39, 120]]]]], [], ["loc", [null, [39, 77], [39, 122]]]], ["inline", "t", ["crafting.send_to_workbench"], [], ["loc", [null, [40, 32], [40, 66]]]]],
+          statements: [["element", "action", ["sendToWorkbench", ["get", "quantifiableItem", ["loc", [null, [40, 104], [40, 120]]]]], [], ["loc", [null, [40, 77], [40, 122]]]], ["inline", "t", ["crafting.send_to_workbench"], [], ["loc", [null, [41, 32], [41, 66]]]]],
           locals: [],
           templates: []
         };
@@ -1367,7 +1367,7 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
               "column": 16
             },
             "end": {
-              "line": 52,
+              "line": 53,
               "column": 16
             }
           },
@@ -1389,6 +1389,16 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
           var el2 = dom.createTextNode("\n                        ");
           dom.appendChild(el1, el2);
           var el2 = dom.createComment("");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n                        ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("em");
+          var el3 = dom.createTextNode("(");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode(")");
+          dom.appendChild(el2, el3);
           dom.appendChild(el1, el2);
           var el2 = dom.createTextNode("\n");
           dom.appendChild(el1, el2);
@@ -1430,19 +1440,20 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
         buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
           var element1 = dom.childAt(fragment, [1]);
           var element2 = dom.childAt(element1, [1]);
-          var element3 = dom.childAt(element1, [9, 1]);
-          var morphs = new Array(8);
+          var element3 = dom.childAt(element1, [11, 1]);
+          var morphs = new Array(9);
           morphs[0] = dom.createAttrMorph(element1, 'class');
           morphs[1] = dom.createAttrMorph(element2, 'src');
           morphs[2] = dom.createMorphAt(element1, 3, 3);
-          morphs[3] = dom.createMorphAt(element1, 5, 5);
+          morphs[3] = dom.createMorphAt(dom.childAt(element1, [5]), 1, 1);
           morphs[4] = dom.createMorphAt(element1, 7, 7);
-          morphs[5] = dom.createAttrMorph(element3, 'class');
-          morphs[6] = dom.createAttrMorph(element3, 'style');
-          morphs[7] = dom.createMorphAt(dom.childAt(element3, [1]), 0, 0);
+          morphs[5] = dom.createMorphAt(element1, 9, 9);
+          morphs[6] = dom.createAttrMorph(element3, 'class');
+          morphs[7] = dom.createAttrMorph(element3, 'style');
+          morphs[8] = dom.createMorphAt(dom.childAt(element3, [1]), 0, 0);
           return morphs;
         },
-        statements: [["attribute", "class", ["concat", ["list-group-item ", ["subexpr", "if", [["get", "quantifiableItem.item.isCraftable", ["loc", [null, [35, 52], [35, 85]]]], "list-group-item-craftable"], [], ["loc", [null, [35, 47], [35, 115]]]]]]], ["attribute", "src", ["get", "quantifiableItem.item.image", ["loc", [null, [36, 35], [36, 62]]]]], ["content", "quantifiableItem.item.name", ["loc", [null, [37, 24], [37, 54]]]], ["block", "if", [["get", "quantifiableItem.item.isCraftable", ["loc", [null, [38, 30], [38, 63]]]]], [], 0, null, ["loc", [null, [38, 24], [42, 31]]]], ["inline", "quantity-editor", [], ["quantity", ["subexpr", "@mut", [["get", "quantifiableItem.quantity", ["loc", [null, [43, 51], [43, 76]]]]], [], []], "target", ["subexpr", "@mut", [["get", "quantifiableItem.target", ["loc", [null, [43, 84], [43, 107]]]]], [], []]], ["loc", [null, [43, 24], [43, 109]]]], ["attribute", "class", ["concat", ["progress-bar ", ["subexpr", "if", [["get", "quantifiableItem.isComplete", ["loc", [null, [46, 58], [46, 85]]]], "progress-bar-success", "progress-bar-warning"], [], ["loc", [null, [46, 53], [46, 133]]]]]]], ["attribute", "style", ["get", "quantifiableItem.progressWidthStyle", ["loc", [null, [47, 41], [47, 76]]]]], ["content", "quantifiableItem.progress", ["loc", [null, [48, 54], [48, 83]]]]],
+        statements: [["attribute", "class", ["concat", ["list-group-item ", ["subexpr", "if", [["get", "quantifiableItem.item.isCraftable", ["loc", [null, [35, 52], [35, 85]]]], "list-group-item-craftable"], [], ["loc", [null, [35, 47], [35, 115]]]]]]], ["attribute", "src", ["get", "quantifiableItem.item.image", ["loc", [null, [36, 35], [36, 62]]]]], ["content", "quantifiableItem.item.name", ["loc", [null, [37, 24], [37, 54]]]], ["content", "quantifiableItem.item.type", ["loc", [null, [38, 29], [38, 59]]]], ["block", "if", [["get", "quantifiableItem.item.isCraftable", ["loc", [null, [39, 30], [39, 63]]]]], [], 0, null, ["loc", [null, [39, 24], [43, 31]]]], ["inline", "quantity-editor", [], ["quantity", ["subexpr", "@mut", [["get", "quantifiableItem.quantity", ["loc", [null, [44, 51], [44, 76]]]]], [], []], "target", ["subexpr", "@mut", [["get", "quantifiableItem.target", ["loc", [null, [44, 84], [44, 107]]]]], [], []]], ["loc", [null, [44, 24], [44, 109]]]], ["attribute", "class", ["concat", ["progress-bar ", ["subexpr", "if", [["get", "quantifiableItem.isComplete", ["loc", [null, [47, 58], [47, 85]]]], "progress-bar-success", "progress-bar-warning"], [], ["loc", [null, [47, 53], [47, 133]]]]]]], ["attribute", "style", ["get", "quantifiableItem.progressWidthStyle", ["loc", [null, [48, 41], [48, 76]]]]], ["content", "quantifiableItem.progress", ["loc", [null, [49, 54], [49, 83]]]]],
         locals: ["quantifiableItem"],
         templates: [child0]
       };
@@ -1455,11 +1466,11 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
           "loc": {
             "source": null,
             "start": {
-              "line": 52,
+              "line": 53,
               "column": 16
             },
             "end": {
-              "line": 56,
+              "line": 57,
               "column": 16
             }
           },
@@ -1491,7 +1502,7 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
           morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 1, 1);
           return morphs;
         },
-        statements: [["inline", "t", ["prepare.empty_project"], [], ["loc", [null, [54, 24], [54, 53]]]]],
+        statements: [["inline", "t", ["prepare.empty_project"], [], ["loc", [null, [55, 24], [55, 53]]]]],
         locals: [],
         templates: []
       };
@@ -1509,7 +1520,7 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 63,
+            "line": 64,
             "column": 0
           }
         },
@@ -1605,7 +1616,7 @@ define("dofus-workbench/templates/crafting", ["exports"], function (exports) {
         morphs[6] = dom.createMorphAt(element6, 7, 7);
         return morphs;
       },
-      statements: [["inline", "t", ["crafting.workbench_for"], [], ["loc", [null, [2, 8], [2, 38]]]], ["content", "model.name", ["loc", [null, [2, 39], [2, 53]]]], ["block", "link-to", ["prepare", ["get", "model.id", ["loc", [null, [4, 25], [4, 33]]]]], ["class", "btn btn-info"], 0, null, ["loc", [null, [4, 4], [6, 16]]]], ["block", "fixed-panel", [], [], 1, null, ["loc", [null, [10, 12], [28, 28]]]], ["inline", "t", ["crafting.ressources"], [], ["loc", [null, [31, 16], [31, 43]]]], ["block", "each", [["get", "model.ressourcesItems", ["loc", [null, [34, 24], [34, 45]]]]], [], 2, 3, ["loc", [null, [34, 16], [56, 25]]]], ["content", "outlet", ["loc", [null, [61, 4], [61, 14]]]]],
+      statements: [["inline", "t", ["crafting.workbench_for"], [], ["loc", [null, [2, 8], [2, 38]]]], ["content", "model.name", ["loc", [null, [2, 39], [2, 53]]]], ["block", "link-to", ["prepare", ["get", "model.id", ["loc", [null, [4, 25], [4, 33]]]]], ["class", "btn btn-info"], 0, null, ["loc", [null, [4, 4], [6, 16]]]], ["block", "fixed-panel", [], [], 1, null, ["loc", [null, [10, 12], [28, 28]]]], ["inline", "t", ["crafting.ressources"], [], ["loc", [null, [31, 16], [31, 43]]]], ["block", "each", [["get", "model.ressourcesItems", ["loc", [null, [34, 24], [34, 45]]]]], [], 2, 3, ["loc", [null, [34, 16], [57, 25]]]], ["content", "outlet", ["loc", [null, [62, 4], [62, 14]]]]],
       locals: [],
       templates: [child0, child1, child2, child3]
     };

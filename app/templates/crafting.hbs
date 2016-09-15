@@ -13,9 +13,9 @@
                 <ul class="list-group icons-list-group">
                     {{#each model.wishlistItems as |quantifiableItem|}}
                         <li class="list-group-item">
-                    <span class="badge">
-                        &times; {{quantifiableItem.target}}
-                    </span>
+                            <span class="badge">
+                                &times; {{quantifiableItem.target}}
+                            </span>
                             <img src={{quantifiableItem.item.image}}>
                             {{quantifiableItem.item.name}}
                         </li>
@@ -35,6 +35,7 @@
                     <li class="list-group-item {{if quantifiableItem.item.isCraftable 'list-group-item-craftable'}}">
                         <img src={{quantifiableItem.item.image}}>
                         {{quantifiableItem.item.name}}
+                        <em>({{quantifiableItem.item.type}})</em>
                         {{#if quantifiableItem.item.isCraftable}}
                             <button class="btn btn-warning btn-craft btn-xs" {{action 'sendToWorkbench' quantifiableItem}}>
                                 {{t 'crafting.send_to_workbench'}}
