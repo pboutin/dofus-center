@@ -5,6 +5,10 @@
         {{t 'prepare.back_to_projects'}}
     {{/link-to}}
 
+    {{#link-to 'crafting' model.id class="btn btn-success"}}
+        {{t 'prepare.go_to_workbench'}}
+    {{/link-to}}
+
     <div class="row">
         <div class="col-lg-6">
             <h3>{{t 'prepare.add_items'}}</h3>
@@ -15,7 +19,7 @@
 
             <div class="list-group icons-list-group">
                 {{#each filteredItems as |item|}}
-                    <button class="list-group-item {{unless item.isCraftable 'list-group-item-dimmed'}}" {{action 'add' item}}>
+                    <button class="list-group-item" {{action 'add' item}}>
                         <span class="badge">
                             lvl {{item.level}}
                         </span>
@@ -51,10 +55,6 @@
                         </li>
                     {{/each}}
                 </ul>
-                <hr>
-                {{#link-to 'crafting' model.id class="btn btn-success btn-block"}}
-                    {{t 'prepare.go_to_workbench'}}
-                {{/link-to}}
             {{/fixed-panel}}
         </div>
     </div>

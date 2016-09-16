@@ -2,10 +2,6 @@
     .list-group-item {
         padding-left: 45px;
 
-        &.list-group-item-dimmed {
-            opacity: 0.5;
-        }
-
         &.list-group-item-craftable {
             background-color: lighten($brand-primary, 40%);
         }
@@ -36,6 +32,8 @@
         }
 
         &:hover {
+            background-color: lighten($brand-primary, 50%);
+
             .btn-remove {
                 display: inline-block;
             }

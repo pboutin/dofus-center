@@ -6206,19 +6206,13 @@ img.image-item {
 
 .project {
   display: block;
-  height: 100px;
+  padding-bottom: 15px;
   transition: 1s; }
-  .project .content {
-    float: left; }
-  .project .thumbnails {
-    float: right; }
   .project:hover {
     background-color: rgba(34, 34, 34, 0.1); }
 
 .icons-list-group .list-group-item {
   padding-left: 45px; }
-  .icons-list-group .list-group-item.list-group-item-dimmed {
-    opacity: 0.5; }
   .icons-list-group .list-group-item.list-group-item-craftable {
     background-color: #a6dff5; }
   .icons-list-group .list-group-item img {
@@ -6238,8 +6232,10 @@ img.image-item {
   .icons-list-group .list-group-item .progress {
     width: 60%;
     height: 1.4rem; }
-  .icons-list-group .list-group-item:hover .btn-remove {
-    display: inline-block; }
+  .icons-list-group .list-group-item:hover {
+    background-color: #d4effa; }
+    .icons-list-group .list-group-item:hover .btn-remove {
+      display: inline-block; }
 
 .icons-list-group.list-group-lg .list-group-item {
   height: 5rem;
@@ -6273,5 +6269,9 @@ img.image-item {
   width: 100%; }
   .fixed-panel .affix {
     top: 0px; }
+    .fixed-panel .affix-disabled {
+      position: absolute !important;
+      top: auto !important;
+      bottom: auto !important; }
 
 /*# sourceMappingURL=dofus-workbench.css.map */

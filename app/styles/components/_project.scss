@@ -1,15 +1,8 @@
 .project {
     display: block;
-    height: 100px;
+    padding-bottom: 15px;
 
     transition: 1s;
-
-    .content {
-        float: left;
-    }
-    .thumbnails {
-        float: right;
-    }
 
     &:hover {
         background-color: rgba($gray-darker, .10);

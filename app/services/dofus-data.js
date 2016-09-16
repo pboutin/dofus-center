@@ -39,7 +39,7 @@ export default Ember.Service.extend({
         query = this._sanitize(query);
 
         _.mapValues(this.get('itemMap'), function(item) {
-            if (item.get('searchableName').indexOf(query) >= 0) {
+            if (item.get('searchableName').indexOf(query) >= 0 && item.get('isCraftable')) {
                 result.push(item);
             }
         });

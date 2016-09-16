@@ -42,8 +42,8 @@
 
 {{#each workbench.projects as |project|}}
     <div class="project">
-        <div class="container">
-            <div class="content">
+        <div class="container text-center">
+            <div>
                 <h3>{{project.name}}</h3>
                 {{#link-to 'prepare' project.id class="btn btn-sm btn-primary"}}
                     {{t 'projects.open'}}
@@ -55,7 +55,7 @@
                     {{t 'projects.delete'}}
                 </button>
             </div>
-            <div class="thumbnails">
+            <div>
                 {{#each project.wishlistItems as |wishlistItemQuantifiable|}}
                     <img class="image-item"
                          src={{wishlistItemQuantifiable.item.image}}
