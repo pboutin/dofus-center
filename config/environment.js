@@ -6,7 +6,7 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/dofus-workbench/',
     locationType: 'auto',
-    dofusDataRepository: 'https://raw.githubusercontent.com/pboutin/dofus-data/master/',
+    dofusDataRepository: 'https://raw.githubusercontent.com/pboutin/dofus-data/v2.36/',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
