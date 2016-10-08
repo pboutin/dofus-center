@@ -9,10 +9,7 @@ Router.map(function() {
   this.route('projects', {path: '/'});
   this.route('prepare', {path: '/prepare/:id'});
   this.route('crafting', {path: '/crafting/:id'});
-});
-
-Router.reopen({
-  location: 'hash'
+  this.route('login');
 });
 
 export default Router;

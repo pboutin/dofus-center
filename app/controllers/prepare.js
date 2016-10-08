@@ -2,19 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
     dofusData: Ember.inject.service('dofus-data'),
-    workbench: Ember.inject.service('workbench'),
 
     filteredItems: [],
     query: '',
 
     actions: {
         add(item) {
-            this.get('model').addToWishlist(item);
-            this.get('workbench').save();
+            let project = this.get('model');
+            project.addItem(item);
+            project.save();
         },
         remove(item) {
-            this.get('model').removeFromWishlist(item);
-            this.get('workbench').save();
+            let project = this.get('model');
+            project.removeItem(item);
+            project.save();
         }
     },
 

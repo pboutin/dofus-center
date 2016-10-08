@@ -8,6 +8,7 @@ export default Ember.Component.extend({
     quantity: 0,
     target: 0,
     editableQuantity: 0,
+    onChange: function() {},
 
     actions: {
         incrementBy(quantity) {
@@ -36,7 +37,7 @@ export default Ember.Component.extend({
 
     quantityObserver: Ember.observer('quantity', function() {
         this.set('editableQuantity', this.get('quantity'));
-        this.get('workbench').save();
+        this.get('onChange')();
     }),
 
     editableQuantityObserver: Ember.observer('editableQuantity', function() {

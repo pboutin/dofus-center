@@ -6,10 +6,8 @@ export function initialize(app) {
 
     let container = app.__container__;
     container.lookup('service:dofus-data').initialize().then(function() {
-        container.lookup('service:workbench').initialize().then(function() {
-            Ember.$('#loader').remove();
-            app.advanceReadiness();
-        });
+        Ember.$('#loader').remove();
+        app.advanceReadiness();
     });
 }
 

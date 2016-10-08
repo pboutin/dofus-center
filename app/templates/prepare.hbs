@@ -38,14 +38,14 @@
                 <h3>{{t 'prepare.your_project'}}</h3>
 
                 <ul class="list-group icons-list-group">
-                    {{#each model.wishlistItems as |quantifiableItem|}}
+                    {{#each model.items as |quantifiable|}}
                         <li class="list-group-item">
                             <span class="badge">
-                                &times; {{quantifiableItem.target}}
+                                &times; {{quantifiable.target}}
                             </span>
-                            <img src={{quantifiableItem.item.image}}>
-                            {{quantifiableItem.item.name}}
-                            <button class="btn btn-danger btn-xs btn-remove" {{action 'remove' quantifiableItem.item}}>
+                            <img src={{quantifiable.item.image}}>
+                            {{quantifiable.item.name}}
+                            <button class="btn btn-danger btn-xs btn-remove" {{action 'remove' quantifiable.item}}>
                                 {{t 'prepare.remove'}}
                             </button>
                         </li>
