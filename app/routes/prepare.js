@@ -1,14 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    workbench: Ember.inject.service('workbench'),
+    beforeModel() {
+        if ( ! this.get('session.isAuthenticated')) {
+            return this.transitionTo('login');
+        }
+    },
 
     model(params) {
-        let project = this.get('workbench').getProject(params.id);
-
-        if (project) {
-            return project;
-        }
-        this.transitionTo('projects');
+        return this.store.find('project', params.id);
     }
 });
