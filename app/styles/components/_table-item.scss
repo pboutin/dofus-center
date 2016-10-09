@@ -1,0 +1,28 @@
+.table-item {
+    margin-bottom: 0;
+
+    td {
+        height: 40px;
+        line-height: 36px !important;
+    }
+
+    img {
+        margin-top: 3px;
+    }
+
+    td:nth-child(1) {
+        width: 40px;
+    }
+    td:nth-child(3) {
+        .progress {
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+        width: 450px;
+    }
+    td:nth-child(4) {
+        text-align: right;
+        width: 100px;
+        padding-right: 10px;
+    }
+}

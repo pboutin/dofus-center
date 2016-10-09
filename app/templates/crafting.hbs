@@ -1,6 +1,6 @@
 <div class="container">
     <h1>
-        {{t 'crafting.workbench_for'}} {{model.name}}
+        {{t 'crafting.workbench_for'}} <em>{{model.name}}</em>
 
         {{#link-to 'projects' class="btn btn-info"}}
             {{t 'crafting.go_to_projects'}} {{fa-icon 'home'}}
@@ -11,13 +11,14 @@
         {{/link-to}}
     </h1>
 </div>
+
 {{item-list items=model.items}}
 
 <div class="container margin-top">
     <ul class="list-group list-group-lg icons-list-group">
         {{#each model.sortedStocks as |quantifiable|}}
             <li class="list-group-item {{if quantifiable.item.isCraftable 'list-group-item-craftable'}}">
-                <img src={{quantifiable.item.image}}>
+                <img src="{{quantifiable.item.image}}">
                 {{item-link item=quantifiable.item}}
                 <em>({{quantifiable.item.type}})</em>
 

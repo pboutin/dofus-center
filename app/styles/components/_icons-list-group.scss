@@ -7,11 +7,10 @@
         }
 
         img {
+            @extend .tiny-icon;
             position: absolute;
             top: 2px;
             left: 5px;
-            height: 35px;
-            width: auto;
         }
 
         .btn-remove {

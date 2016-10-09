@@ -5,6 +5,7 @@ export default {
     },
     'projects': {
         'new': "Créer un nouveau projet",
+        'public_link': "Lien publique",
         'save': "Sauvegarder",
         'cancel': "Cancel",
         'name': "Nom du projet",
@@ -27,6 +28,11 @@ export default {
         'go_to_projects': "Retourner à la liste des projets",
         'your_project': "Votre projet",
         'send_to_workbench': "Envoyer à l'atelier"
+    },
+    'view': {
+        'project': "Projet",
+        'go_to_projects': "Aller à la liste des projets",
+        'login': "Se connecter",
+        'empty_project': "Ce projet est présentement vide",
     }
-
 };
