@@ -12,9 +12,9 @@ export default Ember.Controller.extend({
             project.addItem(item);
             project.save();
         },
-        remove(item) {
+        remove(quantifiable) {
             let project = this.get('model');
-            project.removeItem(item);
+            project.removeItem(quantifiable.get('item'));
             project.save();
         }
     },

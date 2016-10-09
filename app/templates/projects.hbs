@@ -1,18 +1,37 @@
-<div class="container">
-    <h1>{{t 'projects.title'}}</h1>
+{{#each model as |project|}}
+    <div class="project">
+        <h3>
+            {{project.name}}
+            <small>lvl {{project.level}}</small>
+        </h3>
+        <p>
+            {{#link-to 'prepare' project.id class="btn btn-sm btn-info"}}
+                {{t 'projects.prepare'}}
+            {{/link-to}}
+            {{#link-to 'crafting' project.id class="btn btn-sm btn-primary"}}
+                {{t 'projects.go_to_workbench'}}
+            {{/link-to}}
+            <button class="btn btn-sm btn-danger" {{action 'delete' project}}>
+                {{t 'projects.delete'}}
+            </button>
+        </p>
+        {{item-list items=project.items}}
+    </div>
+{{/each}}
 
+<div class="container text-center margin-top">
     {{#unless newProject}}
-        <button {{action 'create'}} class="btn btn-primary">
+        <button {{action 'create'}} class="btn btn-lg btn-info">
             {{t 'projects.new'}}
         </button>
     {{else}}
         <div class="form-inline">
             <div class="form-group">
                 {{input value=newProject.name
-                    placeholder=(t 'projects.name')
-                    class="form-control"}}
+                placeholder=(t 'projects.name')
+                class="form-control"}}
             </div>
-            <button {{action 'save'}} class="btn btn-success btn-sm">
+            <button {{action 'save'}} class="btn btn-info btn-sm">
                 {{t 'projects.save'}}
             </button>
             <button {{action 'cancel'}} class="btn btn-default btn-sm">
@@ -21,28 +40,5 @@
         </div>
     {{/unless}}
 </div>
-
-<hr>
-
-{{#each model as |project|}}
-    <div class="project">
-        <div class="container text-center">
-            <div>
-                <h3>{{project.name}}</h3>
-                {{#link-to 'prepare' project.id class="btn btn-sm btn-primary"}}
-                    {{t 'projects.open'}}
-                {{/link-to}}
-                <button class="btn btn-sm btn-danger" {{action 'delete' project}}>
-                    {{t 'projects.delete'}}
-                </button>
-            </div>
-            <div>
-                {{#each project.items as |quantifiable|}}
-                    <img class="image-item" src={{quantifiable.item.image}} alt={{quantifiable.item.name}}>
-                {{/each}}
-            </div>
-        </div>
-    </div>
-{{/each}}
 
 {{outlet}}

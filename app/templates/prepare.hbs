@@ -1,63 +1,38 @@
 <div class="container">
-    <h1>{{t 'prepare.manage'}} {{model.name}}</h1>
+    <h1>
+        {{t 'prepare.manage'}} <em>{{model.name}}</em>
 
-    {{#link-to 'projects' class="btn btn-info"}}
-        {{t 'prepare.back_to_projects'}}
-    {{/link-to}}
+        {{#link-to 'crafting' model.id class="btn btn-sm btn-primary"}}
+            {{t 'prepare.go_to_workbench'}}
+        {{/link-to}}
 
-    {{#link-to 'crafting' model.id class="btn btn-success"}}
-        {{t 'prepare.go_to_workbench'}}
-    {{/link-to}}
+        {{#link-to 'projects' class="btn btn-sm btn-info"}}
+            {{t 'prepare.back_to_projects'}}
+        {{/link-to}}
+    </h1>
+</div>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <h3>{{t 'prepare.add_items'}}</h3>
+{{item-list items=model.items onRemove=(action 'remove')}}
 
-            <div class="form-group">
-                {{input value=query placeholder=(t 'prepare.search') class="form-control"}}
-            </div>
-
-            <div class="list-group icons-list-group">
-                {{#each filteredItems as |item|}}
-                    <button class="list-group-item" {{action 'add' item}}>
-                        <span class="badge">
-                            lvl {{item.level}}
-                        </span>
-                        <span class="badge">
-                            {{item.type}}
-                        </span>
-
-                        <img src={{item.image}}>
-                        {{item.name}}
-                    </button>
-                {{/each}}
-            </div>
-        </div>
-        <div class="col-lg-6">
-            {{#fixed-panel}}
-                <h3>{{t 'prepare.your_project'}}</h3>
-
-                <ul class="list-group icons-list-group">
-                    {{#each model.items as |quantifiable|}}
-                        <li class="list-group-item">
-                            <span class="badge">
-                                &times; {{quantifiable.target}}
-                            </span>
-                            <img src={{quantifiable.item.image}}>
-                            {{quantifiable.item.name}}
-                            <button class="btn btn-danger btn-xs btn-remove" {{action 'remove' quantifiable.item}}>
-                                {{t 'prepare.remove'}}
-                            </button>
-                        </li>
-                    {{else}}
-                        <li class="list-group-item list-group-item-warning">
-                            {{t 'prepare.empty_project'}}
-                        </li>
-                    {{/each}}
-                </ul>
-            {{/fixed-panel}}
-        </div>
+<div class="container">
+    <div class="form-group margin-top">
+        {{input value=query placeholder=(t 'prepare.search') class="form-control"}}
     </div>
-    {{outlet}}
+
+    <div class="list-group icons-list-group">
+        {{#each filteredItems as |item|}}
+            <button class="list-group-item" {{action 'add' item}}>
+                <span class="badge">
+                    lvl {{item.level}}
+                </span>
+                <span class="badge">
+                    {{item.type}}
+                </span>
+
+                <img src={{item.image}}>
+                {{item.name}}
+            </button>
+        {{/each}}
+    </div>
 </div>
 

@@ -4,34 +4,28 @@ export default {
         'copyrights': "Cette application a été développée indépendement d'Ankama Studio par Pascal Boutin (Infahemsi de Many). L'ensemble des images et animations utilisées dans cette application sont l'oeuvre et la propriété d'Ankama Studio."
     },
     'projects': {
-        'title': "Vos projets",
         'new': "Créer un nouveau projet",
         'save': "Sauvegarder",
         'cancel': "Cancel",
         'name': "Nom du projet",
-        'import': "Importer un projet",
         'close': "Fermer",
-        'open': "Ouvrir",
-        'export': "Exporter",
+        'prepare': "Modifier",
+        'go_to_workbench': "Passer à l'atelier",
         'delete': "Supprimer",
-        'delete_confirmation': "Êtes-vous sûr de vouloir supprimer le projet",
-        'import_prompt': "Veuillez coller le texte du projet."
+        'delete_confirmation': "Êtes-vous sûr de vouloir supprimer le projet"
     },
     'prepare': {
         'manage': "Gestion du projet",
-        'add_items': "Ajouter à votre projet",
-        'search': "Rechercher...",
+        'search': "Ajouter un item...",
         'empty_project': "Votre projet est présentement vide",
-        'your_project': "Votre projet",
         'back_to_projects': "Retourner à la liste des projets",
         'go_to_workbench': "Passer à l'atelier",
-        'remove': "Retirer"
     },
     'crafting': {
         'workbench_for': "Atelier pour",
-        'back_to_project': "Retourner à la préparation du projet",
+        'edit_project': "Modifier le projet",
+        'go_to_projects': "Retourner à la liste des projets",
         'your_project': "Votre projet",
-        'ressources': "Les ressources",
         'send_to_workbench': "Envoyer à l'atelier"
     }
 

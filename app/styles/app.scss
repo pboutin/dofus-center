@@ -52,10 +52,11 @@
 // Bootswatch
 @import "bootswatch";
 
+@import "utils";
 @import "misc";
 
-@import "components/image-item";
+@import "components/item-icon";
 @import "components/project";
 @import "components/icons-list-group";
 @import "components/quantity-editor";
-@import "components/fixed-panel";
+@import "components/user-handle";

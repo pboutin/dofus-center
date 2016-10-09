@@ -18,6 +18,13 @@ export default DS.Model.extend({
     items: Ember.computed.alias('metadata.items'),
     stocks: Ember.computed.alias('metadata.stocks'),
 
+    level: Ember.computed('items', function() {
+        let levels = _.map(this.get('items'), function(quantifiable) {
+            return quantifiable.get('item.level');
+        });
+        return levels.length ? _.max(levels): 0;
+    }),
+
     sortedStocks: Ember.computed('stocks', function() {
         return _.sortBy(this.get('stocks'), function(quantifiable) {
             return quantifiable.get('target') * -1;

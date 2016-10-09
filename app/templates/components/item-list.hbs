@@ -1,0 +1,15 @@
+<div class="text-center">
+    {{#each items as |quantifiable|}}
+        {{#tooltip-container class="item-icon" title=quantifiable.item.name}}
+            {{#if onRemove}}
+                <button class="btn-remove" {{action 'remove' quantifiable}}></button>
+            {{/if}}
+            {{#if quantifiable.isTargetGreaterThanOne}}
+                <span class="quantity">
+                    {{quantifiable.target}}
+                </span>
+            {{/if}}
+            <img src={{quantifiable.item.image}} alt={{quantifiable.item.name}}>
+        {{/tooltip-container}}
+    {{/each}}
+</div>

@@ -1,10 +1,23 @@
-<div class="alert alert-warning text-center">
-    {{t 'app.data_warning'}}
-</div>
+{{#if session.isAuthenticated}}
+    <header class="container">
+        {{#with session.currentUser as |user|}}
+            <div class="user-handle">
+                <div class="information">
+                    <div>{{user.displayName}}</div>
+                    <div>{{user.email}}</div>
+                </div>
+                <div class="avatar">
+                    <img src="{{user.photoURL}}" alt="Avatar">
+                </div>
+            </div>
+        {{/with}}
+    </header>
+{{/if}}
 
 {{outlet}}
 
-<hr>
-<footer class="container text-center">
-    <p>{{t 'app.copyrights'}}</p>
+<footer>
+    <div class="container">
+        <p>{{t 'app.copyrights'}}</p>
+    </div>
 </footer>
