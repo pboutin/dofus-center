@@ -1,7 +1,29 @@
+html, body {
+    min-height: 100vh;
+}
+
 body {
-    background: url(../background.jpg) no-repeat center center fixed;
+    background: url(../background.png) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    padding-bottom: 75px;
+}
+
+h1 {
+    a, button {
+        float: right;
+        margin-left: 5px;
+    }
+}
+
+footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    padding-top: 10px;
+    background-color: rgba($gray-darker, .60);
+    text-align: center;
+    color: $brand-white;
 }

@@ -1,11 +1,25 @@
 .project {
     display: block;
+    margin-top: 10px;
+    padding-top: 1px;
     padding-bottom: 15px;
+    background-color: rgba($gray-darker, .50);
+    text-align: center;
+
+    h3 {
+        color: $brand-white;
+        small {
+            color: $gray-lighter;
+        }
+    }
 
     transition: 1s;
 
     &:hover {
-        background-color: rgba($gray-darker, .10);
+        background-color: rgba($gray-darker, .60);
     }
 
+    a, button {
+        margin: 0 3px;
+    }
 }

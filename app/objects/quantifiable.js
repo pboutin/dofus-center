@@ -9,6 +9,10 @@ export default Ember.Object.extend({
         this.set('target', this.get('target') + quantity);
     },
 
+    isTargetGreaterThanOne: Ember.computed('target', function() {
+        return this.get('target') > 1;
+    }),
+
     progressWidthStyle: Ember.computed('quantity', 'target', function() {
         let progress = (this.get('quantity') / this.get('target')) * 100;
         return Ember.String.htmlSafe(`width: ${progress}%`);
