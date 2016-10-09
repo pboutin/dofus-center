@@ -1,0 +1,14 @@
+.item-link {
+    a {
+        text-decoration: none;
+        color: $brand-black;
+    }
+
+    i {
+        display: none;
+    }
+
+    &:hover i {
+        display: inline-block;
+    }
+}

@@ -3,11 +3,11 @@
         {{t 'crafting.workbench_for'}} {{model.name}}
 
         {{#link-to 'projects' class="btn btn-info"}}
-            {{t 'crafting.go_to_projects'}}
+            {{t 'crafting.go_to_projects'}} {{fa-icon 'home'}}
         {{/link-to}}
 
         {{#link-to 'prepare' model.id class="btn btn-info"}}
-            {{t 'crafting.edit_project'}}
+            {{t 'crafting.edit_project'}} {{fa-icon 'pencil'}}
         {{/link-to}}
     </h1>
 </div>
@@ -18,7 +18,7 @@
         {{#each model.sortedStocks as |quantifiable|}}
             <li class="list-group-item {{if quantifiable.item.isCraftable 'list-group-item-craftable'}}">
                 <img src={{quantifiable.item.image}}>
-                {{quantifiable.item.name}}
+                {{item-link item=quantifiable.item}}
                 <em>({{quantifiable.item.type}})</em>
 
                 {{#if quantifiable.item.isCraftable}}
