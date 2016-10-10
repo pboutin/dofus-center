@@ -9,7 +9,7 @@
 /bower_components
 
 # misc
-environment.js
+config/environment.js
 /.sass-cache
 /connect.lock
 /coverage/*
@@ -19,3 +19,4 @@ testem.log
 
 .idea/
 *.iml
+.firebaserc

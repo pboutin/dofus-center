@@ -12,6 +12,7 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* [Firebase tools](https://github.com/firebase/emberfire/blob/master/docs/guide/deploying-to-firebase-hosting.md)
 
 ## Installation
 
