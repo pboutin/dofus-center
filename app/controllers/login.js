@@ -7,9 +7,6 @@ export default Ember.Controller.extend({
                 console.log('Logged in with : ', data);
                 this.transitionToRoute('projects');
             }.bind(this));
-        },
-        signOut: function() {
-            this.get('session').close();
         }
     }
 });
