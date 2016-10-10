@@ -1,0 +1,12 @@
+{
+  "rules": {
+    ".read": true,
+    "projects": {
+      ".indexOn": "userId",
+      ".write": true,
+      "$projectId": {
+        ".write": "data.child('userId').val() === auth.uid"
+      }
+    }
+  }
+}

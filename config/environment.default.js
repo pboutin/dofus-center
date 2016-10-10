@@ -4,14 +4,13 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'dofus-workbench',
     environment: environment,
-    baseURL: '/dofus-workbench/',
     locationType: 'auto',
     dofusDataRepository: 'https://raw.githubusercontent.com/pboutin/dofus-data/v2.36/',
     firebase: {
-      apiKey: 'AIzaSyCAQrDi71G26EmKBoKy1RSxfC8XxreRKqw',
-      authDomain: 'dofus-workbench.firebaseapp.com',
-      databaseURL: 'https://dofus-workbench.firebaseio.com',
-      storageBucket: 'dofus-workbench.appspot.com',
+      apiKey: 'YOUR_KEY',
+      authDomain: 'YOUR_FIREBASE_APP.firebaseapp.com',
+      databaseURL: 'https://YOUR_FIREBASE_APP.firebaseio.com',
+      storageBucket: 'YOUR_FIREBASE_APP.appspot.com',
     },
     torii: {
       sessionServiceName: 'session'
