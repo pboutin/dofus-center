@@ -3,6 +3,10 @@ export default {
         'data_warning': "Tous vos projets sont seulement stockés dans la mémoire locale de votre navigateur. Si vous supprimez vos données de navigation pour ce site, vous supprimerez par le fait même vos projets.",
         'copyrights': "Cette application a été développée indépendement d'Ankama Studio par Pascal Boutin (Infahemsi de Many). L'ensemble des images et animations utilisées dans cette application sont l'oeuvre et la propriété d'Ankama Studio."
     },
+    'login': {
+        'login_with_facebook': "Se connecter avec Facebook",
+        'login_with_google': "Se connecter avec Google"
+    },
     'projects': {
         'new': "Créer un nouveau projet",
         'public_link': "Lien publique",
