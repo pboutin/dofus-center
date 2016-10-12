@@ -1,18 +1,8 @@
-{{#if session.isAuthenticated}}
-    <header class="container">
-        {{#with session.currentUser as |user|}}
-            <div class="user-handle">
-                <div class="information">
-                    <div>{{user.displayName}}</div>
-                    <div>{{user.email}}</div>
-                </div>
-                <div class="sign-out" {{action 'signOut'}}>
-                    <img src="{{user.photoURL}}" alt="Avatar">
-                </div>
-            </div>
-        {{/with}}
-    </header>
-{{/if}}
+<header class="container">
+    {{#if session.isAuthenticated}}
+        {{user-handle session=session}}
+    {{/if}}
+</header>
 
 {{outlet}}
 

@@ -1,0 +1,16 @@
+{{#with session.currentUser as |user|}}
+    <div class="user-handle">
+        <div class="information">
+            <div>
+                {{user.displayName}}
+            </div>
+            <div>
+                {{fa-icon (if isGoogle 'google' 'facebook')}}
+                {{user.email}}
+            </div>
+        </div>
+        <div class="sign-out" {{action 'signOut'}}>
+            <img src="{{user.photoURL}}" alt="Avatar">
+        </div>
+    </div>
+{{/with}}
