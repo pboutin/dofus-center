@@ -13,4 +13,8 @@ Router.map(function() {
   this.route('view', {path: '/view/:id'});
 });
 
+Router.reopen({
+  location: 'hash'
+});
+
 export default Router;
