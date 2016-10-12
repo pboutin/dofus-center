@@ -13,9 +13,10 @@ export default Ember.Controller.extend({
         },
         save() {
             let newProject = this.get('newProject');
-            newProject.save();
-            
-            this.set('newProject', null);
+            newProject.save().then(function(savedProject) {
+                this.set('newProject', null);
+                this.transitionToRoute('prepare', savedProject.get('id'));
+            }.bind(this));
         },
         cancel() {
             this.set('newProject', null);
