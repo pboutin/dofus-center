@@ -4,6 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'dofus-workbench',
     environment: environment,
+    baseURL: '',
     locationType: 'auto',
     dofusDataRepository: 'https://raw.githubusercontent.com/pboutin/dofus-data/v2.36/',
     firebase: {
