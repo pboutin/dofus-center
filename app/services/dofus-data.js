@@ -11,11 +11,8 @@ export default Ember.Service.extend({
         
         return new Ember.RSVP.Promise(function(resolve) {
             Ember.$.getJSON(`${ENV.dofusDataRepository}/dofus-data.json`, function(data) {
-                let baseUrl = data['metadata']['baseUrl'];
-
-                _.mapKeys(data['data'], function(rawItem, itemId) {
+                _.mapKeys(data, function(rawItem, itemId) {
                     rawItem['id'] = itemId;
-                    rawItem['link'] = baseUrl + rawItem['link'];
                     rawItem['image'] = `${ENV.dofusDataRepository}/images/${itemId}.png`;
                     let item = Ember.getOwner(self).lookup('object:item');
                     item.deserialize(rawItem);
