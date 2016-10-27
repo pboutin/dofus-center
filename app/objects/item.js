@@ -23,5 +23,10 @@ export default Ember.Object.extend({
 
     isCraftable: Ember.computed('recipe', function() {
         return _.keys(this.get('recipe')).length > 0;
-    })
+    }),
+
+    fakeFor(itemId) {
+        this.set('id', itemId);
+        this.set('name', _.trim(itemId.replace(/\d*\-/g, ' ')));
+    }
 });

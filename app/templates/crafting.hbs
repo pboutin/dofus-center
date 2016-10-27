@@ -18,9 +18,15 @@
     <ul class="list-group list-group-lg icons-list-group">
         {{#each model.sortedStocks as |quantifiable|}}
             <li class="list-group-item {{if quantifiable.item.isCraftable 'list-group-item-craftable'}}">
-                <img src="{{quantifiable.item.image}}">
+                {{#if quantifiable.item.image}}
+                    <img src="{{quantifiable.item.image}}">
+                {{/if}}
+
                 {{item-link item=quantifiable.item}}
-                <em>({{quantifiable.item.type}})</em>
+
+                {{#if quantifiable.item.type}}
+                    <em>({{quantifiable.item.type}})</em>
+                {{/if}}
 
                 {{#if quantifiable.item.isCraftable}}
                     <button class="btn btn-warning btn-craft btn-xs" {{action 'addToItems' quantifiable}}>

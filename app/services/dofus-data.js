@@ -28,7 +28,12 @@ export default Ember.Service.extend({
     },
 
     getItem(itemId) {
-        return _.get(this.get('itemMap'), itemId);
+        let item = _.get(this.get('itemMap'), itemId, null);
+        if (item === null) {
+            item = Ember.getOwner(this).lookup('object:item');
+            item.fakeFor(itemId);
+        }
+        return item;
     },
 
     getFilteredItemsFor(query) {

@@ -1,3 +1,7 @@
-<a href="{{item.link}}" target="_blank">
-    {{item.name}} {{fa-icon 'external-link'}}
-</a>
+{{#if item.link}}
+    <a href="{{item.link}}" target="_blank">
+        {{item.name}} {{fa-icon 'external-link'}}
+    </a>
+{{else}}
+    {{item.name}}
+{{/if}}
