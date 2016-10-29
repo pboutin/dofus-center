@@ -15,45 +15,56 @@
 {{item-list items=model.items}}
 
 <div class="container margin-top">
-    <ul class="list-group list-group-lg icons-list-group">
-        {{#each model.sortedStocks as |quantifiable|}}
-            <li class="list-group-item {{if quantifiable.item.isCraftable 'list-group-item-craftable'}}">
-                {{#if quantifiable.item.image}}
-                    <img src="{{quantifiable.item.image}}">
-                {{/if}}
+    <p>
+        <button class="btn btn-primary" {{action 'toggleFilter'}}>
+            {{fa-icon 'list'}} {{t (if isFiltered 'crafting.show_everything' 'crafting.hide_completed')}}
+        </button>
+    </p>
+    {{#if displayedStocks}}
+        <ul class="list-group list-group-lg icons-list-group">
+            {{#each displayedStocks as |quantifiable|}}
+                <li class="list-group-item {{if quantifiable.item.isCraftable 'list-group-item-craftable'}}">
+                    {{#if quantifiable.item.image}}
+                        <img src="{{quantifiable.item.image}}">
+                    {{/if}}
 
-                {{item-link item=quantifiable.item}}
+                    {{item-link item=quantifiable.item}}
 
-                {{#if quantifiable.item.type}}
-                    <em>({{quantifiable.item.type}})</em>
-                {{/if}}
+                    {{#if quantifiable.item.type}}
+                        <em>({{quantifiable.item.type}})</em>
+                    {{/if}}
 
-                {{#if quantifiable.item.isCraftable}}
-                    <button class="btn btn-warning btn-craft btn-xs" {{action 'addToItems' quantifiable}}>
-                        {{t 'crafting.send_to_workbench'}}
-                    </button>
-                {{/if}}
+                    {{#if quantifiable.item.isCraftable}}
+                        <button class="btn btn-warning btn-craft btn-xs" {{action 'addToItems' quantifiable}}>
+                            {{t 'crafting.send_to_workbench'}}
+                        </button>
+                    {{/if}}
 
-                {{quantity-editor
+                    {{quantity-editor
                     quantity=quantifiable.quantity
                     target=quantifiable.target
                     onChange=(action 'save')}}
 
-                <div class="progress">
-                    <div class="progress-bar {{if quantifiable.isComplete 'progress-bar-success' 'progress-bar-warning'}}"
-                         style={{quantifiable.progressWidthStyle}}>
-                        <span class="sr-only">{{quantifiable.progress}}%</span>
+                    <div class="progress">
+                        <div class="progress-bar {{if quantifiable.isComplete 'progress-bar-success' 'progress-bar-warning'}}"
+                             style={{quantifiable.progressWidthStyle}}>
+                            <span class="sr-only">{{quantifiable.progress}}%</span>
+                        </div>
                     </div>
-                </div>
-            </li>
-        {{/each}}
-    </ul>
-
-    {{#unless model.stocks}}
-        <div class="alert alert-warning">
-            {{t 'prepare.empty_project'}}
-        </div>
-    {{/unless}}
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        {{#unless model.stocks}}
+            <div class="alert alert-warning">
+                {{t 'crafting.empty_project'}}
+            </div>
+        {{else}}
+            <div class="alert alert-success">
+                {{t 'crafting.completed_project'}}
+            </div>
+        {{/unless}}
+    {{/if}}
 
     {{outlet}}
 </div>

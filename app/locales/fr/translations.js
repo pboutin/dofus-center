@@ -31,7 +31,11 @@ export default {
         'edit_project': "Modifier le projet",
         'go_to_projects': "Retourner à la liste des projets",
         'your_project': "Votre projet",
-        'send_to_workbench': "Envoyer à l'atelier"
+        'send_to_workbench': "Envoyer à l'atelier",
+        'hide_completed': "Cacher les ressources complétées",
+        'show_everything': "Afficher tout les ressources",
+        'empty_project': "Votre projet est présentement vide",
+        'completed_project': "Votre projet semble complété !"
     },
     'view': {
         'project': "Projet",
