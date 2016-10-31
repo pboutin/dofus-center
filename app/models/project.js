@@ -31,24 +31,29 @@ export default DS.Model.extend({
         });
     }),
 
-    addItem(item, quantity) {
-        quantity = typeof quantity === 'undefined' ? 1 : quantity;
+    addItem(newItem, newItemQuantity) {
+        newItemQuantity = typeof newItemQuantity === 'undefined' ? 1 : newItemQuantity;
 
-        let items = this.get('metadata.items');
+        let items = this.get('items');
 
-        let matchingQuantifiableItem = _.find(items, function(quantifiableItem) {
-            return item.get('id') === quantifiableItem.get('item.id');
-        });
+        let matchingQuantifiableItem = this._getQuantifiableItem(newItem.get('id'));
 
         if (matchingQuantifiableItem) {
-            matchingQuantifiableItem.increaseTargetOf(quantity);
+            matchingQuantifiableItem.increaseTargetOf(newItemQuantity);
         } else {
             items.push(new Quantifiable({
-                item: item,
-                target: quantity
+                item: newItem,
+                target: newItemQuantity
             }));
-            this.set('metadata.items', items);
+            this.set('items', items);
         }
+
+        _.each(newItem.get('recipe'), function(recipeItemTarget, recipeItemId) {
+            let quantifiableItemInProject = this._getQuantifiableItem(recipeItemId);
+            if (quantifiableItemInProject) {
+                quantifiableItemInProject.increaseTargetOf(recipeItemTarget * newItemQuantity);
+            }
+        }.bind(this));
     },
 
     removeItem(item) {
@@ -56,5 +61,12 @@ export default DS.Model.extend({
         this.set('metadata.items', _.filter(items, function(quantifiableItem) {
             return quantifiableItem.get('item.id') !== item.get('id');
         }));
+    },
+
+    _getQuantifiableItem(itemId) {
+        let matchingQuantifiableItem = _.find(this.get('items'), function(quantifiableItem) {
+            return itemId === quantifiableItem.get('item.id');
+        });
+        return matchingQuantifiableItem ? matchingQuantifiableItem : null;
     }
 });
