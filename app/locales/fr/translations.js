@@ -1,7 +1,11 @@
 export default {
     'app': {
         'infamc_copyrights': "Cette application a été développée indépendement d'Ankama Studio par Pascal Boutin (Infahemsi de Many).",
-        'ankama_copyrights': "L'ensemble des images et animations utilisées dans cette application sont l'oeuvre et la propriété d'Ankama Studio."
+        'ankama_copyrights': "L'ensemble des images et animations utilisées dans cette application sont l'oeuvre et la propriété d'Ankama Studio.",
+        'issues': "Anomalies",
+        'if_you_encounter_an_anomaly': "Si vous rencontrez une anomalie, il est possible de me la rapporter via Dofus, /w Infahemsi sur Many, ou via le dépot du projet concerné.",
+        'data_issue': "Pour un item manquant ou erroné",
+        'workbench_issue': "Pour toute autre forme d'anomalie"
     },
     'login': {
         'login_with_facebook': "Se connecter avec Facebook",

@@ -8,7 +8,21 @@
 
 <footer>
     <div class="container">
-        <p>{{t 'app.infamc_copyrights'}}</p>
-        <p>{{t 'app.ankama_copyrights'}}</p>
+        <p>{{t 'app.if_you_encounter_an_anomaly'}}</p>
+        <p>
+            {{t 'app.data_issue'}} :
+            <a href="{{dataIssuesUrl}}" class="btn btn-default btn-xs" target="_blank">
+                dofus-data {{fa-icon 'github'}}
+            </a>
+        </p>
+        <p>
+            {{t 'app.workbench_issue'}} :
+            <a href="{{workbenchIssuesUrl}}" class="btn btn-default btn-xs" target="_blank">
+                dofus-workbench {{fa-icon 'github'}}
+            </a>
+        </p>
+        <hr>
+        <p class="text-center">{{t 'app.infamc_copyrights'}}</p>
+        <p class="text-center">{{t 'app.ankama_copyrights'}}</p>
     </div>
 </footer>
