@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'dofus-workbench/config/environment';
 import _ from 'lodash/lodash';
 
 export default Ember.Object.extend({
@@ -7,23 +8,26 @@ export default Ember.Object.extend({
     searchableName: '',
     level: 0,
     type: '',
-    image: '',
     link: '',
     recipe: {},
+
+    image: Ember.computed('id', function() {
+        let itemIntId = this.get('id').replace(/-.+/, '');
+        return `${ENV.dofusDataRepository}/images/${itemIntId}.png`;
+    }),
 
     deserialize(rawItem) {
         let parsedRecipe = {};
         _.each(rawItem['recipe'], function(target, itemId) {
             parsedRecipe[itemId] = parseInt(target, 10);
         });
-        
+
         this.set('id', rawItem['id']);
         this.set('name', rawItem['name']);
         this.set('level', parseInt(rawItem['level'], 10));
         this.set('type', rawItem['type']);
         this.set('recipe', parsedRecipe);
         this.set('link', rawItem['link']);
-        this.set('image', rawItem['image']);
     },
 
     isCraftable: Ember.computed('recipe', function() {

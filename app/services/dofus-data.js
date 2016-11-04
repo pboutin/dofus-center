@@ -13,7 +13,6 @@ export default Ember.Service.extend({
             Ember.$.getJSON(`${ENV.dofusDataRepository}/dofus-data.json`, function(data) {
                 _.mapKeys(data, function(rawItem, itemId) {
                     rawItem['id'] = itemId;
-                    rawItem['image'] = `${ENV.dofusDataRepository}/images/${itemId}.png`;
                     let item = Ember.getOwner(self).lookup('object:item');
                     item.deserialize(rawItem);
                     item.set('searchableName', self._sanitize(item.get('name')));

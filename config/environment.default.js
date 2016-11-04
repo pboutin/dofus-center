@@ -6,7 +6,7 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '',
     locationType: 'auto',
-    dofusDataRepository: 'https://raw.githubusercontent.com/pboutin/dofus-data/master/',
+    dofusDataRepository: 'https://raw.githubusercontent.com/pboutin/dofus-data/master',
     dofusDataIssuesUrl: 'https://github.com/pboutin/dofus-data/issues/new',
     dofusWorkbenchIssuesUrl: 'https://github.com/pboutin/dofus-workbench/issues/new',
     firebase: {
