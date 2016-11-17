@@ -1,7 +1,7 @@
 <div class="text-center">
     {{#each items as |quantifiable|}}
         <a href="{{quantifiable.item.link}}" class="link-unstyled" target="_blank">
-            {{#tooltip-container class="item-icon" title=quantifiable.item.name}}
+            {{#tooltip-container class="item-icon" title=quantifiable.item.title}}
                 {{#if onRemove}}
                     <button class="btn-remove" {{action 'remove' quantifiable}}></button>
                 {{/if}}

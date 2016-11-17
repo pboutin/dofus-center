@@ -11,6 +11,12 @@ export default Ember.Object.extend({
     link: '',
     recipe: {},
 
+    title: Ember.computed('name', 'level', function() {
+        let name = this.get('name');
+        let level = this.get('level');
+        return `${name} (${level})`;
+    }),
+
     image: Ember.computed('id', function() {
         let itemIntId = this.get('id').replace(/-.+/, '');
         return `${ENV.dofusDataRepository}/images/${itemIntId}.png`;
