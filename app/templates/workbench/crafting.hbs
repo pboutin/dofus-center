@@ -2,11 +2,11 @@
     <h1>
         {{t 'crafting.workbench_for'}} <em>{{model.name}}</em>
 
-        {{#link-to 'projects' class="btn btn-info"}}
+        {{#link-to 'workbench.projects' class="btn btn-info"}}
             {{t 'crafting.go_to_projects'}} {{fa-icon 'home'}}
         {{/link-to}}
 
-        {{#link-to 'prepare' model.id class="btn btn-info"}}
+        {{#link-to 'workbench.prepare' model.id class="btn btn-info"}}
             {{t 'crafting.edit_project'}} {{fa-icon 'pencil'}}
         {{/link-to}}
     </h1>

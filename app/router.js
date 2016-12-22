@@ -6,11 +6,14 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('dashboard', {path: '/'});
   this.route('login');
-  this.route('projects', {path: '/'});
-  this.route('prepare', {path: '/prepare/:id'});
-  this.route('crafting', {path: '/crafting/:id'});
-  this.route('view', {path: '/view/:id'});
+  this.route('workbench', function() {
+    this.route('projects');
+    this.route('prepare', {path: 'prepare/:id'});
+    this.route('crafting', {path: 'crafting/:id'});
+    this.route('view', {path: 'view/:id'});
+  });
 });
 
 Router.reopen({
