@@ -3,7 +3,7 @@
         {{t 'view.project'}} <em>{{model.name}}</em>
 
         {{#if session.isAuthenticated}}
-            {{#link-to 'projects' class="btn btn-sm btn-info"}}
+            {{#link-to 'workbench.projects' class="btn btn-sm btn-info"}}
                 {{t 'view.go_to_projects'}} {{fa-icon 'home'}}
             {{/link-to}}
         {{else}}

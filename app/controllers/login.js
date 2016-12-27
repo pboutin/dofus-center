@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
         signIn: function(provider) {
             this.get('session').open('firebase', { provider: provider}).then(function(data) {
                 console.log('Logged in with : ', data);
-                this.transitionToRoute('projects');
+                this.transitionToRoute('dashboard');
             }.bind(this));
         }
     }
