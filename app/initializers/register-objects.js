@@ -6,6 +6,7 @@ export function initialize(app) {
 
     app.register('object:item', Item, { singleton: false });
     app.register('object:quantifiable', Quantifiable, { singleton: false });
+    app.register('object:almanax', Quantifiable, { singleton: false });
 }
 
 export default {

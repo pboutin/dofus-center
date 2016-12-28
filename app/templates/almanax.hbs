@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <table class="almanax-table">
+        {{#each model as |day|}}
+            <tr class="{{if (is-weekend day.moment) 'weekend'}}">
+                <td>{{moment-format day.moment 'DD-MM-YYYY'}}</td>
+                <td>{{day.almanax.bonus}}</td>
+                <td>
+                    {{#if day.almanax.questItem}}
+                        <img src="{{day.almanax.questItem.image}}">
+                    {{/if}}
+                    {{day.almanax.quest}}
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-block" {{action 'addDays' 7}}>
+                <i class="fa fa-plus"></i> 7
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-block" {{action 'addDays' 30}}>
+                <i class="fa fa-plus"></i> 30
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-block" {{action 'addDays' 100}}>
+                <i class="fa fa-plus"></i> 100
+            </button>
+        </div>
+    </div>
+</div>
+
+{{outlet}}

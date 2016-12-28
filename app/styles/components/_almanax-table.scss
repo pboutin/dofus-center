@@ -1,0 +1,38 @@
+.almanax-table {
+    @extend .table;
+    background-color: $brand-white;
+    border-radius: $border-radius-base;
+
+    img {
+        height: 30px;
+    }
+
+    tr {
+        &:hover {
+            background-color: lighten($brand-primary, 30%);
+        }
+
+        &.weekend {
+            background-color: $gray-lighter;
+
+            &:hover {
+                background-color: lighten($brand-primary, 25%);
+            }
+        }
+    }
+
+    td {
+        padding-left: $padding-base-horizontal;
+        padding-right: $padding-base-horizontal;
+        padding-top: $padding-base-vertical;
+        padding-bottom: $padding-base-vertical;
+
+        &:first-child {
+            white-space: nowrap;
+        }
+
+        &:last-child {
+            white-space: nowrap;
+        }
+    }
+}
