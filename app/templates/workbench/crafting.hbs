@@ -1,13 +1,13 @@
 <div class="container">
     <h1>
-        {{t 'crafting.workbench_for'}} <em>{{model.name}}</em>
+        {{t 'workbench.crafting.workbench_for'}} <em>{{model.name}}</em>
 
         {{#link-to 'workbench.projects' class="btn btn-info"}}
-            {{t 'crafting.go_to_projects'}} {{fa-icon 'home'}}
+            {{t 'workbench.crafting.go_to_projects'}} {{fa-icon 'home'}}
         {{/link-to}}
 
         {{#link-to 'workbench.prepare' model.id class="btn btn-info"}}
-            {{t 'crafting.edit_project'}} {{fa-icon 'pencil'}}
+            {{t 'workbench.crafting.edit_project'}} {{fa-icon 'pencil'}}
         {{/link-to}}
     </h1>
 </div>
@@ -17,7 +17,7 @@
 <div class="container margin-top">
     <p>
         <button class="btn btn-primary" {{action 'toggleFilter'}}>
-            {{fa-icon 'list'}} {{t (if isFiltered 'crafting.show_everything' 'crafting.hide_completed')}}
+            {{fa-icon 'list'}} {{t (if isFiltered 'workbench.crafting.show_everything' 'workbench.crafting.hide_completed')}}
         </button>
     </p>
     {{#if displayedStocks}}
@@ -36,7 +36,7 @@
 
                     {{#if quantifiable.item.isCraftable}}
                         <button class="btn btn-warning btn-craft btn-xs" {{action 'addToItems' quantifiable}}>
-                            {{t 'crafting.send_to_workbench'}}
+                            {{t 'workbench.crafting.send_to_workbench'}}
                         </button>
                     {{/if}}
 
@@ -57,11 +57,11 @@
     {{else}}
         {{#unless model.stocks}}
             <div class="alert alert-warning">
-                {{t 'crafting.empty_project'}}
+                {{t 'workbench.crafting.empty_project'}}
             </div>
         {{else}}
             <div class="alert alert-success">
-                {{t 'crafting.completed_project'}}
+                {{t 'workbench.crafting.completed_project'}}
             </div>
         {{/unless}}
     {{/if}}

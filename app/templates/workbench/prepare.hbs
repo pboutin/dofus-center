@@ -1,13 +1,13 @@
 <div class="container">
     <h1>
-        {{t 'prepare.manage'}} <em>{{model.name}}</em>
+        {{t 'workbench.prepare.manage'}} <em>{{model.name}}</em>
 
         {{#link-to 'workbench.crafting' model.id class="btn btn-sm btn-primary"}}
-            {{t 'prepare.go_to_workbench'}} {{fa-icon 'home'}}
+            {{t 'workbench.prepare.go_to_workbench'}} {{fa-icon 'home'}}
         {{/link-to}}
 
         {{#link-to 'workbench.projects' class="btn btn-sm btn-info"}}
-            {{t 'prepare.back_to_projects'}} {{fa-icon 'wrench'}}
+            {{t 'workbench.prepare.back_to_projects'}} {{fa-icon 'wrench'}}
         {{/link-to}}
     </h1>
 </div>
@@ -16,7 +16,7 @@
 
 <div class="container">
     <div class="form-group margin-top">
-        {{input value=query placeholder=(t 'prepare.search') class="form-control"}}
+        {{input value=query placeholder=(t 'workbench.prepare.search') class="form-control"}}
     </div>
 
     <div class="list-group icons-list-group">

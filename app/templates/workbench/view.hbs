@@ -1,14 +1,14 @@
 <div class="container">
     <h1>
-        {{t 'view.project'}} <em>{{model.name}}</em>
+        {{t 'workbench.view.project'}} <em>{{model.name}}</em>
 
         {{#if session.isAuthenticated}}
             {{#link-to 'workbench.projects' class="btn btn-sm btn-info"}}
-                {{t 'view.go_to_projects'}} {{fa-icon 'home'}}
+                {{t 'workbench.view.go_to_projects'}} {{fa-icon 'home'}}
             {{/link-to}}
         {{else}}
             {{#link-to 'login' class="btn btn-sm btn-primary"}}
-                {{t 'view.login'}} {{fa-icon 'sign-in'}}
+                {{t 'workbench.view.login'}} {{fa-icon 'sign-in'}}
             {{/link-to}}
         {{/if}}
     </h1>
@@ -49,7 +49,7 @@
 
     {{#unless model.stocks}}
         <div class="alert alert-warning">
-            {{t 'view.empty_project'}}
+            {{t 'workbench.view.empty_project'}}
         </div>
     {{/unless}}
 
