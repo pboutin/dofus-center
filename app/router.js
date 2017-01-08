@@ -12,7 +12,6 @@ Router.map(function() {
     this.route('projects');
     this.route('prepare', {path: 'prepare/:id'});
     this.route('crafting', {path: 'crafting/:id'});
-    this.route('view', {path: 'view/:id'});
   });
   this.route('almanax');
 });

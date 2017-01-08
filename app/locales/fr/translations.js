@@ -7,6 +7,9 @@ export default {
         'data_issue': "Pour un item manquant ou erroné",
         'workbench_issue': "Pour toute autre forme d'anomalie"
     },
+    'components': {
+        'share': 'Partager'
+    },
     'login': {
         'login_with_facebook': "Se connecter avec Facebook",
         'login_with_google': "Se connecter avec Google"
@@ -18,7 +21,6 @@ export default {
     'workbench': {
         'projects': {
             'new': "Créer un nouveau projet",
-            'public_link': "Lien publique",
             'save': "Sauvegarder",
             'cancel': "Cancel",
             'name': "Nom du projet",
@@ -44,12 +46,6 @@ export default {
             'show_everything': "Afficher tout les ressources",
             'empty_project': "Votre projet est présentement vide",
             'completed_project': "Votre projet semble complété !"
-        },
-        'view': {
-            'project': "Projet",
-            'go_to_projects': "Aller à la liste des projets",
-            'login': "Se connecter",
-            'empty_project': "Ce projet est présentement vide",
         }
     }
 };

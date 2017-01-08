@@ -2,13 +2,15 @@
     <h1>
         {{t 'workbench.crafting.workbench_for'}} <em>{{model.name}}</em>
 
-        {{#link-to 'workbench.projects' class="btn btn-info"}}
-            {{t 'workbench.crafting.go_to_projects'}} {{fa-icon 'home'}}
-        {{/link-to}}
+        {{#if isEditing}}
+            {{#link-to 'workbench.projects' class="btn btn-info"}}
+                {{t 'workbench.crafting.go_to_projects'}} {{fa-icon 'home'}}
+            {{/link-to}}
 
-        {{#link-to 'workbench.prepare' model.id class="btn btn-info"}}
-            {{t 'workbench.crafting.edit_project'}} {{fa-icon 'pencil'}}
-        {{/link-to}}
+            {{#link-to 'workbench.prepare' model.id class="btn btn-info"}}
+                {{t 'workbench.crafting.edit_project'}} {{fa-icon 'pencil'}}
+            {{/link-to}}
+        {{/if}}
     </h1>
 </div>
 
@@ -19,6 +21,7 @@
         <button class="btn btn-primary" {{action 'toggleFilter'}}>
             {{fa-icon 'list'}} {{t (if isFiltered 'workbench.crafting.show_everything' 'workbench.crafting.hide_completed')}}
         </button>
+        {{share-button}}
     </p>
     {{#if displayedStocks}}
         <ul class="list-group list-group-lg icons-list-group">
@@ -41,9 +44,10 @@
                     {{/if}}
 
                     {{quantity-editor
-                    quantity=quantifiable.quantity
-                    target=quantifiable.target
-                    onChange=(action 'save')}}
+                        isEditing=isEditing
+                        quantity=quantifiable.quantity
+                        target=quantifiable.target
+                        onChange=(action 'save')}}
 
                     <div class="progress">
                         <div class="progress-bar {{if quantifiable.isComplete 'progress-bar-success' 'progress-bar-warning'}}"

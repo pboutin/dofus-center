@@ -1,0 +1,7 @@
+{{#unless url}}
+    <button class="btn btn-primary" {{action 'share'}}>
+        {{fa-icon 'share-alt'}} {{t 'components.share'}}
+    </button>
+{{else}}
+    <input type="text" class="form-control  input-sm" value="{{url}}" onclick="this.select()">
+{{/unless}}

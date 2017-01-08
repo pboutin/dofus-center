@@ -8,6 +8,8 @@ export default Ember.Component.extend({
     quantity: 0,
     target: 0,
     editableQuantity: 0,
+    isEditing: true,
+    
     onChange: function() {},
 
     actions: {

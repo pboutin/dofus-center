@@ -5,12 +5,6 @@
             <small>lvl {{project.level}}</small>
         </h3>
         <p>
-            {{#link-to 'workbench.view' project.id target="_blank"}}
-                {{t 'workbench.projects.public_link'}}
-                {{fa-icon 'external-link'}}
-            {{/link-to}}
-        </p>
-        <p>
             {{#link-to 'workbench.prepare' project.id class="btn btn-sm btn-info"}}
                 {{t 'workbench.projects.prepare'}} {{fa-icon 'pencil'}}
             {{/link-to}}

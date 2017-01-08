@@ -5,18 +5,21 @@ export default Ember.Controller.extend({
     dofusData: Ember.inject.service('dofus-data'),
 
     isFiltered: false,
+    isEditing: false,
 
     actions: {
         toggleFilter() {
             this.toggleProperty('isFiltered');
         },
         toggleQuantity(quantifiable) {
-            const target = quantifiable.get('target');
-            const quantity = quantifiable.get('quantity');
-            if (quantity === 0) {
-                quantifiable.set('quantity', target);
-            } else {
-                quantifiable.set('quantity', 0);
+            if (this.get('isEditing')) {
+                const target = quantifiable.get('target');
+                const quantity = quantifiable.get('quantity');
+                if (quantity === 0) {
+                    quantifiable.set('quantity', target);
+                } else {
+                    quantifiable.set('quantity', 0);
+                }
             }
         },
         addToItems(quantifiableItem) {

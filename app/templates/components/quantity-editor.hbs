@@ -1,19 +1,26 @@
 <div class="details">
-    {{input value=editableQuantity type="number" class="form-control"}} / {{target}}
+    {{#if isEditing}}
+        {{input value=editableQuantity type="number" class="form-control"}} / {{target}}
+    {{else}}
+        {{quantity}} / {{target}}
+    {{/if}}
+
     {{#if missing}}
         <sup class="text-warning">{{missing}}</sup>
     {{/if}}
 </div>
 
-<div class="btn-group-vertical">
-    <button class="btn btn-default btn-xs" {{action 'incrementBy' 1}}>+1</button>
-    <button class="btn btn-default btn-xs" {{action 'decrementBy' 1}}>-1</button>
-</div>
-<div class="btn-group-vertical">
-    <button class="btn btn-default btn-xs" {{action 'incrementBy' 10}}>+10</button>
-    <button class="btn btn-default btn-xs" {{action 'decrementBy' 10}}>-10</button>
-</div>
-<div class="btn-group-vertical">
-    <button class="btn btn-default btn-xs" {{action 'maximise'}}>max</button>
-    <button class="btn btn-default btn-xs" {{action 'clear'}}>min</button>
-</div>
+{{#if isEditing}}
+    <div class="btn-group-vertical">
+        <button class="btn btn-default btn-xs" {{action 'incrementBy' 1}}>+1</button>
+        <button class="btn btn-default btn-xs" {{action 'decrementBy' 1}}>-1</button>
+    </div>
+    <div class="btn-group-vertical">
+        <button class="btn btn-default btn-xs" {{action 'incrementBy' 10}}>+10</button>
+        <button class="btn btn-default btn-xs" {{action 'decrementBy' 10}}>-10</button>
+    </div>
+    <div class="btn-group-vertical">
+        <button class="btn btn-default btn-xs" {{action 'maximise'}}>max</button>
+        <button class="btn btn-default btn-xs" {{action 'clear'}}>min</button>
+    </div>
+{{/if}}
