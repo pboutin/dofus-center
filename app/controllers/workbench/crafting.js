@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
             if (this.get('isEditing')) {
                 const target = quantifiable.get('target');
                 const quantity = quantifiable.get('quantity');
-                if (quantity === 0) {
+                if (quantity > 0) {
                     quantifiable.set('quantity', target);
                 } else {
                     quantifiable.set('quantity', 0);

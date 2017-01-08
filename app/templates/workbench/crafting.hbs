@@ -26,9 +26,9 @@
     {{#if displayedStocks}}
         <ul class="list-group list-group-lg icons-list-group">
             {{#each displayedStocks as |quantifiable|}}
-                <li class="list-group-item {{if quantifiable.item.isCraftable 'list-group-item-craftable'}}" {{action 'toggleQuantity' quantifiable on='doubleClick'}}>
+                <li class="list-group-item {{if quantifiable.item.isCraftable 'list-group-item-craftable'}}">
                     {{#if quantifiable.item.image}}
-                        <img src="{{quantifiable.item.image}}">
+                        <img src="{{quantifiable.item.image}}" {{action 'toggleQuantity' quantifiable on='doubleClick'}}>
                     {{/if}}
 
                     {{item-link item=quantifiable.item}}
