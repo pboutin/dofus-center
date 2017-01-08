@@ -2,6 +2,7 @@
     @extend .table;
     background-color: $brand-white;
     border-radius: $border-radius-base;
+    overflow: hidden;
 
     img {
         height: 30px;
@@ -27,11 +28,18 @@
         padding-top: $padding-base-vertical;
         padding-bottom: $padding-base-vertical;
 
-        &:first-child {
+        // Date
+        &:nth-child(1) {
             white-space: nowrap;
         }
 
-        &:last-child {
+        // Item thumbnail
+        &:nth-child(3) {
+            width: 55px;
+        }
+
+        // Quest
+        &:nth-child(4) {
             white-space: nowrap;
         }
     }

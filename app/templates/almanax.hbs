@@ -8,7 +8,14 @@
                     {{#if day.almanax.questItem}}
                         <img src="{{day.almanax.questItem.image}}">
                     {{/if}}
-                    {{day.almanax.quest}}
+                </td>
+                <td>
+                    {{#if day.almanax.questItem}}
+                        {{day.almanax.questQuantity}}
+                        {{item-link item=day.almanax.questItem}}
+                    {{else}}
+                        {{day.almanax.quest}}
+                    {{/if}}
                 </td>
             </tr>
         {{/each}}

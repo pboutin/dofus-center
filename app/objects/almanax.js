@@ -13,6 +13,10 @@ export default Ember.Object.extend({
         return this;
     },
 
+    questQuantity: Ember.computed('quest', function() {
+        return parseInt(this.get('quest').match(/\d+/), 10);
+    }),
+
     isXpBonus: Ember.computed('bonus', function() {
         return /expérience|étoile/.test(this.get('bonus'));
     }),
