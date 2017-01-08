@@ -10,6 +10,15 @@ export default Ember.Controller.extend({
         toggleFilter() {
             this.toggleProperty('isFiltered');
         },
+        toggleQuantity(quantifiable) {
+            const target = quantifiable.get('target');
+            const quantity = quantifiable.get('quantity');
+            if (quantity === 0) {
+                quantifiable.set('quantity', target);
+            } else {
+                quantifiable.set('quantity', 0);
+            }
+        },
         addToItems(quantifiableItem) {
             let project = this.get('model');
             project.addItem(quantifiableItem.get('item'), quantifiableItem.get('target'));
