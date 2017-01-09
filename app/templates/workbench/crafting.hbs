@@ -37,10 +37,12 @@
                         <em>({{quantifiable.item.type}})</em>
                     {{/if}}
 
-                    {{#if quantifiable.item.isCraftable}}
-                        <button class="btn btn-warning btn-craft btn-xs" {{action 'addToItems' quantifiable}}>
-                            {{t 'workbench.crafting.send_to_workbench'}}
-                        </button>
+                    {{#if isEditing}}
+                        {{#if quantifiable.item.isCraftable}}
+                            <button class="btn btn-warning btn-craft btn-xs" {{action 'addToItems' quantifiable}}>
+                                {{t 'workbench.crafting.send_to_workbench'}}
+                            </button>
+                        {{/if}}
                     {{/if}}
 
                     {{quantity-editor
