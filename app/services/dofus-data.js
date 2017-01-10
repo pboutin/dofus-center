@@ -42,16 +42,15 @@ export default Ember.Service.extend({
         return foundItem || null;
     },
 
-    getFilteredItemsFor(query) {
-        var result = [];
-        query = this._sanitize(query);
+    getFilteredItemsFor(query, mode) {
+        return _.filter(this.get('itemsMap'), item => {
+            let isValid = item.get('searchableName').indexOf(this._sanitize(query)) >= 0;
 
-        _.mapValues(this.get('itemsMap'), function(item) {
-            if (item.get('searchableName').indexOf(query) >= 0 && item.get('isCraftable')) {
-                result.push(item);
+            if (mode === 'craft') {
+                isValid &= item.get('isCraftable');
             }
+            return isValid;
         });
-        return result;
     },
 
     _sanitize(input) {

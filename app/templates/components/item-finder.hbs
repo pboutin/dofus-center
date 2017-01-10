@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="form-group margin-top">
+        {{input value=query placeholder=(t 'workbench.prepare.search') class="form-control"}}
+    </div>
+
+    <div class="list-group icons-list-group">
+        {{#each filteredItems as |item|}}
+            <button class="list-group-item" {{action 'select' item}}>
+                <span class="badge">
+                    lvl {{item.level}}
+                </span>
+                <span class="badge">
+                    {{item.type}}
+                </span>
+
+                <img src={{item.image}}>
+                {{item.name}}
+            </button>
+        {{/each}}
+    </div>
+</div>
