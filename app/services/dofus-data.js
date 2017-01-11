@@ -48,6 +48,8 @@ export default Ember.Service.extend({
 
             if (mode === 'craft') {
                 isValid &= item.get('isCraftable');
+            } else if (mode === 'effect') {
+                isValid &= item.get('hasEffects');
             }
             return isValid;
         });

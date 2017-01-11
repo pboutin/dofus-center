@@ -1,0 +1,38 @@
+.mage-table {
+    @extend .table;
+    background-color: $brand-white;
+    border-radius: $border-radius-base;
+    overflow: hidden;
+
+    tr:nth-child(even) {
+        background-color: $gray-lighter;
+    }
+
+    th, td {
+        padding-left: $padding-base-horizontal;
+        padding-right: $padding-base-horizontal;
+        padding-top: $padding-base-vertical;
+        padding-bottom: $padding-base-vertical;
+    }
+
+    th em {
+        display: block;
+        font-size: 1rem;
+        font-style: normal;
+        &:before {
+            content: '(';
+        }
+        &:after {
+            content: ')';
+        }
+    }
+
+    sub {
+        &:before {
+            content: '(';
+        }
+        &:after {
+            content: ')';
+        }
+    }
+}

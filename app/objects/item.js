@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import ENV from 'dofus-workbench/config/environment';
+import runes from '../ressources/item-runes';
 import _ from 'lodash/lodash';
 
 export default Ember.Object.extend({
@@ -10,6 +11,7 @@ export default Ember.Object.extend({
     type: '',
     link: '',
     recipe: {},
+    effects: [],
 
     title: Ember.computed('name', 'level', function() {
         let name = this.get('name');
@@ -33,12 +35,66 @@ export default Ember.Object.extend({
         this.set('level', parseInt(rawItem['level'], 10));
         this.set('type', rawItem['type']);
         this.set('recipe', parsedRecipe);
+        this.set('effects', rawItem['effects']);
         this.set('link', rawItem['link']);
     },
 
     isCraftable: Ember.computed('recipe', function() {
         return _.keys(this.get('recipe')).length > 0;
     }),
+
+    hasEffects: Ember.computed('effects', function() {
+        const effects = this.get('effects');
+        if (effects === null) {
+            return false;
+        }
+        return ! _.every(effects, isNaN);
+    }),
+
+    getEffectsList() {
+        let effects = this.get('effects');
+
+        if (effects === null) {
+            return [];
+        }
+
+        let parsedEffects = [];
+        let miscEffects = [];
+
+        while (effects.length) {
+            let effect = effects.shift();
+            let rune = _.get(runes, effect, null);
+
+            if (rune) {
+                const perfectRoll = parseInt(effects.shift(), 10);
+                const over = Math.floor(101 / rune.weight.bonus[0] * rune.effects[0]);
+                const isBonus = perfectRoll > 0;
+                parsedEffects.push({
+                    isStatic: false,
+                    effect: effect,
+                    value: perfectRoll,
+                    isBonus: isBonus,
+                    max: (over > perfectRoll) && isBonus ? over : null,
+                    runes: _.map(['Base', 'Pa', 'Ra'], (runeType, index) => {
+                        if (rune.effects[index]) {
+                            return {
+                                type: runeType,
+                                effect: rune.effects[index],
+                                weight: (isBonus ? rune.weight.bonus : rune.weight.malus)[index]
+                            };
+                        }
+                        return null;
+                    })
+                });
+            } else {
+                miscEffects.push({
+                    isStatic: true,
+                    effect: effect
+                });
+            }
+        }
+        return _.union(parsedEffects, miscEffects);
+    },
 
     fakeFor(itemId) {
         this.set('id', itemId);

@@ -8,7 +8,8 @@ export default {
         'workbench_issue': "Pour toute autre forme d'anomalie"
     },
     'components': {
-        'share': 'Partager'
+        'share': 'Partager',
+        'item_search': 'Chercher un objet...'
     },
     'login': {
         'login_with_facebook': "Se connecter avec Facebook",
@@ -16,7 +17,8 @@ export default {
     },
     'dashboard': {
         'workbench': "Atelier d'artisanat",
-        'almanax': "Almanax"
+        'almanax': "Almanax",
+        'magebench': "Atelier de forgemagie"
     },
     'workbench': {
         'projects': {
@@ -32,7 +34,6 @@ export default {
         },
         'prepare': {
             'manage': "Gestion du projet",
-            'search': "Ajouter un item...",
             'back_to_projects': "Retourner à la liste des projets",
             'go_to_workbench': "Passer à l'atelier",
         },
@@ -46,6 +47,16 @@ export default {
             'show_everything': "Afficher tout les ressources",
             'empty_project': "Votre projet est présentement vide",
             'completed_project': "Votre projet semble complété !"
+        }
+    },
+    'magebench': {
+        'item': {
+            'effects': "Effets",
+            'rune_effect': "Effet de la rune",
+            'maximum_rolls': "Jets maximums",
+            'maximum_over': "Over maximum théorique",
+            'weight': "Poids",
+            'back_to_item_search': "Retourner à la recherche d'item"
         }
     }
 };

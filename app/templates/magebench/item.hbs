@@ -1,0 +1,44 @@
+<div class="container">
+    <h1>
+        {{#if model.image}}
+            <img src="{{model.image}}" alt="{{model.name}}">
+        {{/if}}
+        {{model.name}}
+        {{#link-to 'magebench.search' class="btn btn-sm btn-info"}}
+            {{t 'magebench.item.back_to_item_search'}} {{fa-icon 'home'}}
+        {{/link-to}}
+    </h1>
+
+    <table class="mage-table">
+        <tr>
+            <th>{{t 'magebench.item.effects'}}</th>
+            <th>{{t 'magebench.item.maximum_rolls'}} <em>{{t 'magebench.item.maximum_over'}}</em></th>
+            <th>{{t 'magebench.item.weight'}} <em>{{t 'magebench.item.rune_effect'}}</em></th>
+            <th>{{t 'magebench.item.weight'}} (Pa) <em>{{t 'magebench.item.rune_effect'}}</em></th>
+            <th>{{t 'magebench.item.weight'}} (Ra) <em>{{t 'magebench.item.rune_effect'}}</em></th>
+        </tr>
+        {{#each effects as |effect|}}
+            {{#unless effect.isStatic}}
+                <tr>
+                    <td class="{{if effect.isBonus 'text-success' 'text-danger'}}">
+                        {{effect effect.effect}}
+                    </td>
+                    <td>
+                        {{effect.value}}
+                        {{#if effect.max}}
+                            <sub>{{effect.max}}</sub>
+                        {{/if}}
+                    </td>
+                    {{#each effect.runes as |rune|}}
+                        <td>
+                            {{#if rune}}
+                                {{rune.weight}}
+                                <sub class="text-success">+{{rune.effect}}</sub>
+                            {{/if}}
+                        </td>
+                    {{/each}}
+                </tr>
+            {{/unless}}
+        {{/each}}
+    </table>
+</div>

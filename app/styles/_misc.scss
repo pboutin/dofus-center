@@ -16,6 +16,11 @@ header {
 }
 
 h1 {
+    img {
+        float: left;
+        max-height: 40px;
+        margin-right: 10px;
+    }
     a, button {
         float: right;
         margin-left: 5px;
