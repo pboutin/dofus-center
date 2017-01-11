@@ -14,6 +14,7 @@ export default DS.Model.extend({
             };
         }
     }),
+    timestamp: DS.attr('timestamp'),
 
     items: Ember.computed.alias('metadata.items'),
     stocks: Ember.computed.alias('metadata.stocks'),
