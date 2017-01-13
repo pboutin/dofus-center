@@ -3,7 +3,7 @@
         padding-left: 45px;
 
         &.list-group-item-craftable {
-            background-color: lighten($brand-primary, 40%);
+            background-color: lighten($brand-info, 40%);
         }
 
         img {
@@ -31,7 +31,7 @@
         }
 
         &:hover {
-            background-color: lighten($brand-primary, 50%);
+            background-color: lighten($brand-primary, 30%);
 
             .btn-remove {
                 display: inline-block;
