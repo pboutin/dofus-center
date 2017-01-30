@@ -1,0 +1,8 @@
+<h1>OCRE PROGRESSION</h1>
+{{#each steps as |step index|}}
+    {{ocre-step
+        items=step.items
+        progress=step.progress
+        stepIndex=index
+        onChange=(action 'update')}}
+{{/each}}

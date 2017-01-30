@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Step {{stepDisplay}}
+    </div>
+    <div class="panel-body">
+        <ul>
+            {{#each parsedItems as |item|}}
+                <li>
+                    {{item.name}} - {{item.note}}
+                    - Val {{item.value}}
+
+                    <button {{action 'update' item 1}}>+</button>
+                    <button {{action 'update' item -1}}>-</button>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
