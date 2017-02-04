@@ -28,11 +28,15 @@ export default Ember.Component.extend({
         const items = this.get('items');
 
         this.set('parsedItems', _.map(items, (item, index) => {
+            const value = parseInt(progress[index], 10);
+            console.log(value);
             return {
                 name: item[0],
                 note: item[1],
                 index: index,
-                value: parseInt(progress[index], 10)
+                canAdd: value < 9,
+                canRemove: value > 0,
+                value: value
             };
         }));
     },
