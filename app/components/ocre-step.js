@@ -1,47 +1,51 @@
 import Ember from 'ember';
 import _ from 'lodash/lodash';
+import steps from '../ressources/ocre-quest';
 
 export default Ember.Component.extend({
     progress: '',
-    items: [],
     stepIndex: 0,
+    target: 0,
     onChange: () => {},
-
-    parsedItems: [],
 
     actions: {
         update(item, delta) {
             let progress = this.get('progress');
-            let newValue = parseInt(progress[item.index], 10) + delta;
-            let updatedProgress = this._replaceDigit(progress, item.index, newValue);
-            this.get('onChange')(updatedProgress, this.get('stepIndex'));
-            this.set('progress', updatedProgress);
+            progress = progress.split('');
+            progress[item.index] = item.value + delta;
+            progress = progress.join('');
+
+            this.get('onChange')(progress, this.get('stepIndex'));
         }
     },
 
-    stepDisplay: Ember.computed('stepIndex', function() {
-        return this.get('stepIndex') + 1;
+    progressBars: Ember.computed('parsedItems', 'target', function() {
+        const parsedItems = this.get('parsedItems');
+
+        return _.times(this.get('target'), (index) => {
+            return _.filter(parsedItems, parsedItem => parsedItem.value > index).length / parsedItems.length;
+        });
     }),
 
-    didReceiveAttrs() {
+    minimum: Ember.computed('progress', function() {
         const progress = this.get('progress');
-        const items = this.get('items');
+        return Math.min(..._.map(progress.split(''), number => parseInt(number, 10)));
+    }),
 
-        this.set('parsedItems', _.map(items, (item, index) => {
+    parsedItems: Ember.computed('progress', function() {
+        const progress = this.get('progress');
+        const items = steps[this.get('stepIndex')];
+
+        return _.map(items, (item, index) => {
             const value = parseInt(progress[index], 10);
-            console.log(value);
             return {
                 name: item[0],
                 note: item[1],
                 index: index,
-                canAdd: value < 9,
-                canRemove: value > 0,
+                cantAdd: value >= 9,
+                cantRemove: value <= 1,
                 value: value
             };
-        }));
-    },
-
-    _replaceDigit(str, index, newValue) {
-        return str.substr(0, index) + newValue.toString() + str.substr(index + 1);
-    }
+        });
+    })
 });

@@ -1,6 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('userdata', 'Unit | Model | userdata', {
+moduleForModel('ocre', 'Unit | Model | ocre', {
   // Specify the other units that are required for this test.
   needs: []
 });

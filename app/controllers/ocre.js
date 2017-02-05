@@ -1,28 +1,29 @@
 import Ember from 'ember';
-import steps from '../ressources/ocre-quest';
-import _ from 'lodash/lodash';
 
 export default Ember.Controller.extend({
     steps: [],
     
     actions: {
-        update(subProgress, index) {
-            let userdata = this.get('model');
-            let progress = userdata.get('ocreProgress');
-            progress[index] = subProgress;
-            userdata.set('ocreProgress', progress);
-            userdata.save();
+        updateTarget(delta) {
+            let ocre = this.get('model');
+            ocre.set('target', ocre.get('target') + delta);
+            ocre.save();
+        },
+        updateStep(progress, stepIndex) {
+            let ocre = this.get('model');
+            ocre.set(`step${stepIndex}`, progress);
+            ocre.save();
+
+            Ember.run.debounce(ocre, function() {
+                this.save();
+            }, 2000);
         }
     },
 
-    prepareSteps() {
-        let progress = this.get('model.ocreProgress');
-
-        this.set('steps', _.map(steps, (items, index) => {
-            return {
-                items: items,
-                progress: progress[index]
-            };
-        }));
-    }
+    cantIncrementTarget: Ember.computed('model.target', function() {
+        return this.get('model.target') >= 9;
+    }),
+    cantDecrementTarget: Ember.computed('model.target', function() {
+        return this.get('model.target') <= 1;
+    })
 });

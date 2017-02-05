@@ -4,7 +4,7 @@ import _ from 'lodash/lodash';
 
 export default Ember.Route.extend({
     model() {
-        return this.store.query('userdata', {
+        return this.store.query('ocre', {
             orderBy: 'userId',
             equalTo: this.get('session.uid')
         });
@@ -12,18 +12,20 @@ export default Ember.Route.extend({
 
     setupController(controller, model) {
         if (model.get('length')) {
-            controller.set('model', model.get('firstObject'));
+            model = model.get('firstObject');
         } else {
-            controller.set('model', this.get('store').createRecord('userdata', {
+            model = this._initProgressFor(this.get('store').createRecord('ocre', {
                 userId: this.get('session.uid'),
-                ocreProgress: this._initOcreProgress()
+                target: 1
             }));
         }
-
-        controller.prepareSteps();
+        controller.set('model', model);
     },
 
-    _initOcreProgress() {
-        return _.map(steps, step => _.repeat('0', step.length));
+    _initProgressFor(ocre) {
+        _.each(steps, (stepItems, index) => {
+            ocre.set(`step${index}`, _.map(stepItems, stepItem => 0));
+        });
+        return ocre;
     }
 });
