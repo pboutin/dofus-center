@@ -1,16 +1,6 @@
-<div class="login-box">
-    <h1>Dofus Workbench</h1>
-    <img src="banner.png" alt="Infa team">
-    <div class="row">
-        <div class="col-lg-6">
-            <button class="btn btn-facebook btn-block btn-lg" {{action 'signIn' 'facebook'}}>
-                {{fa-icon 'facebook'}} {{t 'login.login_with_facebook'}}
-            </button>
-        </div>
-        <div class="col-lg-6">
-            <button class="btn btn-google btn-block btn-lg" {{action 'signIn' 'google'}}>
-                {{fa-icon 'google'}} {{t 'login.login_with_google'}}
-            </button>
-        </div>
-    </div>
+<div class="container">
+    <p class="well text-center">
+        {{fa-icon 'lock'  fixedWidth=true}}
+        {{t 'login.message'}}
+    </p>
 </div>

@@ -10,3 +10,13 @@
     font-size: 1.4rem;
     font-weight: bold;
 }
+
+$facebook-blue: #3b5998;
+.btn-facebook {
+    @include button-variant($brand-white, $facebook-blue, darken($facebook-blue, 5%));
+}
+
+$google-red: #db3236;
+.btn-google {
+    @include button-variant($brand-white, $google-red, darken($google-red, 5%));
+}

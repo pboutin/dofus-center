@@ -3,7 +3,11 @@ import Ember from 'ember';
 export default Ember.Route.extend({
     beforeModel() {
         if ( ! this.get('session.isAuthenticated')) {
-            return this.transitionTo('login');
+            return this.transitionTo('login', {
+                queryParams: {
+                    page: 'workbench'
+                }
+            });
         }
     },
 

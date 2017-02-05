@@ -5,7 +5,11 @@ import _ from 'lodash/lodash';
 export default Ember.Route.extend({
     beforeModel() {
         if ( ! this.get('session.isAuthenticated')) {
-            return this.transitionTo('login');
+            return this.transitionTo('login', {
+                queryParams: {
+                    page: 'ocre'
+                }
+            });
         }
     },
 

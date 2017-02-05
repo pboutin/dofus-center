@@ -5,7 +5,9 @@ export default {
         'issues': "Anomalies",
         'if_you_encounter_an_anomaly': "Si vous rencontrez une anomalie, il est possible de me la rapporter via Dofus, /w Infahemsi sur Many, ou via le dépot du projet concerné.",
         'data_issue': "Pour un item manquant ou erroné",
-        'workbench_issue': "Pour toute autre forme d'anomalie"
+        'workbench_issue': "Pour toute autre forme d'anomalie",
+        'login_with_facebook': "Se connecter avec Facebook",
+        'login_with_google': "Se connecter avec Google"
     },
     'components': {
         'share': 'Partager',
@@ -13,8 +15,7 @@ export default {
         'step': "Étape"
     },
     'login': {
-        'login_with_facebook': "Se connecter avec Facebook",
-        'login_with_google': "Se connecter avec Google"
+        'message': "Cette fonctionnalité va vous permettre d'enregistrer vos données afin de pouvoir les conserver. Pour débuter, il faut tout d'abord vous connecter en utilisant les boutons ci-dessus."
     },
     'dashboard': {
         'workbench': "Atelier d'artisanat",
