@@ -6,7 +6,7 @@ import _ from 'lodash/lodash';
 export default DS.Model.extend({
     userId: DS.attr('string'),
     name: DS.attr('string'),
-    metadata: DS.attr('metadata', {
+    metadata: DS.attr('project-metadata', {
         defaultValue: function() {
             return {
                 items: [],
