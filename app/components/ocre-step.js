@@ -34,7 +34,7 @@ export default Ember.Component.extend({
 
     parsedItems: Ember.computed('progress', function() {
         const progress = this.get('progress');
-        const items = steps[this.get('stepIndex')];
+        const items = steps[this.get('stepIndex') - 1];
 
         return _.map(items, (item, index) => {
             const value = parseInt(progress[index], 10);

@@ -326,9 +326,9 @@ export default [
         ["Fantôme maho", "île de Grobe"],
         ["Fantôme yokai",    "île de Grobe"],
     ],
-
-    ["Fantôme pandore",  "île de Grobe"],
-    ["Fantôme Tanukouï San", "île de Grob)]"
+    [
+        ["Fantôme pandore",  "île de Grobe"],
+        ["Fantôme Tanukouï San", "île de Grobe"]
     ],
     [
         ["Mob l'Eponge",    "Donjon"],
