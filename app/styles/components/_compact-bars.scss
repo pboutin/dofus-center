@@ -1,0 +1,14 @@
+.compact-bars {
+    .progress {
+        margin-bottom: 0;
+        height: 15px;
+
+        &:not(:last-child) {
+            border-bottom: 0px;
+        }
+
+        &:not(:first-child) {
+            border-top: 0px;
+        }
+    }
+}

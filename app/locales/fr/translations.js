@@ -9,7 +9,8 @@ export default {
     },
     'components': {
         'share': 'Partager',
-        'item_search': 'Chercher un objet...'
+        'item_search': 'Chercher un objet...',
+        'step': "Étape"
     },
     'login': {
         'login_with_facebook': "Se connecter avec Facebook",
@@ -18,7 +19,8 @@ export default {
     'dashboard': {
         'workbench': "Atelier d'artisanat",
         'almanax': "Almanax",
-        'magebench': "Atelier de forgemagie"
+        'magebench': "Atelier de forgemagie",
+        'ocre': "L'éternelle moisson"
     },
     'workbench': {
         'projects': {
@@ -58,5 +60,9 @@ export default {
             'weight': "Poids",
             'back_to_item_search': "Retourner à la recherche d'item"
         }
+    },
+    'ocre': {
+        'add_target': "Ajouter un Dofus",
+        'remove_target': "Retirer un Dofus"
     }
 };

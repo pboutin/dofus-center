@@ -7,6 +7,13 @@
       "$projectId": {
         ".write": "data.child('userId').val() === auth.uid"
       }
+    },
+    "ocres": {
+      ".indexOn": "userId",
+      ".write": true,
+      "$ocreId": {
+        ".write": "data.child('userId').val() === auth.uid"
+      }
     }
   }
 }

@@ -18,6 +18,7 @@ Router.map(function() {
       this.route('search', {path: '/'});
       this.route('item', {path: ':id'});
   });
+  this.route('ocre');
 });
 
 Router.reopen({

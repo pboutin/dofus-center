@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{t 'components.step'}} {{stepIndex}}
+        <span class="badge fat-badge pull-right">
+            {{minimum}} / {{target}}
+        </span>
+    </div>
+    <div class="panel-body compact-bars">
+        {{#each progressBars as |progressBar|}}
+            <div class="progress">
+                <div class="progress-bar progress-bar-info" style={{percent-width progressBar}}></div>
+            </div>
+        {{/each}}
+    </div>
+    <ul class="list-group">
+        {{#each parsedItems as |item|}}
+            <li class="list-group-item">
+                {{item.name}} <em>({{item.note}})</em>
+                &mdash;
+                <strong>{{item.value}}</strong>
+                <button class="btn btn-success btn-xs" {{action 'update' item 1}} disabled={{item.cantAdd}}>
+                    {{fa-icon 'plus'}}
+                </button>
+                <button class="btn btn-danger btn-xs" {{action 'update' item -1}} disabled={{item.cantRemove}}>
+                    {{fa-icon 'minus'}}
+                </button>
+            </li>
+        {{/each}}
+    </ul>
+</div>
