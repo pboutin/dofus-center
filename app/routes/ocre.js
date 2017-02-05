@@ -24,7 +24,7 @@ export default Ember.Route.extend({
 
     _initProgressFor(ocre) {
         _.each(steps, (stepItems, index) => {
-            ocre.set(`step${index}`, _.map(stepItems, stepItem => 0));
+            ocre.set(`step${index}`, _.repeat(0, stepItems.length));
         });
         return ocre;
     }
