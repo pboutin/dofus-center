@@ -3,6 +3,12 @@ import steps from '../ressources/ocre-quest';
 import _ from 'lodash/lodash';
 
 export default Ember.Route.extend({
+    beforeModel() {
+        if ( ! this.get('session.isAuthenticated')) {
+            return this.transitionTo('login');
+        }
+    },
+
     model() {
         return this.store.query('ocre', {
             orderBy: 'userId',
