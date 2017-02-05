@@ -43,7 +43,7 @@ export default Ember.Component.extend({
                 note: item[1],
                 index: index,
                 cantAdd: value >= 9,
-                cantRemove: value <= 1,
+                cantRemove: value <= 0,
                 value: value
             };
         });
