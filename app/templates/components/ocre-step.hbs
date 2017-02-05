@@ -14,10 +14,10 @@
     </div>
     <ul class="list-group">
         {{#each parsedItems as |item|}}
-            <li class="list-group-item">
+            <li class="list-group-item {{if item.isCompleted 'list-group-item-success'}} {{if item.isStarted 'list-group-item-warning'}}">
                 {{item.name}} <em>({{item.note}})</em>
                 &mdash;
-                <strong>{{item.value}}</strong>
+                <strong>{{item.value}} / {{target}}</strong>
                 <button class="btn btn-success btn-xs" {{action 'update' item 1}} disabled={{item.cantAdd}}>
                     {{fa-icon 'plus'}}
                 </button>

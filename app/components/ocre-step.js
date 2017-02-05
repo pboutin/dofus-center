@@ -35,6 +35,7 @@ export default Ember.Component.extend({
     parsedItems: Ember.computed('progress', function() {
         const progress = this.get('progress');
         const items = steps[this.get('stepIndex') - 1];
+        const target = this.get('target');
 
         return _.map(items, (item, index) => {
             const value = parseInt(progress[index], 10);
@@ -44,7 +45,9 @@ export default Ember.Component.extend({
                 index: index,
                 cantAdd: value >= 9,
                 cantRemove: value <= 0,
-                value: value
+                value: value,
+                isCompleted: value >= target,
+                isStarted: value < target && value > 0
             };
         });
     })
