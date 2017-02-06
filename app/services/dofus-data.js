@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import ENV from 'dofus-workbench/config/environment';
 import _ from 'lodash/lodash';
+import sanitize from '../utils/string-sanitize';
 
 export default Ember.Service.extend({
     itemsMap: {},
@@ -15,7 +16,7 @@ export default Ember.Service.extend({
                     rawItem['id'] = itemId;
                     let item = Ember.getOwner(self).lookup('object:item');
                     item.deserialize(rawItem);
-                    item.set('searchableName', self._sanitize(item.get('name')));
+                    item.set('searchableName', sanitize(item.get('name')));
                     itemsMap[itemId] = item;
                 });
 
@@ -53,11 +54,5 @@ export default Ember.Service.extend({
             }
             return isValid;
         });
-    },
-
-    _sanitize(input) {
-        input = _.deburr(input.toLowerCase());
-        input = _.trim(input);
-        return input.replace(/[^a-z\d:]/ig, []);
     }
 });

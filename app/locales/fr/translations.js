@@ -12,7 +12,9 @@ export default {
     'components': {
         'share': 'Partager',
         'item_search': 'Chercher un objet...',
-        'step': "Étape"
+        'step': "Étape",
+        'search': "Rechercher…",
+        'cancel': "Annuler"
     },
     'login': {
         'message': "Cette fonctionnalité va vous permettre d'enregistrer vos données afin de pouvoir les conserver. Pour débuter, il faut tout d'abord vous connecter en utilisant les boutons ci-dessus."
@@ -64,6 +66,8 @@ export default {
     },
     'ocre': {
         'add_target': "Ajouter un Dofus",
-        'remove_target': "Retirer un Dofus"
+        'remove_target': "Retirer un Dofus",
+        'hide_completed': "Cacher les monstres complétés",
+        'show_everything': "Afficher tout les monstres"
     }
 };

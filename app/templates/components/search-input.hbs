@@ -1,0 +1,7 @@
+{{input value=value class="form-control" placeholder=(t 'components.search')}}
+
+{{#if value}}
+    <button class="btn btn-danger btn-xs" {{action 'clear'}}>
+        {{fa-icon 'times'}} {{t 'components.cancel'}}
+    </button>
+{{/if}}
