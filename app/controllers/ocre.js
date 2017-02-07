@@ -3,9 +3,9 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
     steps: [],
 
-    isFiltered: true,
     textFilter: '',
-    
+    _isFiltered: true,
+
     actions: {
         updateTarget(delta) {
             let ocre = this.get('model');
@@ -22,10 +22,13 @@ export default Ember.Controller.extend({
             }, 2000);
         },
         toggleFilter() {
-            this.toggleProperty('isFiltered');
+            this.toggleProperty('_isFiltered');
         }
     },
 
+    isFiltered: Ember.computed('textFilter', '_isFiltered', function() {
+        return this.get('_isFiltered') && this.get('textFilter') === '';
+    }),
     cantIncrementTarget: Ember.computed('model.target', function() {
         return this.get('model.target') >= 9;
     }),
