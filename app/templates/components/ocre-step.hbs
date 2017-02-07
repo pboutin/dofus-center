@@ -1,34 +1,30 @@
-{{#if hasVisibleItems}}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            {{t 'components.step'}} {{stepIndex}}
-            <span class="badge fat-badge pull-right">
-                {{minimum}} / {{target}}
-            </span>
-        </div>
-        <div class="panel-body compact-bars">
-            {{#each progressBars as |progressBar|}}
-                <div class="progress">
-                    <div class="progress-bar progress-bar-info" style={{percent-width progressBar}}></div>
-                </div>
-            {{/each}}
-        </div>
-        <ul class="list-group">
-            {{#each parsedItems as |item|}}
-                {{#if item.isVisible}}
-                    <li class="list-group-item {{if item.isCompleted 'list-group-item-success'}} {{if item.isStarted 'list-group-item-warning'}}">
-                        {{item.name}} <em>({{item.note}})</em>
-                        &mdash;
-                        <strong>{{item.value}} / {{target}}</strong>
-                        <button class="btn btn-success btn-xs" {{action 'update' item 1}} disabled={{item.cantAdd}}>
-                            {{fa-icon 'plus'}}
-                        </button>
-                        <button class="btn btn-danger btn-xs" {{action 'update' item -1}} disabled={{item.cantRemove}}>
-                            {{fa-icon 'minus'}}
-                        </button>
-                    </li>
-                {{/if}}
-            {{/each}}
-        </ul>
+<div data-filter={{sanitizedSummary}} class="_ocre-step panel panel-default">
+    <div class="panel-heading">
+        {{t 'components.step'}} {{stepIndex}}
+        <span class="badge fat-badge pull-right">
+            {{minimum}} / {{target}}
+        </span>
     </div>
-{{/if}}
+    <div class="panel-body compact-bars">
+        {{#each progressBars as |progressBar|}}
+            <div class="progress">
+                <div class="progress-bar progress-bar-info" style={{percent-width progressBar}}></div>
+            </div>
+        {{/each}}
+    </div>
+    <ul class="list-group">
+        {{#each parsedItems as |item|}}
+            <li data-filter={{item.sanitizedName}} class="_ocre-item list-group-item {{if item.isCompleted 'list-group-item-success'}} {{if item.isStarted 'list-group-item-warning'}}">
+            {{if @first 'FIRST'}} {{item.name}} <em>({{item.note}})</em>
+                &mdash;
+                <strong>{{item.value}} / {{target}}</strong>
+                <button class="btn btn-success btn-xs" {{action 'update' item 1}} disabled={{item.cantAdd}}>
+                    {{fa-icon 'plus'}}
+                </button>
+                <button class="btn btn-danger btn-xs" {{action 'update' item -1}} disabled={{item.cantRemove}}>
+                    {{fa-icon 'minus'}}
+                </button>
+            </li>
+        {{/each}}
+    </ul>
+</div>

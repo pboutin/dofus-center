@@ -5,7 +5,6 @@ export default Ember.Controller.extend({
 
     isFiltered: true,
     textFilter: '',
-    textFilterQuery: '',
     
     actions: {
         updateTarget(delta) {
@@ -26,12 +25,6 @@ export default Ember.Controller.extend({
             this.toggleProperty('isFiltered');
         }
     },
-
-    textFilterQueryObserver: Ember.observer('textFilterQuery', function() {
-        Ember.run.debounce(this, function() {
-            this.set('textFilter', this.get('textFilterQuery'));
-        }, 1000);
-    }),
 
     cantIncrementTarget: Ember.computed('model.target', function() {
         return this.get('model.target') >= 9;
