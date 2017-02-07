@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    classNames: ['quantity-editor'],
-
     workbench: Ember.inject.service('workbench'),
 
     quantity: 0,
