@@ -9,6 +9,9 @@ export default {
         'login_with_facebook': "Se connecter avec Facebook",
         'login_with_google': "Se connecter avec Google"
     },
+    'loading': {
+        'message': "Chargement"
+    },
     'components': {
         'share': 'Partager',
         'item_search': 'Chercher un objet...',
