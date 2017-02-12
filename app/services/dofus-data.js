@@ -45,7 +45,7 @@ export default Ember.Service.extend({
 
     getFilteredItemsFor(query, mode) {
         return _.filter(this.get('itemsMap'), item => {
-            let isValid = item.get('searchableName').indexOf(this._sanitize(query)) >= 0;
+            let isValid = item.get('searchableName').indexOf(sanitize(query)) >= 0;
 
             if (mode === 'craft') {
                 isValid &= item.get('isCraftable');
