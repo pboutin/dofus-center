@@ -667,11 +667,11 @@ export default [
         ["Drageaufol la Joyeuse","Dragoss de Saphir Éveillé"],
         ["Soryonara le Poli","Soryo Firefoux"],
         ["Kitsoufre l'Explosif","Kitsou Nufeu"],
-        ["Mahoku le Botté","Maho Firefoux"],
         ["Drakolage le Tentateur","Drakoalak"],
+        ["Faufoll la Joyeuse","Fauchalak"],
     ],
     [
-        ["Faufoll la Joyeuse","Fauchalak"],
+        ["Mahoku le Botté","Maho Firefoux"],
         ["Maître Koantik le Théoricien","Maître Koalak"],
         ["Poolopo la Traditionnelle","Poolay"],
         ["Trooyé l'Oxydé","Troollaraj"],
