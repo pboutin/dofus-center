@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
             this.set('newProject', null);
         },
         delete(project) {
-            let confirmation = this.get('i18n').t('projects.delete_confirmation');
+            let confirmation = this.get('i18n').t('workbench.projects.delete_confirmation');
             if (confirm(`${confirmation} : "${project.get('name')}"`)) {
                 project.destroyRecord();
             }
