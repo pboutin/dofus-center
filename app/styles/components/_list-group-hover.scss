@@ -1,0 +1,36 @@
+.list-group-hover {
+    > li {
+        &.list-group-item-success {
+            background-color: lighten($brand-success, 30%);
+        }
+
+        &.list-group-item-warning {
+            background-color: lighten($brand-warning, 30%);
+        }
+
+        &.list-group-item-danger {
+            background-color: lighten($brand-danger, 30%);
+        }
+    }
+
+    > li:hover {
+        background-color: $gray-lighter;
+
+        &.list-group-item-success {
+            background-color: lighten($brand-success, 20%);
+        }
+
+        &.list-group-item-warning {
+            background-color: lighten($brand-warning, 20%);
+        }
+
+        &.list-group-item-danger {
+            background-color: lighten($brand-danger, 20%);
+        }
+    }
+
+    .btn-xs {
+        position: relative;
+        top: -3px;
+    }
+}

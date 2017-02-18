@@ -1,9 +1,19 @@
 <div data-filter={{sanitizedSummary}} class="_ocre-step panel panel-default">
     <div class="panel-heading">
         {{t 'components.step'}} {{stepIndex}}
-        <span class="badge fat-badge pull-right">
-            {{minimum}} / {{target}}
-        </span>
+        <div class="pull-right">
+            <span class="badge fat-badge">
+                {{minimum}} / {{target}}
+            </span>
+            {{#unless isFiltered}}
+                <button class="btn btn-success btn-xs" {{action 'updateAll' 1}} disabled={{cantGloballyAdd}}>
+                    {{fa-icon 'plus'}}
+                </button>
+                <button class="btn btn-danger btn-xs" {{action 'updateAll' -1}} disabled={{cantGloballyRemove}}>
+                    {{fa-icon 'minus'}}
+                </button>
+            {{/unless}}
+        </div>
     </div>
     <div class="panel-body compact-bars">
         {{#each progressBars as |progressBar|}}
@@ -12,18 +22,20 @@
             </div>
         {{/each}}
     </div>
-    <ul class="list-group">
+    <ul class="list-group list-group-hover">
         {{#each parsedItems as |item|}}
             <li data-filter={{item.sanitizedName}} class="_ocre-item list-group-item {{if item.isCompleted 'list-group-item-success'}} {{if item.isStarted 'list-group-item-warning'}}">
-            {{if @first 'FIRST'}} {{item.name}} <em>({{item.note}})</em>
-                &mdash;
-                <strong>{{item.value}} / {{target}}</strong>
-                <button class="btn btn-success btn-xs" {{action 'update' item 1}} disabled={{item.cantAdd}}>
-                    {{fa-icon 'plus'}}
-                </button>
-                <button class="btn btn-danger btn-xs" {{action 'update' item -1}} disabled={{item.cantRemove}}>
-                    {{fa-icon 'minus'}}
-                </button>
+                {{item.name}} <em>({{item.note}})</em>
+                <div class="pull-right">
+                    <strong>{{item.value}} / {{target}}</strong>
+                    &mdash;
+                    <button class="btn btn-success btn-xs" {{action 'update' item 1}} disabled={{item.cantAdd}}>
+                        {{fa-icon 'plus'}}
+                    </button>
+                    <button class="btn btn-danger btn-xs" {{action 'update' item -1}} disabled={{item.cantRemove}}>
+                        {{fa-icon 'minus'}}
+                    </button>
+                </div>
             </li>
         {{/each}}
     </ul>

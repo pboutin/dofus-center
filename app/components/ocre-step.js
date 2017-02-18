@@ -7,6 +7,7 @@ export default Ember.Component.extend({
     progress: '',
     stepIndex: 0,
     target: 0,
+    isFiltered: false,
     onChange: () => {},
 
     actions: {
@@ -14,6 +15,18 @@ export default Ember.Component.extend({
             let progress = this.get('progress');
             progress = progress.split('');
             progress[item.index] = item.value + delta;
+            progress = progress.join('');
+
+            this.get('onChange')(progress, this.get('stepIndex'));
+        },
+        updateAll(delta) {
+            let progress = _.map(this.get('parsedItems'), parsedItem => {
+                let newValue = parsedItem.value + delta;
+                if (newValue <= 9 && newValue >= 0) {
+                    return newValue;
+                }
+                return parsedItem.value;
+            });
             progress = progress.join('');
 
             this.get('onChange')(progress, this.get('stepIndex'));
@@ -59,5 +72,13 @@ export default Ember.Component.extend({
                 isStarted: value < target && value > 0
             };
         });
+    }),
+
+    cantGloballyAdd: Ember.computed('progress', function() {
+        return /^9+$/.test(this.get('progress'));
+    }),
+
+    cantGloballyRemove: Ember.computed('progress', function() {
+        return /^0+$/.test(this.get('progress'));
     })
 });

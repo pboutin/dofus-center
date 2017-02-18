@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
     steps: [],
 
     textFilter: '',
-    _isFiltered: true,
+    _isFiltered: false,
 
     actions: {
         updateTarget(delta) {
