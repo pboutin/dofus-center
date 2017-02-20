@@ -24,21 +24,6 @@ export default Ember.Object.extend({
         return `${ENV.dofusDataRepository}/images/${itemIntId}.png`;
     }),
 
-    deserialize(rawItem) {
-        let parsedRecipe = {};
-        _.each(rawItem['recipe'], function(target, itemId) {
-            parsedRecipe[itemId] = parseInt(target, 10);
-        });
-
-        this.set('id', rawItem['id']);
-        this.set('name', rawItem['name']);
-        this.set('level', parseInt(rawItem['level'], 10));
-        this.set('type', rawItem['type']);
-        this.set('recipe', parsedRecipe);
-        this.set('effects', rawItem['effects']);
-        this.set('link', rawItem['link']);
-    },
-
     isCraftable: Ember.computed('recipe', function() {
         return _.keys(this.get('recipe')).length > 0;
     }),

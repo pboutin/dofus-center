@@ -13,6 +13,5 @@ export function initialize(app) {
 
 export default {
     name: 'services-initialization',
-    after: 'register-objects',
     initialize
 };

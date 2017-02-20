@@ -2,6 +2,7 @@ import Ember from 'ember';
 import ENV from 'dofus-workbench/config/environment';
 import moment from 'moment';
 import _ from 'lodash';
+import Almanax from '../objects/almanax';
 
 export default Ember.Route.extend({
     dofusData: Ember.inject.service('dofus-data'),
@@ -12,7 +13,7 @@ export default Ember.Route.extend({
             Ember.$.getJSON(`${ENV.dofusDataRepository}/almanax-data.json`, rawData => {
                 resolve(_.mapValues(rawData, (rawAlmanax, day) => {
                     rawAlmanax['day'] = day;
-                    let almanax = Ember.getOwner(this).lookup('object:almanax').deserialize(rawAlmanax);
+                    let almanax = Almanax.create(rawAlmanax);
                     almanax.set('questItem', dofusData.findItem(almanax.get('quest').replace(/^\d+ /, '')));
                     return almanax;
                 }));

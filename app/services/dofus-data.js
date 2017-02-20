@@ -2,6 +2,7 @@ import Ember from 'ember';
 import ENV from 'dofus-workbench/config/environment';
 import _ from 'lodash/lodash';
 import sanitize from '../utils/string-sanitize';
+import Item from '../objects/item';
 
 export default Ember.Service.extend({
     itemsMap: {},
@@ -14,8 +15,16 @@ export default Ember.Service.extend({
             Ember.$.getJSON(`${ENV.dofusDataRepository}/dofus-data.json`, function(data) {
                 _.mapKeys(data, function(rawItem, itemId) {
                     rawItem['id'] = itemId;
-                    let item = Ember.getOwner(self).lookup('object:item');
-                    item.deserialize(rawItem);
+                    let item = Item.create({
+                        id: rawItem['id'],
+                        name: rawItem['name'],
+                        level: parseInt(rawItem['level'], 10),
+                        type: rawItem['type'],
+                        recipe: _.mapValues(rawItem['recipe'], rawTarget => parseInt(rawTarget, 10)),
+                        effects: rawItem['effects'],
+                        link: rawItem['link']
+                    });
+
                     item.set('searchableName', sanitize(item.get('name')));
                     itemsMap[itemId] = item;
                 });
@@ -30,7 +39,7 @@ export default Ember.Service.extend({
     getItem(itemId) {
         let item = _.get(this.get('itemsMap'), itemId, null);
         if (item === null) {
-            item = Ember.getOwner(this).lookup('object:item');
+            item = Item.create();
             item.fakeFor(itemId);
         }
         return item;
@@ -38,7 +47,7 @@ export default Ember.Service.extend({
 
     findItem(itemName) {
         let foundItem = _.find(this.get('itemsMap'), item => {
-            return item.get('name') == itemName;
+            return item.get('name') === itemName;
         });
         return foundItem || null;
     },

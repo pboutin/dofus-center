@@ -11,7 +11,7 @@ export default DS.Transform.extend({
         let metadata = JSON.parse(rawMetadata);
 
         let items =  _.reduce(metadata.items, function(quantifiableList, target, itemId) {
-            quantifiableList.push(new Quantifiable({
+            quantifiableList.push(Quantifiable.create({
                 item: dofusData.getItem(itemId),
                 target: target
             }));
@@ -22,7 +22,7 @@ export default DS.Transform.extend({
             _.each(quantifiableItem.get('item.recipe'), function(resourceTarget, resourceId) {
                 if ( ! _.has(metadata.items, resourceId)) {
                     if ( ! _.has(quantifiableMap, resourceId)) {
-                        quantifiableMap[resourceId] = new Quantifiable({
+                        quantifiableMap[resourceId] = Quantifiable.create({
                             item: dofusData.getItem(resourceId),
                             quantity: _.get(metadata.stocks, resourceId, 0)
                         });
