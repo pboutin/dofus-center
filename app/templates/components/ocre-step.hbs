@@ -24,7 +24,10 @@
     </div>
     <ul class="list-group list-group-hover">
         {{#each parsedItems as |item|}}
-            <li data-filter={{item.sanitizedName}} class="_ocre-item list-group-item {{if item.isCompleted 'list-group-item-success'}} {{if item.isStarted 'list-group-item-warning'}}">
+            <li data-filter={{item.sanitizedName}}
+                data-completed={{item.isCompleted}}
+                class="_ocre-item list-group-item {{if item.isCompleted 'list-group-item-success'}} {{if item.isStarted 'list-group-item-warning'}}">
+
                 {{item.name}} <em>({{item.note}})</em>
                 <div class="pull-right">
                     <strong>{{item.value}} / {{target}}</strong>

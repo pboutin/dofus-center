@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
     steps: [],
 
     textFilter: '',
-    _isFiltered: false,
+    isFiltered: false,
 
     actions: {
         updateTarget(delta) {
@@ -22,12 +22,12 @@ export default Ember.Controller.extend({
             }, 2000);
         },
         toggleFilter() {
-            this.toggleProperty('_isFiltered');
+            this.toggleProperty('isFiltered');
         }
     },
 
-    isFiltered: Ember.computed('textFilter', '_isFiltered', function() {
-        return this.get('_isFiltered') && this.get('textFilter') === '';
+    isFilteredWithoutSearch: Ember.computed('textFilter', 'isFiltered', function() {
+        return this.get('isFiltered') && this.get('textFilter') === '';
     }),
     cantIncrementTarget: Ember.computed('model.target', function() {
         return this.get('model.target') >= 9;
