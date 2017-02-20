@@ -44,11 +44,7 @@ export default Ember.Component.extend({
         }
     },
 
-    didReceiveAttrs() {
-        if (this.get('parsedItems')) {
-            return;
-        }
-
+    init() {
         this.set('parsedItems', _.map(steps[this.get('stepIndex') - 1], (item, index) => {
             return OcreItem.create({
                 stepIndex: this.get('stepIndex'),
@@ -58,6 +54,8 @@ export default Ember.Component.extend({
             });
         }));
         this._updateProgressBars();
+
+        this._super(...arguments);
     },
 
     isFilteredObserver: Ember.observer('isFiltered', function() {
