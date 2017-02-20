@@ -66,11 +66,13 @@ export default Ember.Component.extend({
         }
     }),
     _hideCompletedItems() {
-        const $items = this.$('._ocre-item');
-        const $completedItems = this.$('._ocre-item[data-completed="true"]');
-        $completedItems.hide();
-        if ($items.length === $completedItems.length) {
-            this.$().hide();
+        if (this.get('isFiltered')) {
+            const $items = this.$('._ocre-item');
+            const $completedItems = this.$('._ocre-item[data-completed="true"]');
+            $completedItems.hide();
+            if ($items.length === $completedItems.length) {
+                this.$().hide();
+            }
         }
     },
     _showItems() {
@@ -99,7 +101,7 @@ export default Ember.Component.extend({
     }),
 
     sanitizedSummary: Ember.computed('parsedItems', function() {
-        return _.map(this.get('parsedItems'), parsedItem => parsedItem.sanitizedName).join('-');
+        return _.map(this.get('parsedItems'), parsedItem => parsedItem.get('sanitizedName')).join('-');
     }),
 
     cantGloballyAdd: Ember.computed('progress', function() {

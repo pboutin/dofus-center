@@ -53,11 +53,13 @@ export default Ember.Controller.extend({
         }
     }),
     _hideCompletedItems() {
-        const $items = Ember.$('._crafting-item');
-        const $completedItems = Ember.$('._crafting-item[data-completed="true"]');
-        $completedItems.hide();
-        if ($items.length === $completedItems.length) {
-            Ember.$('._crafting-finish').show();
+        if (this.get('isFiltered')) {
+            const $items = Ember.$('._crafting-item');
+            const $completedItems = Ember.$('._crafting-item[data-completed="true"]');
+            $completedItems.hide();
+            if ($items.length === $completedItems.length) {
+                Ember.$('._crafting-finish').show();
+            }
         }
     },
     _showItems() {
