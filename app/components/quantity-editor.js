@@ -37,10 +37,7 @@ export default Ember.Component.extend({
 
     quantityObserver: Ember.observer('quantity', function() {
         this.set('editableQuantity', this.get('quantity'));
-
-        Ember.run.debounce(this, function() {
-            this.get('onChange')();
-        }, 2000);
+        this.get('onChange')();
     }),
 
     editableQuantityObserver: Ember.observer('editableQuantity', function() {

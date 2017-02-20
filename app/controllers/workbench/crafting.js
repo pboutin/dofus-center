@@ -27,17 +27,42 @@ export default Ember.Controller.extend({
             project.addItem(quantifiableItem.get('item'), quantifiableItem.get('target'));
             project.save();
         },
-        save() {
-            this.get('model').save();
+        quantityUpdate() {
+            Ember.run.debounce(this, '_applyQuantitiesAndSave', 5000);
         }
     },
 
-    displayedStocks: Ember.computed('model.sortedStocks', 'isFiltered', function() {
+    _applyQuantitiesAndSave() {
+        const stocks = this.get('stocks');
+        const model = this.get('model');
+        const modelStocks = model.get('sortedStocks');
+
+        _.each(this.get('stocks'), (quantifiableItem, index) => {
+            modelStocks[index].set('quantity', quantifiableItem.get('quantity'));
+        });
+        model.save();
+        this._hideCompletedItems();
+    },
+
+    // TODO: move this logic into a component
+    isFilteredObserver: Ember.observer('isFiltered', function() {
         if (this.get('isFiltered')) {
-            return _.filter(this.get('model.sortedStocks'), function(quantifiable) {
-                return ! quantifiable.get('isComplete');
-            });
+            this._hideCompletedItems();
+        } else {
+            this._showItems();
         }
-        return this.get('model.sortedStocks');
-    })
+    }),
+    _hideCompletedItems() {
+        const $items = Ember.$('._crafting-item');
+        const $completedItems = Ember.$('._crafting-item[data-completed="true"]');
+        $completedItems.hide();
+        if ($items.length === $completedItems.length) {
+            Ember.$('._crafting-finish').show();
+        }
+    },
+    _showItems() {
+        Ember.$('._crafting-item').show();
+        Ember.$('._crafting-finish').hide();
+    }
+    // end:TODO
 });

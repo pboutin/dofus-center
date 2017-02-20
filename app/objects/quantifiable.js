@@ -17,7 +17,7 @@ export default Ember.Object.extend({
         return this.get('quantity') / this.get('target');
     }),
 
-    isComplete: Ember.computed('quantity', 'target', function() {
+    isCompleted: Ember.computed('quantity', 'target', function() {
         return this.get('quantity') >= this.get('target');
     })
 });

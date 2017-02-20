@@ -18,6 +18,7 @@ export default Ember.Route.extend({
     setupController(controller, model) {
         const session = this.get('session');
         controller.set('isEditing', session.get('isAuthenticated') && session.get('uid') === model.get('userId'));
+        controller.set('stocks', model.get('sortedStocks'));
 
         this._super(...arguments);
     }
