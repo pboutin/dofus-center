@@ -42,19 +42,25 @@ export default DS.Model.extend({
         if (matchingQuantifiableItem) {
             matchingQuantifiableItem.increaseTargetOf(newItemQuantity);
         } else {
-            items.push(new Quantifiable({
+            items.push(Quantifiable.create({
                 item: newItem,
                 target: newItemQuantity
             }));
             this.set('items', items);
         }
 
-        _.each(newItem.get('recipe'), function(recipeItemTarget, recipeItemId) {
-            let quantifiableItemInProject = this._getQuantifiableItem(recipeItemId);
-            if (quantifiableItemInProject) {
-                quantifiableItemInProject.increaseTargetOf(recipeItemTarget * newItemQuantity);
+        this._recursiveRecipeAdjustFor(newItem, newItemQuantity);
+    },
+
+    _recursiveRecipeAdjustFor(item, quantity) {
+        _.each(item.get('recipe'), (recipeItemTarget, recipeItemId) => {
+            let quantifiableItemProject = this._getQuantifiableItem(recipeItemId);
+            if (quantifiableItemProject) {
+                const missing = recipeItemTarget * quantity;
+                quantifiableItemProject.increaseTargetOf(missing);
+                this._recursiveRecipeAdjustFor(quantifiableItemProject.get('item'), missing);
             }
-        }.bind(this));
+        });
     },
 
     removeItem(item) {
@@ -65,9 +71,8 @@ export default DS.Model.extend({
     },
 
     _getQuantifiableItem(itemId) {
-        let matchingQuantifiableItem = _.find(this.get('items'), function(quantifiableItem) {
+        return _.find(this.get('items'), function(quantifiableItem) {
             return itemId === quantifiableItem.get('item.id');
-        });
-        return matchingQuantifiableItem ? matchingQuantifiableItem : null;
+        }) || null;
     }
 });

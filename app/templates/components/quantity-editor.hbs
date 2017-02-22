@@ -1,6 +1,6 @@
 <div class="details">
     {{#if isEditing}}
-        <input value={{editableQuantity}} type="number" class="form-control" onclick="this.select()"> / {{target}}
+        {{input value=editableQuantity type="number" class="form-control"}} / {{target}}
     {{else}}
         {{quantity}} / {{target}}
     {{/if}}

@@ -35,6 +35,13 @@ export default Ember.Component.extend({
         this._super(...arguments);
     },
 
+    didInsertElement() {
+        $("input[type='number']").click(function () {
+            $(this).select();
+        });
+        this._super();
+    },
+
     quantityObserver: Ember.observer('quantity', function() {
         this.set('editableQuantity', this.get('quantity'));
         this.get('onChange')();

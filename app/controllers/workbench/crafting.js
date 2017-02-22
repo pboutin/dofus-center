@@ -23,9 +23,11 @@ export default Ember.Controller.extend({
             }
         },
         addToItems(quantifiableItem) {
-            let project = this.get('model');
-            project.addItem(quantifiableItem.get('item'), quantifiableItem.get('target'));
-            project.save();
+            let model = this.get('model');
+            model.addItem(quantifiableItem.get('item'), quantifiableItem.get('target'));
+            this._applyQuantitiesAndSave().then(() => {
+                this.set('stocks', model.get('sortedStocks'));
+            });
         },
         quantityUpdate() {
             Ember.run.debounce(this, '_applyQuantitiesAndSave', 5000);
@@ -40,8 +42,8 @@ export default Ember.Controller.extend({
         _.each(this.get('stocks'), (quantifiableItem, index) => {
             modelStocks[index].set('quantity', quantifiableItem.get('quantity'));
         });
-        model.save();
         this._hideCompletedItems();
+        return model.save();
     },
 
     // TODO: move this logic into a component
