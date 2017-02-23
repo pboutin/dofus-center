@@ -27,6 +27,9 @@ export default Ember.Controller.extend({
             model.addItem(quantifiableItem.get('item'), quantifiableItem.get('target'));
             this._applyQuantitiesAndSave().then(() => {
                 this.set('stocks', model.get('sortedStocks'));
+                if (this.get('isFiltered')) {
+                    this._hideCompletedItems();
+                }
             });
         },
         quantityUpdate() {
