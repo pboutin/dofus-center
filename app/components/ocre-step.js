@@ -76,7 +76,7 @@ export default Ember.Component.extend({
         }
     },
     _showItems() {
-        this.$('._ocre-item').show();
+        this.$('._ocre-item').css('display', 'block');
         this.$().show();
     },
 

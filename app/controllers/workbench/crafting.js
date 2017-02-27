@@ -68,7 +68,7 @@ export default Ember.Controller.extend({
         }
     },
     _showItems() {
-        Ember.$('._crafting-item').show();
+        Ember.$('._crafting-item').css('display', 'block');
         Ember.$('._crafting-finish').hide();
     }
     // end:TODO
