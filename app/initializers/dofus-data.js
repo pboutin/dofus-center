@@ -1,17 +1,15 @@
 import Ember from 'ember';
 
 export function initialize(app) {
-    console.log('Init : Services initialization');
     app.deferReadiness();
-
     let container = app.__container__;
-    container.lookup('service:dofus-data').initialize().then(function() {
+    container.lookup('service:dofus-data').loadDofusData().then(function() {
         Ember.$('#loader').remove();
         app.advanceReadiness();
     });
 }
 
 export default {
-    name: 'services-initialization',
+    name: 'dofus-data',
     initialize
 };

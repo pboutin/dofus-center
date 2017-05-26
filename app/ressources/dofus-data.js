@@ -1,0 +1,1 @@
+../../node_modules/dofus-data/dofus-data.js

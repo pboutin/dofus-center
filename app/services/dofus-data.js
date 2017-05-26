@@ -1,38 +1,36 @@
 import Ember from 'ember';
-import ENV from 'dofus-workbench/config/environment';
 import _ from 'lodash/lodash';
 import sanitize from '../utils/string-sanitize';
 import Item from '../objects/item';
+import dofusData from '../ressources/dofus-data';
 
 export default Ember.Service.extend({
     itemsMap: {},
 
-    initialize() {
+    loadDofusData() {
         let self = this;
         let itemsMap = {};
-        
-        return new Ember.RSVP.Promise(function(resolve) {
-            Ember.$.getJSON(`${ENV.dofusDataRepository}/dofus-data.json`, function(data) {
-                _.mapKeys(data, function(rawItem, itemId) {
-                    rawItem['id'] = itemId;
-                    let item = Item.create({
-                        id: rawItem['id'],
-                        name: rawItem['name'],
-                        level: parseInt(rawItem['level'], 10),
-                        type: rawItem['type'],
-                        recipe: _.mapValues(rawItem['recipe'], rawTarget => parseInt(rawTarget, 10)),
-                        effects: rawItem['effects'],
-                        link: rawItem['link']
-                    });
 
-                    item.set('searchableName', sanitize(item.get('name')));
-                    itemsMap[itemId] = item;
+        return new Ember.RSVP.Promise(function(resolve) {
+            _.mapKeys(dofusData, function(rawItem, itemId) {
+                rawItem['id'] = itemId;
+                let item = Item.create({
+                    id: rawItem['id'],
+                    name: rawItem['name'],
+                    level: parseInt(rawItem['level'], 10),
+                    type: rawItem['type'],
+                    recipe: _.mapValues(rawItem['recipe'], rawTarget => parseInt(rawTarget, 10)),
+                    effects: rawItem['effects'],
+                    link: rawItem['link']
                 });
 
-                self.set('itemsMap', itemsMap);
-                console.log('Processed dofus-data');
-                resolve();
+                item.set('searchableName', sanitize(item.get('name')));
+                itemsMap[itemId] = item;
             });
+
+            self.set('itemsMap', itemsMap);
+            console.log('Processed dofus-data');
+            resolve();
         });
     },
 
