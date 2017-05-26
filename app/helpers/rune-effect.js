@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import _ from 'lodash';
 
-export function effect(params) {
+export function runeEffect(params) {
     return _.get({
         'fo': 'Force',
         'ine': 'Intelligence',
@@ -47,8 +47,14 @@ export function effect(params) {
         'invo': 'Invocations',
         'po': 'Portée',
         'ga_pa': 'PA',
-        'ga_pme': 'PM'
+        'ga_pme': 'PM',
+        'do_per_di': 'Dommages distance (%)',
+        'do_per_ar': 'Dommages d\'armes (%)',
+        'do_per_so': 'Dommages aux sorts (%)',
+        'de_per_me': 'Dommages mêlée (%)',
+        're_per_me': 'Résistance mêlée (%)',
+        're_per_di': 'Résistance distance (%)'
     }, params[0], '');
 }
 
-export default Ember.Helper.helper(effect);
+export default Ember.Helper.helper(runeEffect);

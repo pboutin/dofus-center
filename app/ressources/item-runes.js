@@ -313,5 +313,47 @@ export default {
             bonus: [90],
             malus: [90]
         }
+    },
+    'do_per_di': {
+        effects: [1],
+        weight: {
+            bonus: [15],
+            malus: [7.5]
+        }
+    },
+    'do_per_ar': {
+        effects: [1],
+        weight: {
+            bonus: [15],
+            malus: [7.5]
+        }
+    },
+    'do_per_so': {
+        effects: [1],
+        weight: {
+            bonus: [15],
+            malus: [7.5]
+        }
+    },
+    'de_per_me': {
+        effects: [1],
+        weight: {
+            bonus: [15],
+            malus: [7.5]
+        }
+    },
+    're_per_me': {
+        effects: [1],
+        weight: {
+            bonus: [15],
+            malus: [7.5]
+        }
+    },
+    're_per_di': {
+        effects: [1],
+        weight: {
+            bonus: [15],
+            malus: [7.5]
+        }
     }
 };
