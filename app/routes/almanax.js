@@ -1,32 +1,25 @@
 import Ember from 'ember';
-import ENV from 'dofus-workbench/config/environment';
 import moment from 'moment';
-import _ from 'lodash';
 import Almanax from '../objects/almanax';
+import almanaxData from '../ressources/almanax-data';
 
 export default Ember.Route.extend({
     dofusData: Ember.inject.service('dofus-data'),
     
     model() {
         const dofusData = this.get('dofusData');
-        return new Ember.RSVP.Promise(resolve => {
-            Ember.$.getJSON(`${ENV.dofusDataRepository}/almanax-data.json`, rawData => {
-                resolve(_.mapValues(rawData, (rawAlmanax, day) => {
-                    rawAlmanax['day'] = day;
-                    let almanax = Almanax.create(rawAlmanax);
-                    almanax.set('questItem', dofusData.findItem(almanax.get('quest').replace(/^\d+ /, '')));
-                    return almanax;
-                }));
-            });
-        });
-    },
+        let currentDate = moment();
+        let upperBoundDate = moment().add(60, 'days');
+        let model = Ember.A();
 
-    setupController(controller, model) {
-        controller.set('daysMap', model);
-        controller.set('current', moment());
+        do {
+            const rawDate = currentDate.format('YYYY-MM-DD');
+            let almanax = Almanax.create(almanaxData[rawDate]);
+            almanax.set('date', rawDate);
+            almanax.set('questItem', dofusData.findItem(almanax.get('quest').replace(/^\d+ /, '')));
+            model.pushObject(almanax);
+        } while(currentDate.add(1, 'days').isBefore(upperBoundDate));
         
-        controller.set('model', Ember.A());
-        
-        controller.generateEvents(7 * 4);
+        return model;
     }
 });

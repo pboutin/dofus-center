@@ -49,6 +49,7 @@
     "torii": "0.8.1"
   },
   "dependencies": {
-    "bootstrap-sass": "^3.3.7"
+    "bootstrap-sass": "^3.3.7",
+    "dofus-data": "^2.1.1"
   }
 }

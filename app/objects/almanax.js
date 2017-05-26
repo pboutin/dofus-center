@@ -4,7 +4,7 @@ export default Ember.Object.extend({
     bonus: '',
     quest: '',
     questItem: null,
-    day: '',
+    date: '',
 
     questQuantity: Ember.computed('quest', function() {
         return parseInt(this.get('quest').match(/\d+/), 10);
@@ -15,5 +15,8 @@ export default Ember.Object.extend({
     }),
     isDropBonus: Ember.computed('bonus', function() {
         return /butin|étoile/.test(this.get('bonus'));
-    })
+    }),
+    isKamasBonus: Ember.computed('bonus', function() {
+        return /butin|étoile/.test(this.get('bonus'));
+    }),
 });
