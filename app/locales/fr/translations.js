@@ -14,7 +14,8 @@ export default {
     },
     'components': {
         'share': 'Partager',
-        'item_search': 'Chercher un objet...',
+        'item_search': "Nom de l'objet ou lien d'un équipement Dofus Fashionista",
+        'no_results': "Aucun élément ne correspond à cette recherche.",
         'step': "Étape",
         'search': "Rechercher…",
         'cancel': "Annuler"

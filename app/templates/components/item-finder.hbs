@@ -3,19 +3,31 @@
         {{input value=query placeholder=(t 'components.item_search') class="form-control"}}
     </div>
 
-    <div class="list-group icons-list-group">
-        {{#each filteredItems as |item|}}
-            <button class="list-group-item" {{action 'select' item}}>
-                <span class="badge">
-                    lvl {{item.level}}
-                </span>
-                <span class="badge">
-                    {{item.type}}
-                </span>
+    {{#unless isLoading}}
+        {{#if filteredItems}}
+            <div class="list-group icons-list-group">
+                {{#each filteredItems as |item|}}
+                    <button class="list-group-item" {{action 'select' item}}>
+                        <span class="badge">
+                            lvl {{item.level}}
+                        </span>
+                        <span class="badge">
+                            {{item.type}}
+                        </span>
 
-                <img src={{item.image}}>
-                {{item.name}}
-            </button>
-        {{/each}}
-    </div>
+                        <img src={{item.image}}>
+                        {{item.name}}
+                    </button>
+                {{/each}}
+            </div>
+        {{else}}
+            {{#if hasSearched}}
+                <div class="alert alert-warning">
+                    <i class="fa fa-frown-o"></i> {{t 'components.no_results'}}
+                </div>
+            {{/if}}
+        {{/if}}
+    {{else}}
+        <p class="text-center"><i class="fa fa-spinner fa-spin fa-4x"></i></p>
+    {{/unless}}
 </div>

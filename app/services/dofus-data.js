@@ -36,11 +36,16 @@ export default Ember.Service.extend({
 
     getItem(itemId) {
         let item = _.get(this.get('itemsMap'), itemId, null);
-        if (item === null) {
-            item = Item.create();
-            item.fakeFor(itemId);
+
+        if (item) {
+            return item;
         }
-        return item;
+
+        const digitsId = itemId.match(/^\d+/)[0];
+        item = _.find(this.get('itemsMap'), item => {
+            return item.id.indexOf(digitsId) === 0;
+        });
+        return item || Item.create().fakeFor(itemId);
     },
 
     findItem(itemName) {
