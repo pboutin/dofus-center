@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ENV from 'dofus-workbench/config/environment';
+import ENV from 'dofus-center/config/environment';
 import runes from '../ressources/item-runes';
 import _ from 'lodash/lodash';
 

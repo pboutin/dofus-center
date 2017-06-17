@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ENV from 'dofus-workbench/config/environment';
+import ENV from 'dofus-center/config/environment';
 
 export default Ember.Controller.extend({
     queryParams: ['page'],

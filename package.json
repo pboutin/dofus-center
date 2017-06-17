@@ -1,23 +1,12 @@
 {
-  "name": "dofus-workbench",
-  "version": "0.0.0",
-  "description": "Small description for dofus-workbench goes here",
-  "private": true,
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
+  "name": "dofus-center",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
     "test": "ember test",
     "deploy": "firebase deploy"
   },
-  "repository": "",
-  "engines": {
-    "node": ">= 0.10.0"
-  },
-  "author": "",
+  "author": "Pascal Boutin <contact@pboutin.net>",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
