@@ -12,7 +12,10 @@ body {
 
 header {
     margin-bottom: 20px;
-    margin-top: 20px;
+    padding-bottom: 10px;
+    padding-top: 20px;
+    background-color: rgba($gray-darker, .60);
+    color: $brand-white;
 }
 
 h1 {

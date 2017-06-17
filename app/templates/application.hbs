@@ -1,17 +1,19 @@
-<header class="container">
-    {{#link-to 'dashboard' class="home-handle"}}Dofus Workbench{{/link-to}}
-    {{#if session.isAuthenticated}}
-        {{user-handle session=session}}
-    {{else}}
-        <div class="pull-right">
-            <button class="btn btn-facebook" {{action 'signIn' 'facebook'}}>
-                {{fa-icon 'facebook'}} {{t 'app.login_with_facebook'}}
-            </button>
-            <button class="btn btn-google" {{action 'signIn' 'google'}}>
-                {{fa-icon 'google'}} {{t 'app.login_with_google'}}
-            </button>
-        </div>
-    {{/if}}
+<header>
+    <div class="container">
+        {{#link-to 'dashboard' class="home-handle"}}Dofus Center{{/link-to}}
+        {{#if session.isAuthenticated}}
+            {{user-handle session=session}}
+        {{else}}
+            <div class="pull-right">
+                <button class="btn btn-facebook" {{action 'signIn' 'facebook'}}>
+                    {{fa-icon 'facebook'}} {{t 'app.login_with_facebook'}}
+                </button>
+                <button class="btn btn-google" {{action 'signIn' 'google'}}>
+                    {{fa-icon 'google'}} {{t 'app.login_with_google'}}
+                </button>
+            </div>
+        {{/if}}
+    </div>
 </header>
 
 {{outlet}}

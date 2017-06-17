@@ -1,62 +1,64 @@
 <div class="container">
-    <h1>
-        {{t 'workbench.crafting.workbench_for'}} <em>{{model.name}}</em>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1 class="mt-0">
+                {{t 'workbench.crafting.workbench_for'}} <em>{{model.name}}</em>
+                {{#if isEditing}}
+                    {{#link-to 'workbench.projects' class="btn btn-info"}}
+                        {{t 'workbench.crafting.go_to_projects'}} {{fa-icon 'home'}}
+                    {{/link-to}}
 
-        {{#if isEditing}}
-            {{#link-to 'workbench.projects' class="btn btn-info"}}
-                {{t 'workbench.crafting.go_to_projects'}} {{fa-icon 'home'}}
-            {{/link-to}}
+                    {{#link-to 'workbench.prepare' model.id class="btn btn-info"}}
+                        {{t 'workbench.crafting.edit_project'}} {{fa-icon 'pencil'}}
+                    {{/link-to}}
+                {{/if}}
+            </h1>
 
-            {{#link-to 'workbench.prepare' model.id class="btn btn-info"}}
-                {{t 'workbench.crafting.edit_project'}} {{fa-icon 'pencil'}}
-            {{/link-to}}
-        {{/if}}
-    </h1>
-</div>
+            {{item-list items=model.items}}
 
-{{item-list items=model.items}}
+            <div class="margin-top">
+                <button class="btn btn-primary" {{action 'toggleFilter'}}>
+                    {{fa-icon 'list'}} {{t (if isFiltered 'workbench.crafting.show_everything' 'workbench.crafting.hide_completed')}}
+                </button>
+                {{share-button}}
+            </div>
+        </div>
+    </div>
 
-<div class="container margin-top">
-    <p>
-        <button class="btn btn-primary" {{action 'toggleFilter'}}>
-            {{fa-icon 'list'}} {{t (if isFiltered 'workbench.crafting.show_everything' 'workbench.crafting.hide_completed')}}
-        </button>
-        {{share-button}}
-    </p>
     {{#if stocks}}
         <ul class="list-group list-group-lg icons-list-group">
             {{#each stocks as |quantifiable|}}
                 <li data-completed={{quantifiable.isCompleted}} class="_crafting-item list-group-item {{if quantifiable.item.isCraftable 'list-group-item-craftable'}}">
-                    {{#if quantifiable.item.image}}
-                        <img src="{{quantifiable.item.image}}" {{action 'toggleQuantity' quantifiable on='doubleClick'}}>
+                {{#if quantifiable.item.image}}
+                    <img src="{{quantifiable.item.image}}" {{action 'toggleQuantity' quantifiable on='doubleClick'}}>
+                {{/if}}
+
+                {{item-link item=quantifiable.item}}
+
+                {{#if quantifiable.item.type}}
+                    <em>({{quantifiable.item.type}})</em>
+                {{/if}}
+
+                {{#if isEditing}}
+                    {{#if quantifiable.item.isCraftable}}
+                        <button class="btn btn-info btn-craft btn-xs" {{action 'addToItems' quantifiable}}>
+                            {{t 'workbench.crafting.send_to_workbench'}}
+                        </button>
                     {{/if}}
+                {{/if}}
 
-                    {{item-link item=quantifiable.item}}
-
-                    {{#if quantifiable.item.type}}
-                        <em>({{quantifiable.item.type}})</em>
-                    {{/if}}
-
-                    {{#if isEditing}}
-                        {{#if quantifiable.item.isCraftable}}
-                            <button class="btn btn-info btn-craft btn-xs" {{action 'addToItems' quantifiable}}>
-                                {{t 'workbench.crafting.send_to_workbench'}}
-                            </button>
-                        {{/if}}
-                    {{/if}}
-
-                    {{quantity-editor
+                {{quantity-editor
                         isEditing=isEditing
                         quantity=quantifiable.quantity
                         target=quantifiable.target
                         onChange=(action 'quantityUpdate')}}
 
-                    <div class="progress">
-                        <div class="progress-bar {{if quantifiable.isCompleted 'progress-bar-success' 'progress-bar-warning'}}"
-                             style={{percent-width quantifiable.progress}}>
-                            <span class="sr-only">{{quantifiable.progress}}%</span>
-                        </div>
+                <div class="progress">
+                    <div class="progress-bar {{if quantifiable.isCompleted 'progress-bar-success' 'progress-bar-warning'}}"
+                         style={{percent-width quantifiable.progress}}>
+                        <span class="sr-only">{{quantifiable.progress}}%</span>
                     </div>
+                </div>
                 </li>
             {{/each}}
         </ul>
