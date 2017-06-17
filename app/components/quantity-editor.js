@@ -36,8 +36,8 @@ export default Ember.Component.extend({
     },
 
     didInsertElement() {
-        $("input[type='number']").click(function () {
-            $(this).select();
+        Ember.$("input[type='number']").click(function () {
+            Ember.$(this).select();
         });
         this._super();
     },

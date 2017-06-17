@@ -38,7 +38,6 @@ export default Ember.Controller.extend({
     },
 
     _applyQuantitiesAndSave() {
-        const stocks = this.get('stocks');
         const model = this.get('model');
         const modelStocks = model.get('sortedStocks');
 

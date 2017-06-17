@@ -44,10 +44,17 @@ export default Ember.Component.extend({
             }).done(html => {
                 const $page = Ember.$(html);
                 const dofusData = this.get('dofusData');
-                resolveWith(_.map($page.find('.item-external-link'), $item => {
-                    const itemId = $item.href.match(/equipements\/(\d+.+$)/)[1];
-                    return dofusData.getItem(itemId);
-                }));
+                const parsedItems = _.map($page.find('.item-external-link'), $item => {
+                    const matchedUrl = $item.href.match(/equipements\/(\d+.+$)/);
+                    if (matchedUrl) {
+                        const item = dofusData.getItem(matchedUrl[1]);
+                        if (item.get('isCraftable')) {
+                            return item;
+                        }
+                    }
+                    return null;
+                });
+                resolveWith(_.filter(parsedItems, parsedItem => !! parsedItem));
             });
         });
     }

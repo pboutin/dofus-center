@@ -60,16 +60,7 @@ export default Ember.Object.extend({
                     value: perfectRoll,
                     isBonus: isBonus,
                     max: (over > perfectRoll) && isBonus ? over : null,
-                    runes: _.map(['Base', 'Pa', 'Ra'], (runeType, index) => {
-                        if (rune.effects[index]) {
-                            return {
-                                type: runeType,
-                                effect: rune.effects[index],
-                                weight: (isBonus ? rune.weight.bonus : rune.weight.malus)[index]
-                            };
-                        }
-                        return null;
-                    })
+                    runes: this._getRunesFor(rune, isBonus)
                 });
             } else {
                 miscEffects.push({
@@ -84,5 +75,18 @@ export default Ember.Object.extend({
     fakeFor(itemId) {
         this.set('id', itemId);
         this.set('name', _.trim(itemId.replace(/\d*\-/g, ' ')));
+    },
+
+    _getRunesFor(rune, isBonus) {
+        return _.map(['Base', 'Pa', 'Ra'], (runeType, index) => {
+            if (rune.effects[index]) {
+                return {
+                    type: runeType,
+                    effect: rune.effects[index],
+                    weight: (isBonus ? rune.weight.bonus : rune.weight.malus)[index]
+                };
+            }
+            return null;
+        });
     }
 });
