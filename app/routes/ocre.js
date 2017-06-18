@@ -1,8 +1,13 @@
 import Ember from 'ember';
 import steps from '../ressources/ocre-quest';
 import _ from 'lodash/lodash';
+import analyticsEvent from '../utils/analytics-event';
 
 export default Ember.Route.extend({
+    activate() {
+        analyticsEvent('feature', 'ocre', 'Ocre');
+    },
+
     beforeModel() {
         if ( ! this.get('session.isAuthenticated')) {
             return this.transitionTo('login', {

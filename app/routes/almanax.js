@@ -2,9 +2,14 @@ import Ember from 'ember';
 import moment from 'moment';
 import Almanax from '../objects/almanax';
 import almanaxData from '../ressources/almanax-data';
+import analyticsEvent from '../utils/analytics-event';
 
 export default Ember.Route.extend({
     dofusData: Ember.inject.service('dofus-data'),
+
+    activate() {
+        analyticsEvent('feature', 'almanax', 'Almanax');
+    },
     
     model() {
         const dofusData = this.get('dofusData');
