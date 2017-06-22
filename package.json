@@ -4,7 +4,7 @@
     "build": "ember build",
     "start": "ember server",
     "test": "ember test",
-    "deploy": "firebase deploy"
+    "deploy": "ember build --environment=production && firebase deploy"
   },
   "author": "Pascal Boutin <contact@pboutin.net>",
   "license": "MIT",
@@ -40,6 +40,6 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
-    "dofus-data": "^2.1.2"
+    "dofus-data": "^2.2.0"
   }
 }
